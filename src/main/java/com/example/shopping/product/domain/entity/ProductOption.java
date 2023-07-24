@@ -13,9 +13,11 @@ import lombok.*;
 public class ProductOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long option_seq;
+    private Long optionSeq;
     private String color;
     private Integer size;
+
     @ManyToOne
+    @JoinColumn(name = "productSeq")
     private Product product;
 }

@@ -1,6 +1,7 @@
 package com.example.shopping.product.domain.request;
 
 import com.example.shopping.product.domain.entity.Interest;
+import com.example.shopping.product.domain.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,13 +13,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InterestRequest {
-    private LocalDate interest_date;
-    private Integer interest_like;
+    private LocalDate interestDate;
+    private Integer interestLike;
 
-    public Interest toEntity() {
+    public Interest toEntity(Long productSeq) {
         return Interest.builder()
-                .interest_date(interest_date)
-                .interest_like(interest_like)
+                .interestDate(interestDate)
+                .interestLike(interestLike)
+                .product(Product.builder().productSeq(productSeq).build())
                 .build();
     }
 

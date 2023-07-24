@@ -21,11 +21,11 @@ public class ProductOptionService {
         return productOptionRepository.findAll();
     }
 
-    public void saveOption(ProductOptionRequest productOptionRequest) {
-        productOptionRepository.save(productOptionRequest.toEntity());
+    public void saveOption(ProductOptionRequest productOptionRequest, Long productSeq) {
+        productOptionRepository.save(productOptionRequest.toEntity(productSeq));
     }
 
-    public void deleteOption(Long option_seq) {
-        productOptionRepository.deleteById(option_seq);
+    public void deleteOption(Long optionSeq) {
+        productOptionRepository.deleteById(optionSeq);
     }
 }

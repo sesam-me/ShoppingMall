@@ -19,9 +19,11 @@ public class ProductOptionController {
         return productOptionService.findAllOption();
     }
 
-    @PostMapping
-    public void saveOption(@RequestBody ProductOptionRequest productOptionRequest) {
-        productOptionService.saveOption(productOptionRequest);
+    @PostMapping("{productSeq}")
+    public void saveOption(@RequestBody ProductOptionRequest productOptionRequest,
+                           @PathVariable("productSeq") Long productSeq) {
+
+        productOptionService.saveOption(productOptionRequest,productSeq);
     }
 
     @DeleteMapping("{option_seq}")

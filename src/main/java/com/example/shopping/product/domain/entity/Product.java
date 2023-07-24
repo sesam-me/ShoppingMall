@@ -15,14 +15,18 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long product_seq;
+    private Long productSeq;
     private String name;
-    private String img_url;
+    private String imgUrl;
+
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductOption> productOption;
 
-    public void update(String name, String img_url) {
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<Interest> interests;
+
+    public void update(String name, String imgUrl) {
         this.name = name;
-        this.img_url = img_url;
+        this.imgUrl = imgUrl;
     }
 }

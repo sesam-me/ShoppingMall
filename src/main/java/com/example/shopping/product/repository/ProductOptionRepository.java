@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface ProductOptionRepository extends JpaRepository<ProductOption,Long> {
-    Optional<ProductOption> findById(Long option_seq);
+    Optional<ProductOption> findById(Long optionSeq);
 }

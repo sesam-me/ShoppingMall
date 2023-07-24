@@ -12,12 +12,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProductRequest {
     private String name;
-    private String img_url;
+    private String imgUrl;
 
     public Product ToEntity() {
         return Product.builder()
                 .name(name)
-                .img_url(img_url)
+                .imgUrl(imgUrl)
                 .build();
     }
 }

@@ -17,21 +17,21 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<Product> findAll() {
+    public List<ProductResponse> findAll() {
         return productService.findAll();
     }
 
-    @PutMapping("{product_seq}")
-    public ProductResponse update(@PathVariable("product_seq") Long product_seq, @RequestBody ProductUpdateRequest productUpdateRequest) {
-        return productService.update(product_seq, productUpdateRequest);
+    @PutMapping("{productSeq}")
+    public ProductResponse update(@PathVariable("productSeq") Long productSeq, @RequestBody ProductUpdateRequest productUpdateRequest) {
+        return productService.update(productSeq, productUpdateRequest);
     }
     @PostMapping
     public void save(@RequestBody ProductRequest productRequest) {
         productService.save(productRequest);
     }
 
-    @DeleteMapping("{product_seq}")
-    private void delete(@PathVariable("product_seq") Long product_seq) {
-        productService.delete(product_seq);
+    @DeleteMapping("{productSeq}")
+    private void delete(@PathVariable("productSeq") Long productSeq) {
+        productService.delete(productSeq);
     }
 }

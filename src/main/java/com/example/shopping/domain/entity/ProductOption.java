@@ -16,4 +16,6 @@ public class ProductOption {
     private Long option_seq;
     private String color;
     private Integer size;
+    @ManyToOne
+    private Product product;
 }

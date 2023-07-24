@@ -33,7 +33,7 @@ public class MemberResponse {
         this.deliveries = member.getDeliveries() != null ?
                 member.getDeliveries().stream().map(DeliveryDto::new).toList() : new ArrayList<>();
 
-        ;
+//        private List<DeliverCompany> deliverCompanyList;
     }
 
     @Getter @AllArgsConstructor
@@ -53,9 +53,9 @@ public class MemberResponse {
         private Long orderSeq;
 
         public DeliveryDto(Delivery delivery) {
-            this.deliverSeq = delivery.getDeliverSeq();
+            this.deliverSeq = delivery.getDeliverySeq();
             this.deliveryDate = delivery.getDeliveryDate();
-            this.deliverStatus = delivery.getDeliverStatus();
+            this.deliverStatus = delivery.getDeliveryStatus();
             this.recipientInformation = delivery.getRecipientInformation();
             this.deliveryMethod = delivery.getDeliveryMethod();
             this.deliveryFee = delivery.getDeliveryFee();

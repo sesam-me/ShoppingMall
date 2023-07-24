@@ -15,7 +15,14 @@ public class MemberService {
     private final MemberRepository memberRepository;
     public void memberInsert(MemberInsertDto memberInsertDto){
         Member member = Member.builder()
-                .id(memberInsertDto.getId()).password(memberInsertDto.getPassword()).username(memberInsertDto.getUsername()).gender(memberInsertDto.isGender()).registrationDate(memberInsertDto.getRegistrationDate()).address(memberInsertDto.getAddress()).build();
+                .id(memberInsertDto.getId())
+                .password(memberInsertDto.getPassword())
+                .username(memberInsertDto.getUsername())
+                .gender(memberInsertDto.isGender())
+                .registrationDate(memberInsertDto.getRegistrationDate())
+                .address(memberInsertDto.getAddress())
+
+                .build();
         memberRepository.save(member);
     }
     public List<MemberResponse> findAll(){

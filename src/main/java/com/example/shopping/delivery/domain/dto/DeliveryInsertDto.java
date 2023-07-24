@@ -23,10 +23,28 @@ public class DeliveryInsertDto {
     private String recipientAddress;
     private String recipientPhoneNumber;
 
-    private Long memberSeq;
-    private Long paymentSeq;
-    private Long deliveryCompanySeq;
-    private Long orderSeq;
+    private Long member_seq;
+    private Long payment_seq;
+    private Long deliveryCompany_seq;
+    private Long order_seq;
+
+    @Override
+    public String toString() {
+        return "DeliveryInsertDto{" +
+                "deliveryDate=" + deliveryDate +
+                ", deliverStatus='" + deliverStatus + '\'' +
+                ", recipientInformation='" + recipientInformation + '\'' +
+                ", deliveryMethod='" + deliveryMethod + '\'' +
+                ", deliveryFee=" + deliveryFee +
+                ", recipientAddress='" + recipientAddress + '\'' +
+                ", recipientPhoneNumber='" + recipientPhoneNumber + '\'' +
+                ", memberSeq=" + member_seq +
+                ", paymentSeq=" + payment_seq +
+                ", deliveryCompanySeq=" + deliveryCompany_seq +
+                ", orderSeq=" + order_seq +
+                ", members=" + members +
+                '}';
+    }
 
     // member_seq를 가져올 수 없어서 대신, 객체를 가져온거임
     @ManyToOne

@@ -3,10 +3,7 @@ package com.example.shopping.delivery.domain.entity;
 import com.example.shopping.member.domain.entity.Member;
 import com.example.shopping.payment.domain.entity.Payment;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,12 +11,12 @@ import java.time.LocalDateTime;
 @Table(name = "deliveries")
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder @Getter
+@Builder @Data
 public class Delivery {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long deliverSeq;
+    private Long deliverySeq;
     private LocalDateTime deliveryDate;
-    private String deliverStatus;
+    private String deliveryStatus;
     private String recipientInformation;
     private String deliveryMethod;
     private Integer deliveryFee;

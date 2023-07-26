@@ -12,13 +12,13 @@ public class ReviewDto {
     private String content; //리뷰 내용
     private Integer rating; // 평점
     private String reviewImg; //리뷰 사진
-    private Long productSeq;
+//    private Long productSeq;
 
     public ReviewDto(Review review) {
         this.reviewSeq = review.getReviewSeq();
         this.content = review.getContent();
         this.rating = review.getRating();
         this.reviewImg = review.getReviewImg();
-        this.productSeq = review.getProduct().getProductSeq();
+//        this.productSeq = review.getProduct().getProductSeq();
     }
 }

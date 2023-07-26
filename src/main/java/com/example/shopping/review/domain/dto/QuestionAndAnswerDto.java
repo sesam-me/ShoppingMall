@@ -12,13 +12,13 @@ public class QuestionAndAnswerDto {
     private String qTitle; //질문 제목
     private String qContent; //질문 내용
     private String answer; //답변
-    private Long productSeq;
+//    private Long productSeq;
 
     public QuestionAndAnswerDto(QuestionAndAnswer questionAndAnswer) {
         this.qaSeq = questionAndAnswer.getQaSeq();
         this.qTitle = questionAndAnswer.getQTitle();
         this.qContent = questionAndAnswer.getQContent();
         this.answer = questionAndAnswer.getAnswer();
-        this.productSeq = questionAndAnswer.getProduct().getProductSeq();
+//        this.productSeq = questionAndAnswer.getProduct().getProductSeq();
     }
 }

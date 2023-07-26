@@ -1,5 +1,6 @@
 package com.example.shopping.review.domain.entity;
 
+import com.example.shopping.product.domain.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,15 +10,18 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name="qas")
+@Table(name = "qas")
 public class QuestionAndAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long qa_seq;
-    private String q_title; //질문 제목
+    private Long qaSeq;
+    private String qTitle; //질문 제목
     @Column(columnDefinition = "TEXT")
-    private String q_content; //질문 내용
+    private String qContent; //질문 내용
     @Column(columnDefinition = "TEXT")
     private String answer; //답변
 
+    @ManyToOne
+    @JoinColumn(name = "productSeq")
+    private Product product;
 }

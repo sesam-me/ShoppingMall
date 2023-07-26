@@ -23,16 +23,16 @@ public class InventoryService {
         return inventoryRepository.findAll();
     }
 
-    public void saveInventory(InventoryRequest inventoryRequest) {
-        inventoryRepository.save(inventoryRequest.toEntity());
+    public void saveInventory(InventoryRequest inventoryRequest, Long productSeq) {
+        inventoryRepository.save(inventoryRequest.toEntity(productSeq));
     }
 
-    public void deleteInventory(Long inventory_seq) {
-        inventoryRepository.deleteById(inventory_seq);
+    public void deleteInventory(Long inventorySeq) {
+        inventoryRepository.deleteById(inventorySeq);
     }
 
-    public InventoryResponse updateInventory(Long inventory_seq, InventoryUpdateRequest inventoryUpdateRequest) {
-        Inventory inventory = findById(inventory_seq);
+    public InventoryResponse updateInventory(Long inventorySeq, InventoryUpdateRequest inventoryUpdateRequest) {
+        Inventory inventory = findById(inventorySeq);
         inventory.update(inventoryUpdateRequest.getCount(), inventoryUpdateRequest.getSales(), inventoryUpdateRequest.getWaste());
         return new InventoryResponse(inventory);
     }

@@ -1,5 +1,6 @@
 package com.example.shopping.review.domain.entity;
 
+import com.example.shopping.product.domain.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,9 +14,13 @@ import lombok.*;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long review_seq;
+    private Long reviewSeq;
     @Column(columnDefinition = "TEXT")
     private String content; //리뷰 내용
     private Integer rating; // 평점
-    private String review_img; //리뷰 사진
+    private String reviewImg; //리뷰 사진
+
+    @ManyToOne
+    @JoinColumn(name = "productSeq")
+    private Product product;
 }

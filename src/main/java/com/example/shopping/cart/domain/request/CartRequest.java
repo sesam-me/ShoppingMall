@@ -11,11 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartRequest {
-    private Integer cart_count;
+    private Integer cartCount;
 
     public Cart toEntity() {
         return Cart.builder()
-                .cart_count(cart_count)
+                .cartCount(cartCount)
                 .build();
     }
 }

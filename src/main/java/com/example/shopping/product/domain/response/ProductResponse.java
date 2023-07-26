@@ -1,8 +1,16 @@
 package com.example.shopping.product.domain.response;
 
+import com.example.shopping.inventory.domain.dto.InventoryDto;
+import com.example.shopping.order.domain.dto.HistoryDto;
+import com.example.shopping.order.domain.dto.OrderDto;
+import com.example.shopping.product.domain.dto.InterestDto;
+import com.example.shopping.product.domain.dto.ProductOptionDto;
 import com.example.shopping.product.domain.entity.Interest;
 import com.example.shopping.product.domain.entity.Product;
 import com.example.shopping.product.domain.entity.ProductOption;
+import com.example.shopping.review.domain.dto.QuestionAndAnswerDto;
+import com.example.shopping.review.domain.dto.ReviewDto;
+import com.example.shopping.review.domain.entity.Review;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,45 +25,38 @@ public class ProductResponse {
     private String imgUrl;
     private List<ProductOptionDto> productOptionDto;
     private List<InterestDto> interestDto;
+    private List<QuestionAndAnswerDto> questionAndAnswerDto;
+    private List<ReviewDto> reviewDto;
+    private List<HistoryDto> historyDto;
+    private List<OrderDto> orderDto;
+    private List<InventoryDto> inventoryDto;
 
     public ProductResponse(Product product) {
         this.productSeq = product.getProductSeq();
         this.name = product.getName();
         this.imgUrl = product.getImgUrl();
-        this.productOptionDto = product.getProductOption() != null ?
-                product.getProductOption().stream().map(ProductOptionDto::new).toList()
+        this.productOptionDto = product.getProductOptions() != null ?
+                product.getProductOptions().stream().map(ProductOptionDto::new).toList()
                 : new ArrayList<>();
-        this.interestDto = product.getInterests() != null ?
-                product.getInterests().stream().map(InterestDto::new).toList()
-                : new ArrayList<>();
+//        this.interestDto = product.getInterests() != null ?
+//                product.getInterests().stream().map(InterestDto::new).toList()
+//                : new ArrayList<>();
+        this.questionAndAnswerDto = product.getQuestionAndAnswers() != null ?
+                product.getQuestionAndAnswers().stream().map(QuestionAndAnswerDto::new).toList() :
+                new ArrayList<>();
+        this.reviewDto = product.getReviews() != null ?
+                product.getReviews().stream().map(ReviewDto::new).toList() :
+                new ArrayList<>();
+//        this.historyDto = product.getHistories() != null ?
+//                product.getHistories().stream().map(HistoryDto::new).toList() :
+//                new ArrayList<>();
+        this.orderDto = product.getOrders() != null ?
+                product.getOrders().stream().map(OrderDto::new).toList() :
+                new ArrayList<>();
+        this.inventoryDto = product.getInventories() != null ?
+                product.getInventories().stream().map(InventoryDto::new).toList() :
+                new ArrayList<>();
+
     }
 
-    @Getter @AllArgsConstructor
-    class ProductOptionDto {
-        private Long optionSeq;
-        private String color;
-        private Integer size;
-        private Long productSeq;
-
-        public ProductOptionDto(ProductOption productOption) {
-            this.optionSeq = productOption.getOptionSeq();
-            this.color = productOption.getColor();
-            this.size = productOption.getSize();
-            this.productSeq = productOption.getProduct().getProductSeq();
-        }
-    }
-    @Getter @AllArgsConstructor
-    class InterestDto {
-        private Long interestSeq;
-        private LocalDate interestDate; //관심 표현한 날짜
-        private Integer interestLike;
-        private Long productSeq;
-
-        public InterestDto(Interest interest) {
-            this.interestSeq = interest.getInterestSeq();
-            this.interestDate = interest.getInterestDate();
-            this.interestLike = interest.getInterestLike();
-            this.productSeq = interest.getProduct().getProductSeq();
-        }
-    }
 }

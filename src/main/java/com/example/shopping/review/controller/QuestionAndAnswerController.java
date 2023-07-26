@@ -19,14 +19,15 @@ public class QuestionAndAnswerController {
         return questionAndAnswerService.findAllQAndA();
     }
 
-    @PostMapping
-    public void saveQAndA(@RequestBody QuestionAndAnswerRequest questionAndAnswerRequest) {
-        questionAndAnswerService.saveQAndA(questionAndAnswerRequest);
+    @PostMapping("{productSeq}")
+    public void saveQAndA(@RequestBody QuestionAndAnswerRequest questionAndAnswerRequest,
+                          @PathVariable("productSeq")Long productSeq) {
+        questionAndAnswerService.saveQAndA(questionAndAnswerRequest, productSeq);
     }
 
-    @DeleteMapping("{qa_seq}")
-    public void deleteQAndA(@PathVariable("qa_seq") Long qa_seq) {
-        questionAndAnswerService.deleteQAndA(qa_seq);
+    @DeleteMapping("{qaSeq}")
+    public void deleteQAndA(@PathVariable("qaSeq") Long qaSeq) {
+        questionAndAnswerService.deleteQAndA(qaSeq);
     }
 
 }

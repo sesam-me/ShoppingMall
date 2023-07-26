@@ -11,11 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InventoryAlertRequest {
-    private Integer alert_count;
+    private Integer alertCount;
 
     public InventoryAlert toEntity() {
         return InventoryAlert.builder()
-                .alert_count(alert_count)
+                .alertCount(alertCount)
                 .build();
     }
 }

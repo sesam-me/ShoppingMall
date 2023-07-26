@@ -22,11 +22,11 @@ public class HistoryService {
         return historyRepository.findAll();
     }
 
-    public void saveHistory(HistoryRequest historyRequest) {
-        historyRepository.save(historyRequest.toEntity());
+    public void saveHistory(HistoryRequest historyRequest, Long productSeq) {
+        historyRepository.save(historyRequest.toEntity(productSeq));
     }
 
-    public void deleteHistory(Long history_seq) {
-        historyRepository.deleteById(history_seq);
+    public void deleteHistory(Long historySeq) {
+        historyRepository.deleteById(historySeq);
     }
 }

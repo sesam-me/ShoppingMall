@@ -1,5 +1,6 @@
 package com.example.shopping.order.domain.entity;
 
+import com.example.shopping.product.domain.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,10 +16,14 @@ import java.time.LocalDate;
 public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long history_seq;
+    private Long historySeq;
     @Column(columnDefinition = "TEXT")
-    private String cancel_content; //주문취소사유
+    private String cancelContent; //주문취소사유
     @Column(columnDefinition = "TEXT")
-    private String refund_content; //주문환불사유
-    private LocalDate history_date;//취소환불일자
+    private String refundContent; //주문환불사유
+    private LocalDate historyDate;//취소환불일자
+
+    @ManyToOne
+    @JoinColumn(name = "productSeq")
+    private Product product;
 }

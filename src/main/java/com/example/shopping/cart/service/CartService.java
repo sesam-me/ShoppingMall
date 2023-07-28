@@ -28,13 +28,13 @@ public class CartService {
         cartRepository.save(cartRequest.toEntity());
     }
 
-    public void deleteCart(Long cart_seq) {
-        cartRepository.deleteById(cart_seq);
+    public void deleteCart(Long cartSeq) {
+        cartRepository.deleteById(cartSeq);
     }
 
-    public CartResponse updateCart(Long cart_seq, CartUpdateRequest cartUpdateRequest) {
-        Cart cart = findById(cart_seq);
-        cart.update(cartUpdateRequest.getCart_count());
+    public CartResponse updateCart(Long cartSeq, CartUpdateRequest cartUpdateRequest) {
+        Cart cart = findById(cartSeq);
+        cart.update(cartUpdateRequest.getCartCount());
         return new CartResponse(cart);
     }
 

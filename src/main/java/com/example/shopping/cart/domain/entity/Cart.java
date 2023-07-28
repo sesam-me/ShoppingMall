@@ -13,10 +13,10 @@ import lombok.*;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cart_seq;
-    private Integer cart_count;
+    private Long cartSeq;
+    private Integer cartCount;
 
-    public void update(Integer cart_count) {
-        this.cart_count = cart_count;
+    public void update(Integer cartCount) {
+        this.cartCount = cartCount;
     }
 }

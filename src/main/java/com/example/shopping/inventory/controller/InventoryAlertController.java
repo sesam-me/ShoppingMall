@@ -24,8 +24,8 @@ public class InventoryAlertController {
         inventoryAlterService.saveAlert(inventoryAlertRequest);
     }
 
-    @DeleteMapping("{alert_seq}")
-    public void deleteAlert(@PathVariable("alert_seq") Long alert_seq) {
-        inventoryAlterService.deleteAlert(alert_seq);
+    @DeleteMapping("{alertSeq}")
+    public void deleteAlert(@PathVariable("alertSeq") Long alertSeq) {
+        inventoryAlterService.deleteAlert(alertSeq);
     }
 }

@@ -25,7 +25,7 @@ public class InventoryAlterService {
         inventoryAlertRepository.save(inventoryAlertRequest.toEntity());
     }
 
-    public void deleteAlert(Long alert_seq) {
-        inventoryAlertRepository.deleteById(alert_seq);
+    public void deleteAlert(Long alertSeq) {
+        inventoryAlertRepository.deleteById(alertSeq);
     }
 }

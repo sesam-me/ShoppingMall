@@ -21,18 +21,18 @@ public class InventoryController {
         return inventoryService.findAllInventory();
     }
 
-    @PostMapping
-    public void saveInventory(@RequestBody InventoryRequest inventoryRequest) {
-        inventoryService.saveInventory(inventoryRequest);
+    @PostMapping("{productSeq}")
+    public void saveInventory(@RequestBody InventoryRequest inventoryRequest, @PathVariable("productSeq") Long productSeq) {
+        inventoryService.saveInventory(inventoryRequest, productSeq);
     }
 
-    @DeleteMapping("{inventory_seq}")
-    public void deleteInventory(@PathVariable("inventory_seq") Long inventory_seq) {
-        inventoryService.deleteInventory(inventory_seq);
+    @DeleteMapping("{inventorySeq}")
+    public void deleteInventory(@PathVariable("inventorySeq") Long inventorySeq) {
+        inventoryService.deleteInventory(inventorySeq);
     }
 
-    @PutMapping("{inventory_seq}")
-    public InventoryResponse updateInventory(@PathVariable("inventory_seq") Long inventory_seq, @RequestBody InventoryUpdateRequest inventoryUpdateRequest) {
-        return inventoryService.updateInventory(inventory_seq, inventoryUpdateRequest);
+    @PutMapping("{inventorySeq}")
+    public InventoryResponse updateInventory(@PathVariable("inventorySeq") Long inventorySeq, @RequestBody InventoryUpdateRequest inventoryUpdateRequest) {
+        return inventoryService.updateInventory(inventorySeq, inventoryUpdateRequest);
     }
 }

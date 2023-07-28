@@ -19,26 +19,27 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public List<ProductResponse> findAll() {
+        List<Product> all = productRepository.findAll();
+        return all.stream().map(ProductResponse::new).toList();
     }
 
     public void save(ProductRequest productRequest) {
         productRepository.save(productRequest.ToEntity());
     }
 
-    public ProductResponse update(Long product_seq, ProductUpdateRequest productUpdateRequest) {
-        Product product = findById(product_seq);
-        product.update(productUpdateRequest.getName(), productUpdateRequest.getImg_url());
+    public ProductResponse update(Long productSeq, ProductUpdateRequest productUpdateRequest) {
+        Product product = findById(productSeq);
+        product.update(productUpdateRequest.getName(), productUpdateRequest.getImgUrl());
         return new ProductResponse(product);
     }
-    public void delete(Long product_seq) {
-        productRepository.deleteById(product_seq);
+    public void delete(Long productSeq) {
+        productRepository.deleteById(productSeq);
     }
 
     private Product findById(Long productSeq) {
         return productRepository.findById(productSeq).orElseThrow(() -> new RuntimeException());
     }
 
-    //
+
 }

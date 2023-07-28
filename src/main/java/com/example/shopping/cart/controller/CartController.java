@@ -17,7 +17,7 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping
-    public List<Cart> findAllCard() {
+    public List<Cart> findAllCart() {
         return cartService.findAllCart();
     }
 
@@ -26,13 +26,13 @@ public class CartController {
         cartService.saveCart(cartRequest);
     }
 
-    @DeleteMapping("{cart_seq}")
-    public void deleteCart(@PathVariable("cart_seq") Long cart_seq) {
-        cartService.deleteCart(cart_seq);
+    @DeleteMapping("{cartSeq}")
+    public void deleteCart(@PathVariable("cartSeq") Long cartSeq) {
+        cartService.deleteCart(cartSeq);
     }
 
-    @PutMapping("{cart_seq}")
-    public CartResponse updateCart(@PathVariable("cart_seq") Long cart_seq, @RequestBody CartUpdateRequest cartUpdateRequest) {
-        return cartService.updateCart(cart_seq, cartUpdateRequest);
+    @PutMapping("{cartSeq}")
+    public CartResponse updateCart(@PathVariable("cartSeq") Long cartSeq, @RequestBody CartUpdateRequest cartUpdateRequest) {
+        return cartService.updateCart(cartSeq, cartUpdateRequest);
     }
 }

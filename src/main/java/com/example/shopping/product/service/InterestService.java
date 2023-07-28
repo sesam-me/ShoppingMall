@@ -22,11 +22,11 @@ public class InterestService {
         return interestRepository.findAll();
     }
 
-    public void saveInterest(InterestRequest interestRequest) {
-        interestRepository.save(interestRequest.toEntity());
+    public void saveInterest(InterestRequest interestRequest, Long productSeq) {
+        interestRepository.save(interestRequest.toEntity(productSeq));
     }
 
-    public void deleteInterest(Long interest_seq) {
-        interestRepository.deleteById(interest_seq);
+    public void deleteInterest(Long interestSeq) {
+        interestRepository.deleteById(interestSeq);
     }
 }

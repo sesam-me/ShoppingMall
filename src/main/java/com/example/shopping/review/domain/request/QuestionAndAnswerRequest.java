@@ -1,5 +1,6 @@
 package com.example.shopping.review.domain.request;
 
+import com.example.shopping.product.domain.entity.Product;
 import com.example.shopping.review.domain.entity.QuestionAndAnswer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,15 +12,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionAndAnswerRequest {
-    private String q_title;
-    private String q_content;
+    private String qTitle;
+    private String qContent;
     private String answer;
 
-    public QuestionAndAnswer toEntity() {
+    public QuestionAndAnswer toEntity(Long productSeq) {
         return QuestionAndAnswer.builder()
-                .q_title(q_title)
-                .q_content(q_content)
+                .qTitle(qTitle)
+                .qContent(qContent)
                 .answer(answer)
+                .product(Product.builder().productSeq(productSeq).build())
                 .build();
     }
 }

@@ -19,13 +19,14 @@ public class InterestController {
         return interestService.findAllInterest();
     }
 
-    @PostMapping
-    public void saveInterest(@RequestBody InterestRequest interestRequest) {
-        interestService.saveInterest(interestRequest);
+    @PostMapping("{productSeq}")
+    public void saveInterest(@RequestBody InterestRequest interestRequest
+            ,@PathVariable("productSeq") Long productSeq) {
+        interestService.saveInterest(interestRequest,productSeq);
     }
 
-    @DeleteMapping("{interest_seq}")
-    public void deleteInterest(@PathVariable("interest_seq") Long interest_seq) {
-        interestService.deleteInterest(interest_seq);
+    @DeleteMapping("{interestSeq}")
+    public void deleteInterest(@PathVariable("interestSeq") Long interestSeq) {
+        interestService.deleteInterest(interestSeq);
     }
 }

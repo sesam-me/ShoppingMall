@@ -24,6 +24,8 @@ public class Product {
     private Long productSeq;
     private String name;
     private String imgUrl;
+    private String createAt;
+
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductOption> productOptions;

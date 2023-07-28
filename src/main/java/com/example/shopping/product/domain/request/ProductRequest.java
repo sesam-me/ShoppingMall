@@ -13,11 +13,13 @@ import lombok.Setter;
 public class ProductRequest {
     private String name;
     private String imgUrl;
+    private String createAt;
 
     public Product ToEntity() {
         return Product.builder()
                 .name(name)
                 .imgUrl(imgUrl)
+                .createAt(createAt)
                 .build();
     }
 }

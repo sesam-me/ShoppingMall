@@ -2,6 +2,7 @@ package com.example.shopping.delivery.controller;
 
 import com.example.shopping.delivery.domain.dto.DeliveryInsertDto;
 import com.example.shopping.delivery.domain.entity.Delivery;
+import com.example.shopping.delivery.domain.response.DeliveryResponse;
 import com.example.shopping.delivery.service.DeliveryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,8 @@ public class DeliveryController {
     }
 
     @GetMapping
-    public List<Delivery> findAll(){
+    public List<DeliveryResponse> findAll(){
         return deliveryService.findAll();
-        //TODO  DeliveryReponse 만들기
+        //TODO DeliveryResponse 만들기
     }
 }

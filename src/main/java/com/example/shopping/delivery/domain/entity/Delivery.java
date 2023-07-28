@@ -22,6 +22,10 @@ public class Delivery {
     private Integer deliveryFee;
     private String recipientAddress;
     private String recipientPhoneNumber;
+    private String deliveryFeeCondition;
+    private String deliveryCompanySeq;
+    private String deliveryContact;
+    private String deliveryLocation;
 
 //    private Long memberSeq;
 //    private Long paymentSeq;
@@ -34,8 +38,4 @@ public class Delivery {
     @ManyToOne
     @JoinColumn(name = "paymentSeq")
     private Payment payment;
-    @ManyToOne
-    @JoinColumn(name = "deliveryCompanySeq")
-    private DeliveryCompany deliveryCompany;
-
 }

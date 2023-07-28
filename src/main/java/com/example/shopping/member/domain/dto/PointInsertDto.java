@@ -1,24 +1,22 @@
-package com.example.shopping.member.domain.entity;
+package com.example.shopping.member.domain.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Data
-public class Point {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PointInsertDto {
     private Long pointSeq;
+    private Long memberSeq;
     private Integer pointBalance;
     private LocalDateTime accumulationDate;
     private LocalDateTime usageDate;
     private LocalDateTime expirationDate;
-
 }
+

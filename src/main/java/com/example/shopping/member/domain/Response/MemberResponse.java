@@ -1,7 +1,9 @@
 package com.example.shopping.member.domain.Response;
 
 import com.example.shopping.delivery.domain.entity.Delivery;
+import com.example.shopping.member.domain.entity.Grade;
 import com.example.shopping.member.domain.entity.Member;
+import com.example.shopping.member.domain.entity.Point;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -20,6 +22,8 @@ public class MemberResponse {
     private LocalDateTime registrationDate = LocalDateTime.now();
     private String address;
     private List<DeliveryDto> deliveries;
+    private Point point;
+    private Grade grade;
 
 
     public MemberResponse(Member member) {
@@ -33,7 +37,9 @@ public class MemberResponse {
         this.deliveries = member.getDeliveries() != null ?
                 member.getDeliveries().stream().map(DeliveryDto::new).toList() : new ArrayList<>();
 
-//        private List<DeliverCompany> deliverCompanyList;
+        this.point = member.getPoint();
+
+        this.grade = member.getGrade();
     }
 
     @Getter @AllArgsConstructor
@@ -62,8 +68,7 @@ public class MemberResponse {
             this.recipientAddress = delivery.getRecipientAddress();
             this.recipientPhoneNumber = delivery.getRecipientPhoneNumber();
             this.memberSeq = delivery.getMember().getMemberSeq();
-            this.paymentSeq = delivery.getMember().getMemberSeq();
-            this.deliveryCompanySeq = delivery.getMember().getMemberSeq();
+            this.paymentSeq = delivery.getPayment().getPaymentSeq();
 //            this.orderSeq = delivery.getMember().getOderSeq;
         }
     }

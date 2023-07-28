@@ -15,6 +15,8 @@ import java.util.List;
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberSeq;
+
+    @Column(unique = true)
     private String id;
     private String password;
     private String username;

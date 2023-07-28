@@ -20,5 +20,6 @@ public class Point {
     private LocalDateTime accumulationDate;
     private LocalDateTime usageDate;
     private LocalDateTime expirationDate;
+    private String userId;
 
 }

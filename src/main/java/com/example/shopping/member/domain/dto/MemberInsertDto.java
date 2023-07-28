@@ -13,11 +13,7 @@ public class MemberInsertDto {
     private String id;
     private String password;
     private String username;
-    private boolean gender;
-    private LocalDateTime registrationDate;
     private String address;
-    private String gradeName;
-    private Integer pointBalance;
 
     @OneToMany(mappedBy = "members")
     private List<Delivery> deliveries;

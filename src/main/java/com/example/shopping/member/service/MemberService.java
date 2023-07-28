@@ -24,14 +24,16 @@ public class MemberService {
     private final GradeRepository gradeRepository;
 
     public void memberInsert(MemberInsertDto memberInsertDto){
-        // Grade 객체 생성
+        // Grade Default 객체 생성 ( 5등급 )
         Grade grade = Grade.builder()
-                .gradeName(memberInsertDto.getGradeName())
+                .gradeName("5등급")
+                .userId(memberInsertDto.getId())
                 .build();
 
-        // Point 객체 생성
+        // Point Default 객체 생성 ( 0원 )
         Point point = Point.builder()
-                .pointBalance(memberInsertDto.getPointBalance())
+                .pointBalance(0)
+                .userId(memberInsertDto.getId())
                 .build();
 
         // Grade와 Point 엔티티를 먼저 저장하여 기본 키 값을 생성
@@ -43,8 +45,6 @@ public class MemberService {
                 .id(memberInsertDto.getId())
                 .password(memberInsertDto.getPassword())
                 .username(memberInsertDto.getUsername())
-                .gender(memberInsertDto.isGender())
-                .registrationDate(memberInsertDto.getRegistrationDate())
                 .address(memberInsertDto.getAddress())
                 .grade(grade) // 저장된 Grade 엔티티를 설정
                 .point(point) // 저장된 Point 엔티티를 설정

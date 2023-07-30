@@ -3,17 +3,14 @@ package com.example.shopping.delivery.domain.dto;
 import com.example.shopping.member.domain.entity.Member;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter
+@Data
 public class DeliveryInsertDto {
     private LocalDateTime deliveryDate;
     private String deliverStatus;
@@ -22,6 +19,10 @@ public class DeliveryInsertDto {
     private Integer deliveryFee;
     private String recipientAddress;
     private String recipientPhoneNumber;
+    private String deliveryFeeCondition;
+    private String deliveryCompanyName;
+    private String deliveryCompanyContact;
+    private String deliveryLocation;
 
     private Long member_seq;
     private Long payment_seq;

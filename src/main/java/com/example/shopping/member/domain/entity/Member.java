@@ -1,6 +1,7 @@
 package com.example.shopping.member.domain.entity;
 
 import com.example.shopping.delivery.domain.entity.Delivery;
+import com.example.shopping.payment.domain.entity.Payment;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,6 +36,10 @@ public class Member {
     @OneToOne
     @JoinColumn(name = "grade_seq")
     private Grade grade;
+
+    @OneToOne
+    @JoinColumn(name = "payment_seq")
+    private Payment payment;
 
     @Override
     public String toString() {

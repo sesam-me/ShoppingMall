@@ -27,12 +27,14 @@ public class MemberController {
     }
 
 
-//    ## Point ##
-    @PostMapping("/insert/point")
-    public void pointInsert(@RequestBody PointInsertDto pointInsertDto){
-        memberService.pointInsert(pointInsertDto);
-    }
+//    ## point ##
+//    @PostMapping("/insert/point")
+//    public void pointInsert(@RequestBody PointInsertDto pointInsertDto){
+//        memberService.pointInsert(pointInsertDto);
+//    }
+//
+////    ## grade ##
+//    @PostMapping("insert/grade")
+//    public void gradeInsert(@RequestBody GradeInsertDto gradeInsertDto) {memberService.gradeInsert(gradeInsertDto);}
 
-    @PostMapping("insert/grade")
-    public void gradeInsert(@RequestBody GradeInsertDto gradeInsertDto) {memberService.gradeInsert(gradeInsertDto);}
 }

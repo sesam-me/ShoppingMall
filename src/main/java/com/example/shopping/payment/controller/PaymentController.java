@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PaymentController {
     private final PaymentService paymentService;
-    @PostMapping("insert/payment")
+    @PostMapping("insert")
     public void paymentInsert(@RequestBody PaymentInsertDto paymentInsertDto, Member member){
 //        paymentService.paymentInsert(paymentInsertDto, member);
     }

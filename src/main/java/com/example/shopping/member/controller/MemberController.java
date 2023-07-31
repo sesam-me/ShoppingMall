@@ -30,6 +30,12 @@ public class MemberController {
         return memberService.memberLogin(memberLoginDto);
     }
 
+    @PutMapping("/update/{id}")
+    public void memberUpdate(@RequestBody MemberUpdateDto memberUpdateDto, @PathVariable("id")String id){
+        memberService.memberUpdate(memberUpdateDto, id);
+    }
+
+
 
 //    ## point ##
 //    @PostMapping("/insert/point")

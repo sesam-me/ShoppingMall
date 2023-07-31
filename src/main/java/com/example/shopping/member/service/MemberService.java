@@ -63,33 +63,32 @@ public class MemberService {
 
 
 
-
 //    ## point ##
-    public void pointInsert(PointInsertDto pointInsertDto){
-        Optional<Member> findByMemberSeq = memberRepository.findById(pointInsertDto.getMemberSeq());
-
-        Point point = Point.builder()
-                .pointSeq(pointInsertDto.getPointSeq())
-                .pointBalance(pointInsertDto.getPointBalance())
-                .accumulationDate(pointInsertDto.getAccumulationDate())
-                .usageDate(pointInsertDto.getUsageDate())
-                .expirationDate(pointInsertDto.getExpirationDate())
-                .build();
-        pointRepository.save(point);
-    }
+//    public void pointInsert(PointInsertDto pointInsertDto){
+//        Optional<Member> findByMemberSeq = memberRepository.findById(pointInsertDto.getMemberSeq());
+//
+//        Point point = Point.builder()
+//                .pointSeq(pointInsertDto.getPointSeq())
+//                .pointBalance(pointInsertDto.getPointBalance())
+//                .accumulationDate(pointInsertDto.getAccumulationDate())
+//                .usageDate(pointInsertDto.getUsageDate())
+//                .expirationDate(pointInsertDto.getExpirationDate())
+//                .build();
+//        pointRepository.save(point);
+//    }
 
 
 //    ## grade ##
-    public void gradeInsert(GradeInsertDto gradeInsertDto){
-        Optional<Member> findByMemberSeq = memberRepository.findById(gradeInsertDto.getMemberSeq());
-
-        Grade grade = Grade.builder()
-                .gradeSeq(gradeInsertDto.getGradeSeq())
-                .gradeName(gradeInsertDto.getGradeName())
-                .build();
-
-        gradeRepository.save(grade);
-    }
+//    public void gradeInsert(GradeInsertDto gradeInsertDto){
+//        Optional<Member> findByMemberSeq = memberRepository.findById(gradeInsertDto.getMemberSeq());
+//
+//        Grade grade = Grade.builder()
+//                .gradeSeq(gradeInsertDto.getGradeSeq())
+//                .gradeName(gradeInsertDto.getGradeName())
+//                .build();
+//
+//        gradeRepository.save(grade);
+//    }
 
     public MemberLoginResponse memberLogin(MemberLoginDto memberLoginDto) {
         Member byIdAndPass = memberRepository.findByIdAndPassword(memberLoginDto.getId(), memberLoginDto.getPassword());
@@ -109,4 +108,21 @@ public class MemberService {
         return memberLoginResponse;
     }
 
+
+    public void memberUpdate(MemberUpdateDto memberUpdateDto, String id){
+        Member findById = memberRepository.findById(id); //  주어진 findById는 id가 Long디폴트값. -> repository에서 String id를 받는 걸 만들어서 사용.
+
+        Member member = Member.builder()
+                .id(findById.getId())
+                .registrationDate(findById.getRegistrationDate())
+                .grade(findById.getGrade())
+                .payment(findById.getPayment())
+                .point(findById.getPoint())
+                .memberSeq(findById.getMemberSeq())
+                .password(memberUpdateDto.getPassword())
+                .username(memberUpdateDto.getUsername())
+                .address(memberUpdateDto.getAddress())
+                .build();
+        memberRepository.save(member);
+    }
 }

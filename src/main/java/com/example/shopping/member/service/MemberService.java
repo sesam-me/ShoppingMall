@@ -8,6 +8,8 @@ import com.example.shopping.member.domain.entity.Point;
 import com.example.shopping.member.repository.GradeRepository;
 import com.example.shopping.member.repository.MemberRepository;
 import com.example.shopping.member.repository.PointRepository;
+import com.example.shopping.payment.domain.entity.Payment;
+import com.example.shopping.payment.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PointRepository pointRepository;
     private final GradeRepository gradeRepository;
+    private final PaymentRepository paymentRepository;
 
     public void memberInsert(MemberInsertDto memberInsertDto){
         // Grade Default 객체 생성 ( 5등급 )
@@ -34,28 +37,39 @@ public class MemberService {
                 .userId(memberInsertDto.getId())
                 .build();
 
+        // Payment 객체 생성
+        Payment payment = Payment.builder()
+                .paymentAmount(memberInsertDto.getPaymentAmount())
+                .paymentMethod(memberInsertDto.getPaymentMethod())
+                .paymentStatus(memberInsertDto.getPaymentStatus())
+                .cardType(memberInsertDto.getCardType())
+                .paymentDate(memberInsertDto.getPaymentDate())
+                .build();
+
         // Grade와 Point 엔티티를 먼저 저장하여 기본 키 값을 생성
         gradeRepository.save(grade);
         pointRepository.save(point);
+        paymentRepository.save(payment);
 
         // Member 객체 생성 및 데이터 설정
         Member member = Member.builder()
                 .id(memberInsertDto.getId())
                 .password(memberInsertDto.getPassword())
                 .username(memberInsertDto.getUsername())
+                .registrationDate(memberInsertDto.getRegistrationDate())
                 .address(memberInsertDto.getAddress())
                 .grade(grade) // 저장된 Grade 엔티티를 설정
                 .point(point) // 저장된 Point 엔티티를 설정
+                .payment(payment) // 저장된 Payment 엔티티를 설정
                 .build();
 
         // Member 엔티티를 저장하면 자동으로 Grade와 Point 엔티티도 저장됨
         memberRepository.save(member);
     }
+
     public List<MemberResponse> findAll(){
         List<Member> all = memberRepository.findAll();
         System.out.println(all);
-
-
         return all.stream().map(MemberResponse::new).toList();
     }
 

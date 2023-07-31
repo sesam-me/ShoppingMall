@@ -18,7 +18,6 @@ public class MemberResponse {
     private String id;
     private String password;
     private String username;
-    private boolean gender;
     private LocalDateTime registrationDate = LocalDateTime.now();
     private String address;
     private List<DeliveryDto> deliveries;
@@ -31,7 +30,6 @@ public class MemberResponse {
         this.id = member.getId();
         this.password = member.getPassword();
         this.username = member.getUsername();
-        this.gender = member.isGender();
         this.registrationDate = member.getRegistrationDate();
         this.address = member.getAddress();
         this.deliveries = member.getDeliveries() != null ?
@@ -52,11 +50,14 @@ public class MemberResponse {
         private Integer deliveryFee;
         private String recipientAddress;
         private String recipientPhoneNumber;
+        private String deliveryFeeCondition;
+        private String deliveryCompanyName;
+        private String deliveryCompanyContact;
+        private String deliveryLocation;
 
         private Long memberSeq;
         private Long paymentSeq;
-        private Long deliveryCompanySeq;
-        private Long orderSeq;
+//        private Long orderSeq;
 
         public DeliveryDto(Delivery delivery) {
             this.deliverSeq = delivery.getDeliverySeq();
@@ -67,6 +68,11 @@ public class MemberResponse {
             this.deliveryFee = delivery.getDeliveryFee();
             this.recipientAddress = delivery.getRecipientAddress();
             this.recipientPhoneNumber = delivery.getRecipientPhoneNumber();
+            this.deliveryFeeCondition = delivery.getDeliveryFeeCondition();
+            this.deliveryCompanyName = delivery.getDeliveryCompanyName();
+            this.deliveryCompanyContact = delivery.getDeliveryCompanyContact();
+            this.deliveryLocation = delivery.getDeliveryLocation();
+
             this.memberSeq = delivery.getMember().getMemberSeq();
             this.paymentSeq = delivery.getPayment().getPaymentSeq();
 //            this.orderSeq = delivery.getMember().getOderSeq;

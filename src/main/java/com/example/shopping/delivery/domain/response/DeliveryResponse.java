@@ -24,7 +24,7 @@ public class DeliveryResponse {
     private String recipientPhoneNumber;
     private String deliveryFeeCondition;
     private String deliveryCompanySeq;
-    private String deliveryContact;
+    private String deliveryCompanyContact;
     private String deliveryLocation;
 
     private Member member;

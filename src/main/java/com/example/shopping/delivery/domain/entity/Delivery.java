@@ -23,13 +23,12 @@ public class Delivery {
     private String recipientAddress;
     private String recipientPhoneNumber;
     private String deliveryFeeCondition;
-    private String deliveryCompanySeq;
-    private String deliveryContact;
+    private String deliveryCompanyName;
+    private String deliveryCompanyContact;
     private String deliveryLocation;
 
 //    private Long memberSeq;
 //    private Long paymentSeq;
-//    private Long deliveryCompanySeq;
 //    private Long orderSeq;
 
     @ManyToOne

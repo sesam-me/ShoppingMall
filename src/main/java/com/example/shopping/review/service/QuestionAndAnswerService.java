@@ -22,6 +22,7 @@ public class QuestionAndAnswerService {
     }
 
     public void saveQAndA(QuestionAndAnswerRequest questionAndAnswerRequest, Long productSeq) {
+
         questionAndAnswerRepository.save(questionAndAnswerRequest.toEntity(productSeq));
     }
 

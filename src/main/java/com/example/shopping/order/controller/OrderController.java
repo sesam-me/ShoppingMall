@@ -2,6 +2,7 @@ package com.example.shopping.order.controller;
 
 import com.example.shopping.order.domain.entity.Order;
 import com.example.shopping.order.domain.request.OrderRequest;
+import com.example.shopping.order.domain.request.OrderUpdateRequest;
 import com.example.shopping.order.domain.response.OrderResponse;
 import com.example.shopping.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +22,17 @@ public class OrderController {
     }
 
     @PostMapping("{productSeq}")
-    public void saveOrder(@RequestBody OrderRequest orderRequest ,@PathVariable("productSeq") Long productSeq) {
+    public void saveOrder(@RequestBody OrderRequest orderRequest, @PathVariable("productSeq") Long productSeq) {
         orderService.saveOrder(orderRequest, productSeq);
     }
 
     @DeleteMapping("{orderSeq}")
     private void deleteOrder(@PathVariable("orderSeq") Long orderSeq) {
         orderService.deleteOrder(orderSeq);
+    }
+
+    @PutMapping("{orderSeq}")
+    public OrderResponse updateOrder(@PathVariable("orderSeq") Long orderSeq, @RequestBody OrderUpdateRequest orderUpdateRequest) {
+        return orderService.updateOrder(orderSeq, orderUpdateRequest);
     }
 }

@@ -34,9 +34,7 @@ public class MemberResponse {
         this.address = member.getAddress();
         this.deliveries = member.getDeliveries() != null ?
                 member.getDeliveries().stream().map(DeliveryDto::new).toList() : new ArrayList<>();
-
         this.point = member.getPoint();
-
         this.grade = member.getGrade();
     }
 

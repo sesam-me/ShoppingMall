@@ -27,13 +27,6 @@ public class MemberInsertDto {
     private LocalDateTime usageDate;
     private LocalDateTime expirationDate;
 
-    //    # payment
-    private int paymentAmount;
-    private String paymentMethod;
-    private String paymentStatus;
-    private String cardType;
-    private LocalDateTime paymentDate;
-
     @OneToMany(mappedBy = "members")
     private List<Delivery> deliveries;
 }

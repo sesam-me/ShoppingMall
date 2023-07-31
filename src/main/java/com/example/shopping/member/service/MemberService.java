@@ -28,7 +28,6 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PointRepository pointRepository;
     private final GradeRepository gradeRepository;
-    private final PaymentRepository paymentRepository;
 
     public ResponseEntity<RestResult<Object>> memberInsert(MemberInsertDto memberInsertDto){
         Member member2 = memberRepository.findById(memberInsertDto.getId());
@@ -55,19 +54,10 @@ public class MemberService {
                 .expirationDate(memberInsertDto.getExpirationDate())
                 .build();
 
-        // Payment 객체 생성
-        Payment payment = Payment.builder()
-                .paymentAmount(memberInsertDto.getPaymentAmount())
-                .paymentMethod(memberInsertDto.getPaymentMethod())
-                .paymentStatus(memberInsertDto.getPaymentStatus())
-                .cardType(memberInsertDto.getCardType())
-                .paymentDate(memberInsertDto.getPaymentDate())
-                .build();
 
         // Grade와 Point 엔티티를 먼저 저장하여 기본 키 값을 생성
         gradeRepository.save(grade);
         pointRepository.save(point);
-        paymentRepository.save(payment);
 
         // Member 객체 생성 및 데이터 설정
         Member member = Member.builder()
@@ -78,7 +68,6 @@ public class MemberService {
                 .address(memberInsertDto.getAddress())
                 .grade(grade) // 저장된 Grade 엔티티를 설정
                 .point(point) // 저장된 Point 엔티티를 설정
-                .payment(payment) // 저장된 Payment 엔티티를 설정
                 .build();
 
         // Member 엔티티를 저장하면 자동으로 Grade와 Point 엔티티도 저장됨

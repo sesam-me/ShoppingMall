@@ -50,7 +50,6 @@ public class Member {
                 ", id='" + id + '\'' +
                 ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
-                ", gender=" +
                 ", registrationDate=" + registrationDate +
                 ", address='" + address + '\'' +
                 // Skip 'deliveries', 'point', and 'grade' to avoid recursion

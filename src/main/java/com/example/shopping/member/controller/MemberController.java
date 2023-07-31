@@ -1,9 +1,11 @@
 package com.example.shopping.member.controller;
 
+import com.example.shopping.common.RestResult;
 import com.example.shopping.member.domain.Response.MemberResponse;
 import com.example.shopping.member.domain.dto.*;
 import com.example.shopping.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +18,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/insert")
-    public void memberInsert(@RequestBody MemberInsertDto memberInsertDto){
-        memberService.memberInsert(memberInsertDto);
+    public ResponseEntity<RestResult<Object>> memberInsert(@RequestBody MemberInsertDto memberInsertDto){
+        return memberService.memberInsert(memberInsertDto);
     }
 
     @GetMapping

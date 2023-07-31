@@ -58,9 +58,10 @@ public class MemberService {
 
     public List<MemberResponse> findAll(){
         List<Member> all = memberRepository.findAll();
-        System.out.println(all);
         return all.stream().map(MemberResponse::new).toList();
     }
+
+
 
 
 //    ## point ##

@@ -27,14 +27,19 @@ public class MemberService {
     public void memberInsert(MemberInsertDto memberInsertDto){
         // Grade Default 객체 생성 ( 5등급 )
         Grade grade = Grade.builder()
-                .gradeName("5등급")
+                .gradeSeq(memberInsertDto.getGradeSeq())
                 .userId(memberInsertDto.getId())
+                .gradeName(memberInsertDto.getGradeName())
                 .build();
 
         // Point Default 객체 생성 ( 0원 )
         Point point = Point.builder()
-                .pointBalance(0)
+                .pointSeq(memberInsertDto.getPointSeq())
                 .userId(memberInsertDto.getId())
+                .pointBalance(memberInsertDto.getPointBalance())
+                .accumulationDate(memberInsertDto.getAccumulationDate())
+                .usageDate(memberInsertDto.getUsageDate())
+                .expirationDate(memberInsertDto.getExpirationDate())
                 .build();
 
         // Payment 객체 생성
@@ -74,32 +79,32 @@ public class MemberService {
     }
 
 
-//    ## point ##
-    public void pointInsert(PointInsertDto pointInsertDto){
-        Optional<Member> findByMemberSeq = memberRepository.findById(pointInsertDto.getMemberSeq());
-
-        Point point = Point.builder()
-                .pointSeq(pointInsertDto.getPointSeq())
-                .pointBalance(pointInsertDto.getPointBalance())
-                .accumulationDate(pointInsertDto.getAccumulationDate())
-                .usageDate(pointInsertDto.getUsageDate())
-                .expirationDate(pointInsertDto.getExpirationDate())
-                .build();
-        pointRepository.save(point);
-    }
+//   ## point ##
+//    public void pointInsert(PointInsertDto pointInsertDto){
+//        Optional<Member> findByMemberSeq = memberRepository.findById(pointInsertDto.getMemberSeq());
+//
+//        Point point = Point.builder()
+//                .pointSeq(pointInsertDto.getPointSeq())
+//                .pointBalance(pointInsertDto.getPointBalance())
+//                .accumulationDate(pointInsertDto.getAccumulationDate())
+//                .usageDate(pointInsertDto.getUsageDate())
+//                .expirationDate(pointInsertDto.getExpirationDate())
+//                .build();
+//        pointRepository.save(point);
+//    }
 
 
 //    ## grade ##
-    public void gradeInsert(GradeInsertDto gradeInsertDto){
-        Optional<Member> findByMemberSeq = memberRepository.findById(gradeInsertDto.getMemberSeq());
-
-        Grade grade = Grade.builder()
-                .gradeSeq(gradeInsertDto.getGradeSeq())
-                .gradeName(gradeInsertDto.getGradeName())
-                .build();
-
-        gradeRepository.save(grade);
-    }
+//    public void gradeInsert(GradeInsertDto gradeInsertDto){
+//        Optional<Member> findByMemberSeq = memberRepository.findById(gradeInsertDto.getMemberSeq());
+//
+//        Grade grade = Grade.builder()
+//                .gradeSeq(gradeInsertDto.getGradeSeq())
+//                .gradeName(gradeInsertDto.getGradeName())
+//                .build();
+//
+//        gradeRepository.save(grade);
+//    }
 
     public MemberLoginResponse memberLogin(MemberLoginDto memberLoginDto) {
         Member byIdAndPass = memberRepository.findByIdAndPassword(memberLoginDto.getId(), memberLoginDto.getPassword());

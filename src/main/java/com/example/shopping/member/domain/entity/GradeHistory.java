@@ -18,7 +18,7 @@ public class GradeHistory {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gradeHistorySeq;
     private Long memberSeq;
-    private Long greadSeq;
+    private Long gradSeq;
     private Integer previousGrade;
     private Integer currentGrade;
     private LocalDateTime gradeChangeDate;

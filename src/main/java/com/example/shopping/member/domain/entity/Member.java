@@ -21,7 +21,7 @@ public class Member {
     private String id;
     private String password;
     private String username;
-    private boolean gender;
+
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
     private LocalDateTime registrationDate = LocalDateTime.now();
@@ -50,7 +50,7 @@ public class Member {
                 ", id='" + id + '\'' +
                 ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
-                ", gender=" + gender +
+                ", gender=" +
                 ", registrationDate=" + registrationDate +
                 ", address='" + address + '\'' +
                 // Skip 'deliveries', 'point', and 'grade' to avoid recursion

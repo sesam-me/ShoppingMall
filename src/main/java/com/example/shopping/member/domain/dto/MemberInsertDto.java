@@ -17,11 +17,15 @@ public class MemberInsertDto {
     private String address;
 
 //    # grade
+    private Long gradeSeq;
     private String gradeName;
 
 //    # point
+    private Long pointSeq;
     private Integer pointBalance;
-
+    private LocalDateTime accumulationDate;
+    private LocalDateTime usageDate;
+    private LocalDateTime expirationDate;
 
 //    # payment
     private int paymentAmount;

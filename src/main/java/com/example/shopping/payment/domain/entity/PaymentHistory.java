@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PaymentHistory {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long paymenHistorySeq;
+    private Long paymentHistorySeq;
     private Long paymentSeq;
 
 

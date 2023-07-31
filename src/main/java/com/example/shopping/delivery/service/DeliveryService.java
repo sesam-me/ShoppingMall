@@ -37,6 +37,10 @@ public class DeliveryService {
                 .deliveryFee(deliveryInsertDto.getDeliveryFee())
                 .recipientAddress(deliveryInsertDto.getRecipientAddress())
                 .recipientPhoneNumber(deliveryInsertDto.getRecipientPhoneNumber())
+                .deliveryFeeCondition(deliveryInsertDto.getDeliveryFeeCondition())
+                .deliveryCompanyName(deliveryInsertDto.getDeliveryCompanyName())
+                .deliveryCompanyContact(deliveryInsertDto.getDeliveryCompanyContact())
+                .deliveryLocation(deliveryInsertDto.getDeliveryLocation())
                 .member(findByMemberSeq.get())  // 해당하는 Member_seq를 찾아서 관련된 다른 값도 가져옴.
 //                .member(Member.builder().memberSeq(deliveryInsertDto.getMember_seq()).build()) 이건 Member_seq만 가져와서 넣는 것
                 .payment(findByPaymentSeq.get())

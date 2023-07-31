@@ -10,6 +10,8 @@ import com.example.shopping.member.domain.entity.Point;
 import com.example.shopping.member.repository.GradeRepository;
 import com.example.shopping.member.repository.MemberRepository;
 import com.example.shopping.member.repository.PointRepository;
+import com.example.shopping.payment.domain.entity.Payment;
+import com.example.shopping.payment.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PointRepository pointRepository;
     private final GradeRepository gradeRepository;
+    private final PaymentRepository paymentRepository;
 
     public ResponseEntity<RestResult<Object>> memberInsert(MemberInsertDto memberInsertDto){
         // Grade Default 객체 생성 ( 5등급 )
@@ -40,9 +43,19 @@ public class MemberService {
                 .userId(memberInsertDto.getId())
                 .build();
 
+        // Payment 객체 생성
+        Payment payment = Payment.builder()
+                .paymentAmount(memberInsertDto.getPaymentAmount())
+                .paymentMethod(memberInsertDto.getPaymentMethod())
+                .paymentStatus(memberInsertDto.getPaymentStatus())
+                .cardType(memberInsertDto.getCardType())
+                .paymentDate(memberInsertDto.getPaymentDate())
+                .build();
+
         // Grade와 Point 엔티티를 먼저 저장하여 기본 키 값을 생성
         gradeRepository.save(grade);
         pointRepository.save(point);
+        paymentRepository.save(payment);
 
         Member member1 = memberRepository.findById(memberInsertDto.getId());
 
@@ -55,9 +68,11 @@ public class MemberService {
                 .id(memberInsertDto.getId())
                 .password(memberInsertDto.getPassword())
                 .username(memberInsertDto.getUsername())
+                .registrationDate(memberInsertDto.getRegistrationDate())
                 .address(memberInsertDto.getAddress())
                 .grade(grade) // 저장된 Grade 엔티티를 설정
                 .point(point) // 저장된 Point 엔티티를 설정
+                .payment(payment) // 저장된 Payment 엔티티를 설정
                 .build();
 
 
@@ -66,9 +81,9 @@ public class MemberService {
         memberRepository.save(member);
         return ResponseEntity.ok(new RestResult<>("success", "회원가입이 완료 되었습니다."));
     }
+
     public List<MemberResponse> findAll(){
         List<Member> all = memberRepository.findAll();
-
         return all.stream().map(MemberResponse::new).toList();
     }
 

@@ -22,39 +22,24 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PointRepository pointRepository;
     private final GradeRepository gradeRepository;
-    private final PaymentRepository paymentRepository;
 
     public void memberInsert(MemberInsertDto memberInsertDto){
         // Grade Default 객체 생성 ( 5등급 )
         Grade grade = Grade.builder()
-                .gradeSeq(memberInsertDto.getGradeSeq())
+                .gradeName("5등급")
                 .userId(memberInsertDto.getId())
-                .gradeName(memberInsertDto.getGradeName())
                 .build();
 
         // Point Default 객체 생성 ( 0원 )
         Point point = Point.builder()
-                .pointSeq(memberInsertDto.getPointSeq())
+                .pointBalance(0)
                 .userId(memberInsertDto.getId())
-                .pointBalance(memberInsertDto.getPointBalance())
-                .accumulationDate(memberInsertDto.getAccumulationDate())
-                .usageDate(memberInsertDto.getUsageDate())
-                .expirationDate(memberInsertDto.getExpirationDate())
                 .build();
 
-        // Payment 객체 생성
-        Payment payment = Payment.builder()
-                .paymentAmount(memberInsertDto.getPaymentAmount())
-                .paymentMethod(memberInsertDto.getPaymentMethod())
-                .paymentStatus(memberInsertDto.getPaymentStatus())
-                .cardType(memberInsertDto.getCardType())
-                .paymentDate(memberInsertDto.getPaymentDate())
-                .build();
 
         // Grade와 Point 엔티티를 먼저 저장하여 기본 키 값을 생성
         gradeRepository.save(grade);
         pointRepository.save(point);
-        paymentRepository.save(payment);
 
         // Member 객체 생성 및 데이터 설정
         Member member = Member.builder()
@@ -65,7 +50,6 @@ public class MemberService {
                 .address(memberInsertDto.getAddress())
                 .grade(grade) // 저장된 Grade 엔티티를 설정
                 .point(point) // 저장된 Point 엔티티를 설정
-                .payment(payment) // 저장된 Payment 엔티티를 설정
                 .build();
 
         // Member 엔티티를 저장하면 자동으로 Grade와 Point 엔티티도 저장됨
@@ -79,32 +63,32 @@ public class MemberService {
     }
 
 
-//   ## point ##
-//    public void pointInsert(PointInsertDto pointInsertDto){
-//        Optional<Member> findByMemberSeq = memberRepository.findById(pointInsertDto.getMemberSeq());
-//
-//        Point point = Point.builder()
-//                .pointSeq(pointInsertDto.getPointSeq())
-//                .pointBalance(pointInsertDto.getPointBalance())
-//                .accumulationDate(pointInsertDto.getAccumulationDate())
-//                .usageDate(pointInsertDto.getUsageDate())
-//                .expirationDate(pointInsertDto.getExpirationDate())
-//                .build();
-//        pointRepository.save(point);
-//    }
+//    ## point ##
+    public void pointInsert(PointInsertDto pointInsertDto){
+        Optional<Member> findByMemberSeq = memberRepository.findById(pointInsertDto.getMemberSeq());
+
+        Point point = Point.builder()
+                .pointSeq(pointInsertDto.getPointSeq())
+                .pointBalance(pointInsertDto.getPointBalance())
+                .accumulationDate(pointInsertDto.getAccumulationDate())
+                .usageDate(pointInsertDto.getUsageDate())
+                .expirationDate(pointInsertDto.getExpirationDate())
+                .build();
+        pointRepository.save(point);
+    }
 
 
 //    ## grade ##
-//    public void gradeInsert(GradeInsertDto gradeInsertDto){
-//        Optional<Member> findByMemberSeq = memberRepository.findById(gradeInsertDto.getMemberSeq());
-//
-//        Grade grade = Grade.builder()
-//                .gradeSeq(gradeInsertDto.getGradeSeq())
-//                .gradeName(gradeInsertDto.getGradeName())
-//                .build();
-//
-//        gradeRepository.save(grade);
-//    }
+    public void gradeInsert(GradeInsertDto gradeInsertDto){
+        Optional<Member> findByMemberSeq = memberRepository.findById(gradeInsertDto.getMemberSeq());
+
+        Grade grade = Grade.builder()
+                .gradeSeq(gradeInsertDto.getGradeSeq())
+                .gradeName(gradeInsertDto.getGradeName())
+                .build();
+
+        gradeRepository.save(grade);
+    }
 
     public MemberLoginResponse memberLogin(MemberLoginDto memberLoginDto) {
         Member byIdAndPass = memberRepository.findByIdAndPassword(memberLoginDto.getId(), memberLoginDto.getPassword());

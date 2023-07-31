@@ -17,22 +17,10 @@ public class MemberInsertDto {
     private String address;
 
 //    # grade
-    private Long gradeSeq;
     private String gradeName;
 
 //    # point
-    private Long pointSeq;
     private Integer pointBalance;
-    private LocalDateTime accumulationDate;
-    private LocalDateTime usageDate;
-    private LocalDateTime expirationDate;
-
-//    # payment
-    private int paymentAmount;
-    private String paymentMethod;
-    private String paymentStatus;
-    private String cardType;
-    private LocalDateTime paymentDate;
 
     @OneToMany(mappedBy = "members")
     private List<Delivery> deliveries;

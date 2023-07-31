@@ -1,9 +1,7 @@
 package com.example.shopping.member.controller;
 
 import com.example.shopping.member.domain.Response.MemberResponse;
-import com.example.shopping.member.domain.dto.GradeInsertDto;
-import com.example.shopping.member.domain.dto.MemberInsertDto;
-import com.example.shopping.member.domain.dto.PointInsertDto;
+import com.example.shopping.member.domain.dto.*;
 import com.example.shopping.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +23,11 @@ public class MemberController {
     @GetMapping
     public List<MemberResponse> findAll(){
         return memberService.findAll();
+    }
+
+    @PostMapping("/login")
+    public MemberLoginResponse login(@RequestBody MemberLoginDto memberLoginDto) {
+        return memberService.memberLogin(memberLoginDto);
     }
 
 

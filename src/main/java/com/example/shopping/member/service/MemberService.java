@@ -1,9 +1,7 @@
 package com.example.shopping.member.service;
 
 import com.example.shopping.member.domain.Response.MemberResponse;
-import com.example.shopping.member.domain.dto.GradeInsertDto;
-import com.example.shopping.member.domain.dto.MemberInsertDto;
-import com.example.shopping.member.domain.dto.PointInsertDto;
+import com.example.shopping.member.domain.dto.*;
 import com.example.shopping.member.domain.entity.Grade;
 import com.example.shopping.member.domain.entity.Member;
 import com.example.shopping.member.domain.entity.Point;
@@ -87,6 +85,24 @@ public class MemberService {
                 .build();
 
         gradeRepository.save(grade);
+    }
+
+    public MemberLoginResponse memberLogin(MemberLoginDto memberLoginDto) {
+        Member byIdAndPass = memberRepository.findByIdAndPassword(memberLoginDto.getId(), memberLoginDto.getPassword());
+
+        MemberLoginResponse memberLoginResponse = new MemberLoginResponse();
+
+        if(byIdAndPass != null) {
+            memberLoginResponse = MemberLoginResponse
+                    .builder()
+                    .address(byIdAndPass.getAddress())
+                    .id(byIdAndPass.getId())
+                    .deliveries(byIdAndPass.getDeliveries())
+                    .username(byIdAndPass.getUsername())
+                    .isLogin(true)
+                    .build();
+        }
+        return memberLoginResponse;
     }
 
 }

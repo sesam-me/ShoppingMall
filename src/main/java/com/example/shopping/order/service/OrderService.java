@@ -1,8 +1,12 @@
 package com.example.shopping.order.service;
 
+import com.example.shopping.common.RestError;
+import com.example.shopping.common.RestResult;
+import com.example.shopping.inventory.domain.entity.Inventory;
 import com.example.shopping.inventory.repository.InventoryRepository;
 import com.example.shopping.order.domain.entity.History;
 import com.example.shopping.order.domain.entity.Order;
+import com.example.shopping.order.domain.request.HistoryRequest;
 import com.example.shopping.order.domain.request.HistoryUpdateRequest;
 import com.example.shopping.order.domain.request.OrderRequest;
 import com.example.shopping.order.domain.request.OrderUpdateRequest;
@@ -14,9 +18,12 @@ import com.example.shopping.product.domain.response.ProductResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,8 +39,45 @@ public class OrderService {
         return all.stream().map(OrderResponse::new).toList();
     }
 
-    public void saveOrder(OrderRequest orderRequest, Long productSeq) {
-        orderRepository.save(orderRequest.toEntity(productSeq));
+    public ResponseEntity<RestResult<Object>> saveOrder(OrderRequest orderRequest, HistoryRequest historyRequest, Long productSeq) {
+        // 유저의 잔액을 조회 해야힘..
+        // 잔액이 상품의 가격보다 낮다 ? return
+        try {
+            orderRepository.save(orderRequest.toEntity(productSeq));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new RestResult<>("error", new RestError("server_error", "server_error")));
+        }
+        //
+        try {
+            historyRepository.save(historyRequest.toEntity(productSeq));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new RestResult<>("error", new RestError("server_error", "server_error")));
+        }
+        // 재고를 체크..
+//        재고테이블에서 빠지는 로직;
+        try {
+            Inventory inventory = inventoryRepository
+                    .findByProductId(productSeq)
+                    .orElseThrow(()->new RuntimeException("그런 상품 없다"));
+
+            inventory.change(10);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new RestResult<>("error", new RestError("server_error", "server_error")));
+        }
+
+        // 전부 다 정상적이라면 ..?
+        return ResponseEntity.ok(new RestResult<>("success", "주문성공"));
+
+
+
     }
 
     public void deleteOrder(Long orderSeq) {
@@ -45,6 +89,7 @@ public class OrderService {
         order.update(orderUpdateRequest.getOrderNum(), orderUpdateRequest.getOrderDate());
         return new OrderResponse(order);
     }
+
 
     private Order findById(Long orderSeq) {
         return orderRepository.findById(orderSeq).orElseThrow(() -> new RuntimeException());

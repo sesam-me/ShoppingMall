@@ -1,6 +1,7 @@
 package com.example.shopping.order.controller;
 
 import com.example.shopping.order.domain.entity.Order;
+import com.example.shopping.order.domain.request.HistoryRequest;
 import com.example.shopping.order.domain.request.OrderRequest;
 import com.example.shopping.order.domain.request.OrderUpdateRequest;
 import com.example.shopping.order.domain.response.OrderResponse;
@@ -22,8 +23,8 @@ public class OrderController {
     }
 
     @PostMapping("{productSeq}")
-    public void saveOrder(@RequestBody OrderRequest orderRequest, @PathVariable("productSeq") Long productSeq) {
-        orderService.saveOrder(orderRequest, productSeq);
+    public void saveOrder(@RequestBody OrderRequest orderRequest, @RequestBody HistoryRequest historyRequest, @PathVariable("productSeq") Long productSeq) {
+        orderService.saveOrder(orderRequest,historyRequest ,productSeq);
     }
 
     @DeleteMapping("{orderSeq}")

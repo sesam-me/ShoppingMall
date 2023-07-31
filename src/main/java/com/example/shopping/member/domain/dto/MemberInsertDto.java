@@ -16,14 +16,18 @@ public class MemberInsertDto {
     private LocalDateTime registrationDate;
     private String address;
 
-//    # grade
+    //    # grade
+    private Long gradeSeq;
     private String gradeName;
 
-//    # point
+    //    # point
+    private Long pointSeq;
     private Integer pointBalance;
+    private LocalDateTime accumulationDate;
+    private LocalDateTime usageDate;
+    private LocalDateTime expirationDate;
 
-
-//    # payment
+    //    # payment
     private int paymentAmount;
     private String paymentMethod;
     private String paymentStatus;
@@ -32,6 +36,4 @@ public class MemberInsertDto {
 
     @OneToMany(mappedBy = "members")
     private List<Delivery> deliveries;
-
-
 }

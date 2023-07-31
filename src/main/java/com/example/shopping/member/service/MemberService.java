@@ -31,16 +31,28 @@ public class MemberService {
     private final PaymentRepository paymentRepository;
 
     public ResponseEntity<RestResult<Object>> memberInsert(MemberInsertDto memberInsertDto){
+        Member member2 = memberRepository.findById(memberInsertDto.getId());
+
+        if (member2 != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new RestResult<>("error", new RestError("duplicate_id", "이미 사용중인 ID 입니다.")));
+        }
+
         // Grade Default 객체 생성 ( 5등급 )
         Grade grade = Grade.builder()
-                .gradeName("5등급")
+                .gradeSeq(memberInsertDto.getGradeSeq())
                 .userId(memberInsertDto.getId())
+                .gradeName(memberInsertDto.getGradeName())
                 .build();
 
         // Point Default 객체 생성 ( 0원 )
         Point point = Point.builder()
-                .pointBalance(0)
+                .pointSeq(memberInsertDto.getPointSeq())
                 .userId(memberInsertDto.getId())
+                .pointBalance(memberInsertDto.getPointBalance())
+                .accumulationDate(memberInsertDto.getAccumulationDate())
+                .usageDate(memberInsertDto.getUsageDate())
+                .expirationDate(memberInsertDto.getExpirationDate())
                 .build();
 
         // Payment 객체 생성
@@ -57,12 +69,6 @@ public class MemberService {
         pointRepository.save(point);
         paymentRepository.save(payment);
 
-        Member member1 = memberRepository.findById(memberInsertDto.getId());
-
-        if (member1 == null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new RestResult<>("error", new RestError("duplicate_id", "이미 사용중인 ID 입니다.")));
-        }
         // Member 객체 생성 및 데이터 설정
         Member member = Member.builder()
                 .id(memberInsertDto.getId())
@@ -75,8 +81,6 @@ public class MemberService {
                 .payment(payment) // 저장된 Payment 엔티티를 설정
                 .build();
 
-
-
         // Member 엔티티를 저장하면 자동으로 Grade와 Point 엔티티도 저장됨
         memberRepository.save(member);
         return ResponseEntity.ok(new RestResult<>("success", "회원가입이 완료 되었습니다."));
@@ -84,36 +88,37 @@ public class MemberService {
 
     public List<MemberResponse> findAll(){
         List<Member> all = memberRepository.findAll();
+        System.out.println(all);
         return all.stream().map(MemberResponse::new).toList();
     }
 
 
-//    ## point ##
-    public void pointInsert(PointInsertDto pointInsertDto){
-        Optional<Member> findByMemberSeq = memberRepository.findById(pointInsertDto.getMemberSeq());
-
-        Point point = Point.builder()
-                .pointSeq(pointInsertDto.getPointSeq())
-                .pointBalance(pointInsertDto.getPointBalance())
-                .accumulationDate(pointInsertDto.getAccumulationDate())
-                .usageDate(pointInsertDto.getUsageDate())
-                .expirationDate(pointInsertDto.getExpirationDate())
-                .build();
-        pointRepository.save(point);
-    }
+//   ## point ##
+//    public void pointInsert(PointInsertDto pointInsertDto){
+//        Optional<Member> findByMemberSeq = memberRepository.findById(pointInsertDto.getMemberSeq());
+//
+//        Point point = Point.builder()
+//                .pointSeq(pointInsertDto.getPointSeq())
+//                .pointBalance(pointInsertDto.getPointBalance())
+//                .accumulationDate(pointInsertDto.getAccumulationDate())
+//                .usageDate(pointInsertDto.getUsageDate())
+//                .expirationDate(pointInsertDto.getExpirationDate())
+//                .build();
+//        pointRepository.save(point);
+//    }
 
 
 //    ## grade ##
-    public void gradeInsert(GradeInsertDto gradeInsertDto){
-        Optional<Member> findByMemberSeq = memberRepository.findById(gradeInsertDto.getMemberSeq());
-
-        Grade grade = Grade.builder()
-                .gradeSeq(gradeInsertDto.getGradeSeq())
-                .gradeName(gradeInsertDto.getGradeName())
-                .build();
-
-        gradeRepository.save(grade);
-    }
+//    public void gradeInsert(GradeInsertDto gradeInsertDto){
+//        Optional<Member> findByMemberSeq = memberRepository.findById(gradeInsertDto.getMemberSeq());
+//
+//        Grade grade = Grade.builder()
+//                .gradeSeq(gradeInsertDto.getGradeSeq())
+//                .gradeName(gradeInsertDto.getGradeName())
+//                .build();
+//
+//        gradeRepository.save(grade);
+//    }
 
     public MemberLoginResponse memberLogin(MemberLoginDto memberLoginDto) {
         Member byIdAndPass = memberRepository.findByIdAndPassword(memberLoginDto.getId(), memberLoginDto.getPassword());

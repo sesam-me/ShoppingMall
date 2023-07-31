@@ -15,23 +15,4 @@ public class MemberInsertDto {
     private String username;
     private LocalDateTime registrationDate;
     private String address;
-
-//    # grade
-    private String gradeName;
-
-//    # point
-    private Integer pointBalance;
-
-
-//    # payment
-    private int paymentAmount;
-    private String paymentMethod;
-    private String paymentStatus;
-    private String cardType;
-    private LocalDateTime paymentDate;
-
-    @OneToMany(mappedBy = "members")
-    private List<Delivery> deliveries;
-
-
 }

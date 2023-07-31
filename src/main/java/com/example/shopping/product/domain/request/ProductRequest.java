@@ -14,12 +14,14 @@ public class ProductRequest {
     private String name;
     private String imgUrl;
     private String createAt;
+    private String brand;
 
     public Product ToEntity() {
         return Product.builder()
                 .name(name)
                 .imgUrl(imgUrl)
                 .createAt(createAt)
+                .brand(brand)
                 .build();
     }
 }

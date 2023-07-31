@@ -25,6 +25,7 @@ public class Product {
     private String name;
     private String imgUrl;
     private String createAt;
+    private String brand;
 
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
@@ -49,8 +50,9 @@ public class Product {
     private List<Inventory> inventories;
 
 
-    public void update(String name, String imgUrl) {
+    public void update(String name, String imgUrl, String brand) {
         this.name = name;
         this.imgUrl = imgUrl;
+        this.brand = brand;
     }
 }

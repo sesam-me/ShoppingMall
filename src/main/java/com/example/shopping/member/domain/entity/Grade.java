@@ -15,5 +15,5 @@ public class Grade {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gradeSeq;
     private String gradeName;
-
+    private String userId;
 }

@@ -1,9 +1,7 @@
 package com.example.shopping.member.service;
 
 import com.example.shopping.member.domain.Response.MemberResponse;
-import com.example.shopping.member.domain.dto.GradeInsertDto;
-import com.example.shopping.member.domain.dto.MemberInsertDto;
-import com.example.shopping.member.domain.dto.PointInsertDto;
+import com.example.shopping.member.domain.dto.*;
 import com.example.shopping.member.domain.entity.Grade;
 import com.example.shopping.member.domain.entity.Member;
 import com.example.shopping.member.domain.entity.Point;
@@ -27,14 +25,16 @@ public class MemberService {
     private final PaymentRepository paymentRepository;
 
     public void memberInsert(MemberInsertDto memberInsertDto){
-        // Grade 객체 생성
+        // Grade Default 객체 생성 ( 5등급 )
         Grade grade = Grade.builder()
-                .gradeName(memberInsertDto.getGradeName())
+                .gradeName("5등급")
+                .userId(memberInsertDto.getId())
                 .build();
 
-        // Point 객체 생성
+        // Point Default 객체 생성 ( 0원 )
         Point point = Point.builder()
-                .pointBalance(memberInsertDto.getPointBalance())
+                .pointBalance(0)
+                .userId(memberInsertDto.getId())
                 .build();
 
         // Payment 객체 생성
@@ -99,6 +99,24 @@ public class MemberService {
                 .build();
 
         gradeRepository.save(grade);
+    }
+
+    public MemberLoginResponse memberLogin(MemberLoginDto memberLoginDto) {
+        Member byIdAndPass = memberRepository.findByIdAndPassword(memberLoginDto.getId(), memberLoginDto.getPassword());
+
+        MemberLoginResponse memberLoginResponse = new MemberLoginResponse();
+
+        if(byIdAndPass != null) {
+            memberLoginResponse = MemberLoginResponse
+                    .builder()
+                    .address(byIdAndPass.getAddress())
+                    .id(byIdAndPass.getId())
+                    .deliveries(byIdAndPass.getDeliveries())
+                    .username(byIdAndPass.getUsername())
+                    .isLogin(true)
+                    .build();
+        }
+        return memberLoginResponse;
     }
 
 }

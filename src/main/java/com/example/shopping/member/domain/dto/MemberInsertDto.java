@@ -22,6 +22,7 @@ public class MemberInsertDto {
 //    # point
     private Integer pointBalance;
 
+
 //    # payment
     private int paymentAmount;
     private String paymentMethod;

@@ -19,13 +19,14 @@ public class ReviewController {
         return reviewService.findAllReview();
     }
 
-    @PostMapping
-    public void saveReview(@RequestBody ReviewRequest reviewRequest) {
-        reviewService.saveReview(reviewRequest);
+    @PostMapping("{productSeq}")
+    public void saveReview(@RequestBody ReviewRequest reviewRequest,
+                           @PathVariable("productSeq") Long productSeq) {
+        reviewService.saveReview(reviewRequest, productSeq);
     }
 
-    @DeleteMapping("{review_seq}")
-    private void deleteReview(@PathVariable("review_seq") Long review_seq) {
-        reviewService.deleteReview(review_seq);
+    @DeleteMapping("{reviewSeq}")
+    private void deleteReview(@PathVariable("reviewSeq") Long reviewSeq) {
+        reviewService.deleteReview(reviewSeq);
     }
 }

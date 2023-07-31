@@ -6,5 +6,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class CartUpdateRequest {
-    private Integer cart_count;
+    private Integer cartCount;
 }

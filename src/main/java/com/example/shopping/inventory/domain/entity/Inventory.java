@@ -1,5 +1,6 @@
 package com.example.shopping.inventory.domain.entity;
 
+import com.example.shopping.product.domain.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,10 +14,14 @@ import lombok.*;
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long inventory_seq;
+    private Long inventorySeq;
     private Integer count; //재고 수량
     private Integer sales; // 판매 수량
     private Integer waste; // 폐기 수량
+
+    @ManyToOne
+    @JoinColumn(name = "productSeq")
+    private Product product;
 
     public void update(Integer count, Integer sales, Integer waste) {
         this.count = count;

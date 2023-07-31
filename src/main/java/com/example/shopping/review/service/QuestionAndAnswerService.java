@@ -21,11 +21,11 @@ public class QuestionAndAnswerService {
         return questionAndAnswerRepository.findAll();
     }
 
-    public void saveQAndA(QuestionAndAnswerRequest questionAndAnswerRequest) {
-        questionAndAnswerRepository.save(questionAndAnswerRequest.toEntity());
+    public void saveQAndA(QuestionAndAnswerRequest questionAndAnswerRequest, Long productSeq) {
+        questionAndAnswerRepository.save(questionAndAnswerRequest.toEntity(productSeq));
     }
 
-    public void deleteQAndA(Long qa_seq) {
-        questionAndAnswerRepository.deleteById(qa_seq);
+    public void deleteQAndA(Long qaSeq) {
+        questionAndAnswerRepository.deleteById(qaSeq);
     }
 }

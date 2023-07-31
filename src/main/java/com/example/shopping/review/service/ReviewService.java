@@ -21,11 +21,11 @@ public class ReviewService {
         return reviewRepository.findAll();
     }
 
-    public void saveReview(ReviewRequest reviewRequest) {
-        reviewRepository.save(reviewRequest.toEntity());
+    public void saveReview(ReviewRequest reviewRequest, Long productSeq) {
+        reviewRepository.save(reviewRequest.toEntity(productSeq));
     }
 
-    public void deleteReview(Long review_seq) {
-        reviewRepository.deleteById(review_seq);
+    public void deleteReview(Long reviewSeq) {
+        reviewRepository.deleteById(reviewSeq);
     }
 }

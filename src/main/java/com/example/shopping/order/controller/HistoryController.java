@@ -20,12 +20,12 @@ public class HistoryController {
     }
 
     @PostMapping
-    public void saveHistory(@RequestBody HistoryRequest historyRequest) {
-        historyService.saveHistory(historyRequest);
+    public void saveHistory(@RequestBody HistoryRequest historyRequest, Long productSeq) {
+        historyService.saveHistory(historyRequest, productSeq);
     }
 
-    @DeleteMapping("{history_seq}")
-    public void deleteHistory(@PathVariable("history_seq") Long history_seq) {
-        historyService.deleteHistory(history_seq);
+    @DeleteMapping("{historySeq}")
+    public void deleteHistory(@PathVariable("historySeq") Long historySeq) {
+        historyService.deleteHistory(historySeq);
     }
 }

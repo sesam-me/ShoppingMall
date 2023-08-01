@@ -140,7 +140,7 @@ public class MemberService {
                 .payment(findById.getPayment())
                 .point(findById.getPoint())
                 .memberSeq(findById.getMemberSeq())
-                .password(memberUpdateDto.getPassword())
+                .password(findById.getPassword())
                 .username(memberUpdateDto.getUsername())
                 .address(memberUpdateDto.getAddress())
                 .build();

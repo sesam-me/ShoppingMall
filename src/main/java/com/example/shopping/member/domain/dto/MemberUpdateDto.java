@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberUpdateDto {
-    private String password;
     private String username;
     private String address;
 }

@@ -4,6 +4,7 @@ import com.example.shopping.review.domain.entity.Review;
 import com.example.shopping.review.domain.request.ReviewRequest;
 import com.example.shopping.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,4 +30,17 @@ public class ReviewController {
     private void deleteReview(@PathVariable("reviewSeq") Long reviewSeq) {
         reviewService.deleteReview(reviewSeq);
     }
+
+    @PostMapping("/{reviewSeq}/like/{memberSeq}")
+    public void saveLike(@PathVariable("reviewSeq") Long reviewSeq, @PathVariable("memberSeq") Long memberSeq) {
+        reviewService.saveLike(reviewSeq, memberSeq);
+    }
+
+    @DeleteMapping("/{reviewSeq}/like")
+    public void deleteLike(@PathVariable("reviewSeq") Long reviewSeq, @RequestParam("memberSeq") Long memberSeq) {
+        reviewService.deleteLike(memberSeq, reviewSeq);
+    }
+
 }
+
+

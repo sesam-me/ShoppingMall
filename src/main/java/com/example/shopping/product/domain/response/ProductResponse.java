@@ -49,7 +49,10 @@ public class ProductResponse {
         this.brand = product.getBrand();
         this.price = product.getPrice();
         this.productOptionDto = product.getProductOptions() != null ?
-                product.getProductOptions().stream().map(ProductOptionDto::new).toList()
+                product.getProductOptions().stream().map(ProductOptionDto::new).toList() :
+                new ArrayList<>();
+        this.interestDto = product.getInterests() != null ?
+                product.getInterests().stream().map(InterestDto::new).toList()
                 : new ArrayList<>();
         this.productOptionDto2 = product.getProductOptions2() != null ?
                 product.getProductOptions2().stream().map(ProductOptionDto2::new).toList()

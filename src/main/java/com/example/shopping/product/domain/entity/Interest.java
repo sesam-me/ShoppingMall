@@ -1,5 +1,6 @@
 package com.example.shopping.product.domain.entity;
 
+import com.example.shopping.member.domain.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,4 +23,10 @@ public class Interest {
     @ManyToOne
     @JoinColumn(name = "productSeq")
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "member_seq")
+    private Member member;
+
+
 }

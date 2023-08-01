@@ -2,6 +2,9 @@ package com.example.shopping.member.domain.entity;
 
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.payment.domain.entity.Payment;
+import com.example.shopping.product.domain.entity.Interest;
+import com.example.shopping.review.domain.entity.Review;
+import com.example.shopping.review.domain.entity.ReviewMember;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,6 +45,12 @@ public class Member {
     @OneToOne
     @JoinColumn(name = "payment_seq")
     private Payment payment;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<ReviewMember> reviewMembers;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Interest> interests;
 
     @Override
     public String toString() {

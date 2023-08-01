@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class InterestResponse  extends InterestDto {
     private ProductDto product;
 
+
     public InterestResponse(Interest interest) {
         super(interest);
         product = new ProductDto(interest.getProduct());

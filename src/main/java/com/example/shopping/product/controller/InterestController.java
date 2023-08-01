@@ -22,8 +22,8 @@ public class InterestController {
 
     @PostMapping("{productSeq}")
     public void saveInterest(@RequestBody InterestRequest interestRequest
-            ,@PathVariable("productSeq") Long productSeq) {
-        interestService.saveInterest(interestRequest,productSeq);
+            ,@PathVariable("productSeq") Long productSeq, @RequestParam("memberSeq") Long memberSeq) {
+        interestService.saveInterest(interestRequest,productSeq, memberSeq);
     }
 
     @DeleteMapping("{interestSeq}")

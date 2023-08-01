@@ -56,6 +56,16 @@ public class MemberController {
         return memberService.findById(id);
     }
 
+    @PostMapping ("/checkCurrentPassword/{id}")
+    public ResponseEntity<RestResult<Object>> checkCurrentPassword(@RequestBody PasswordUpdateDto passwordUpdateDto, @PathVariable("id")String id){
+        return memberService.checkCurrentPassword(passwordUpdateDto, id);
+    }
+
+
+
+
+
+
 //    ## point ##
 //    @PostMapping("/insert/point")
 //    public void pointInsert(@RequestBody PointInsertDto pointInsertDto){

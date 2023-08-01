@@ -150,6 +150,7 @@ public class MemberService {
         return ResponseEntity.ok(new RestResult<>("success", "회원정보수정이 완료되었습니다."));
     }
 
+//    POINT 충전
     public ResponseEntity<RestResult<Object>> pointCharge(PointChargeDto pointChargeDto, String id){
 //        TODO 여기 원래 Obtional들어가는거 아닌가..?
 //        null값일 경우를 대비해, 미리 오류 처리를 어떻게 할 것인지 정해둬야 함.
@@ -175,7 +176,7 @@ public class MemberService {
     }
 
 
-
+//       ID 찾기
     public ResponseEntity<RestResult<Object>> findByPhoneNum(String phoneNum){
         Member byPhoneNum = memberRepository.findByPhoneNum(phoneNum);
 
@@ -189,7 +190,11 @@ public class MemberService {
     }
 
 
+//     비밀번호 찾기
     public ResponseEntity<RestResult<Object>> findById(String id){
+//        TODO
+//        회원의 ID 로 비밀번호를 찾는 기능을 만들어야함 (ok)
+//        회원의 ID를 입력하면 그 이메일로 임시비밀번호가 발송되고 임시비밀번호로 바뀌어야함
         Member byId = memberRepository.findById(id);
 
         if (byId == null){
@@ -199,5 +204,57 @@ public class MemberService {
 
         return ResponseEntity.ok(new RestResult<>("success", byId.getId()));
     }
+
+
+//    # 현재 비밀번호 일치 여부 확인 후 수정
+    public ResponseEntity<RestResult<Object>> checkCurrentPassword(PasswordUpdateDto passwordUpdateDto, String id){
+        Member byId = memberRepository.findById(id);
+        if(!byId.getPassword().equals(passwordUpdateDto.getCurrentPassword())){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new RestResult<>("error", "현재 비밀번호가 일치하지 않습니다."));
+        }
+
+                Member member = Member.builder()
+                .memberSeq(byId.getMemberSeq())
+                .id(byId.getId())
+                .password(passwordUpdateDto.getUpdatePassword()) // password만 변경
+                .username(byId.getUsername())
+                .phoneNum(byId.getPhoneNum())
+                .registrationDate(byId.getRegistrationDate())
+                .address(byId.getAddress())
+                .deliveries(byId.getDeliveries())
+                .point(byId.getPoint())
+                .grade(byId.getGrade())
+                .payment(byId.getPayment())
+                .build();
+        memberRepository.save(member);
+        return ResponseEntity.ok(new RestResult<>("success", "비밀번호수정이 완료되었습니다."));
+
+//        return ResponseEntity.ok(new RestResult<>("success", byId.getPassword()));
+    }
+
+
+//    public ResponseEntity<RestResult<Object>> updatePassword(PasswordUpdateDto updateDto, String id){
+//        Member byId = memberRepository.findById(id);
+//
+//        Member member = Member.builder()
+//                .memberSeq(byId.getMemberSeq())
+//                .id(byId.getId())
+//                .password(updateDto.getPassword()) // password만 변경
+//                .username(byId.getUsername())
+//                .phoneNum(byId.getPhoneNum())
+//                .registrationDate(byId.getRegistrationDate())
+//                .address(byId.getAddress())
+//                .deliveries(byId.getDeliveries())
+//                .point(byId.getPoint())
+//                .grade(byId.getGrade())
+//                .payment(byId.getPayment())
+//                .build();
+//        memberRepository.save(member);
+//        return ResponseEntity.ok(new RestResult<>("success", "비밀번호수정이 완료되었습니다."));
+//
+//    }
+
+
 
 }

@@ -12,12 +12,12 @@ public class InterestDto {
     private Long interestSeq;
     private LocalDate interestDate;
     private Integer interestLike;
-//    private Long productSeq;
+
 
     public InterestDto(Interest interest) {
         this.interestSeq = interest.getInterestSeq();
         this.interestDate = interest.getInterestDate();
         this.interestLike = interest.getInterestLike();
-//        this.productSeq = interest.getProduct().getProductSeq();
+
     }
 }

@@ -16,10 +16,10 @@ public class ReviewMember {
     private Long reviewMemberSeq;
 
     @ManyToOne
-    @JoinColumn(name = "reviews_seq")
+    @JoinColumn(name = "review_seq")
     private Review review;
 
     @ManyToOne
-    @JoinColumn(name = "members_seq")
+    @JoinColumn(name = "member_seq")
     private Member member;
 }

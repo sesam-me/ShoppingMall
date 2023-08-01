@@ -1,6 +1,7 @@
 package com.example.shopping.review.service;
 
 import com.example.shopping.member.domain.entity.Member;
+import com.example.shopping.member.repository.MemberRepository;
 import com.example.shopping.review.domain.entity.Review;
 import com.example.shopping.review.domain.entity.ReviewMember;
 import com.example.shopping.review.domain.request.ReviewRequest;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +22,7 @@ import java.util.List;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewMemberRepository reviewMemberRepository;
+    private final MemberRepository memberRepository;
 
     public List<Review> findAllReview() {
         return reviewRepository.findAll();
@@ -30,10 +33,14 @@ public class ReviewService {
     }
 
     public void saveLike(Long memberSeq, Long reviewSeq) {
-        reviewMemberRepository.save(ReviewMember.builder()
-                .member(Member.builder().memberSeq(memberSeq).build())
-                .review(Review.builder().reviewSeq(reviewSeq).build())
-                .build());
+        Optional<Member> member = memberRepository.findById(memberSeq);
+        Optional<Review> review = reviewRepository.findById(reviewSeq);
+
+        System.out.println(member);
+        System.out.println(review);
+
+        ReviewMember reviewMember = ReviewMember.builder().review(review.get()).member(member.get()).build();
+        reviewMemberRepository.save(reviewMember);
     }
 
     public void deleteLike(Long memberSeq, Long reviewSeq) {

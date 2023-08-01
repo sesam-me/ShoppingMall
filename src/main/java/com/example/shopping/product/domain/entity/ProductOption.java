@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name="options")
+@Table(name = "options")
 public class ProductOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +20,5 @@ public class ProductOption {
     @ManyToOne
     @JoinColumn(name = "productSeq")
     private Product product;
+
 }

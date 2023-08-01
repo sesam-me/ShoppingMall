@@ -31,12 +31,12 @@ public class ReviewController {
         reviewService.deleteReview(reviewSeq);
     }
 
-    @PostMapping("/review/{reviewSeq}/like/{memberSeq}")
+    @PostMapping("/{reviewSeq}/like/{memberSeq}")
     public void saveLike(@PathVariable("reviewSeq") Long reviewSeq, @PathVariable("memberSeq") Long memberSeq) {
         reviewService.saveLike(reviewSeq, memberSeq);
     }
 
-    @DeleteMapping("/reviews/{reviewSeq}/like")
+    @DeleteMapping("/{reviewSeq}/like")
     public void deleteLike(@PathVariable("reviewSeq") Long reviewSeq, @RequestParam("memberSeq") Long memberSeq) {
         reviewService.deleteLike(memberSeq, reviewSeq);
     }

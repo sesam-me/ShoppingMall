@@ -31,8 +31,8 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductOption> productOptions;
 
-//    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-//    private List<Interest> interests;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<Interest> interests;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<QuestionAndAnswer> questionAndAnswers;

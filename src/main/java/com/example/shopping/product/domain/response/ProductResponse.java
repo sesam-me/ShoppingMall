@@ -41,11 +41,11 @@ public class ProductResponse {
         this.createAt = product.getCreateAt();
         this.brand = product.getBrand();
         this.productOptionDto = product.getProductOptions() != null ?
-                product.getProductOptions().stream().map(ProductOptionDto::new).toList()
+                product.getProductOptions().stream().map(ProductOptionDto::new).toList() :
+                new ArrayList<>();
+        this.interestDto = product.getInterests() != null ?
+                product.getInterests().stream().map(InterestDto::new).toList()
                 : new ArrayList<>();
-//        this.interestDto = product.getInterests() != null ?
-//                product.getInterests().stream().map(InterestDto::new).toList()
-//                : new ArrayList<>();
         this.questionAndAnswerDto = product.getQuestionAndAnswers() != null ?
                 product.getQuestionAndAnswers().stream().map(QuestionAndAnswerDto::new).toList() :
                 new ArrayList<>();

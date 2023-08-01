@@ -15,7 +15,7 @@ public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long inventorySeq;
-    private Integer count; //재고 수량
+    private Integer count; // 재고 수량
     private Integer sales; // 판매 수량
     private Integer waste; // 폐기 수량
 

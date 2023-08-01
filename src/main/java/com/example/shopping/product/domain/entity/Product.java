@@ -37,7 +37,8 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Interest> interests;
-  
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductOption2> productOptions2;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)

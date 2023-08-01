@@ -6,7 +6,10 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class ProductUpdateRequest {
-    private String name;
+    private String hName;
+    private String eName;
     private String imgUrl;
+    private String detailImgUrl;
     private String brand;
+    private Integer price;
 }

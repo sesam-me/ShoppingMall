@@ -9,15 +9,14 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "options")
-public class ProductOption {
+@Table(name="options2")
+public class ProductOption2 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long optionSeq;
-    private Integer size;
+    private String color;
 
     @ManyToOne
     @JoinColumn(name = "productSeq")
     private Product product;
-
 }

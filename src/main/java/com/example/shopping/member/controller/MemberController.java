@@ -27,8 +27,14 @@ public class MemberController {
         return memberService.findAll();
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<RestResult<Object>> findById(@PathVariable String id) {
+        return memberService.findById(id);
+    }
+
     @PostMapping("/login")
     public MemberLoginResponse login(@RequestBody MemberLoginDto memberLoginDto) {
+
         return memberService.memberLogin(memberLoginDto);
     }
 

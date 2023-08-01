@@ -30,7 +30,7 @@ public class ProductService {
 
     public ProductResponse update(Long productSeq, ProductUpdateRequest productUpdateRequest) {
         Product product = findById(productSeq);
-        product.update(productUpdateRequest.getName(), productUpdateRequest.getImgUrl(),productUpdateRequest.getBrand());
+        product.update(productUpdateRequest.getHName(), productUpdateRequest.getEName(), productUpdateRequest.getImgUrl(),productUpdateRequest.getBrand(), productUpdateRequest.getDetailImgUrl(), productUpdateRequest.getPrice());
         return new ProductResponse(product);
     }
     public void delete(Long productSeq) {

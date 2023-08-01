@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "loginHistories")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder @Data
@@ -19,5 +20,6 @@ public class LoginHistory {
     private boolean isSuccessfulLogin;
 
     @ManyToOne
+    @JoinColumn(name = "member_seq")
     private Member member;
 }

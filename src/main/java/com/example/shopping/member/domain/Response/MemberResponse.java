@@ -2,6 +2,7 @@ package com.example.shopping.member.domain.Response;
 
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.member.domain.entity.Grade;
+import com.example.shopping.member.domain.entity.LoginHistory;
 import com.example.shopping.member.domain.entity.Member;
 import com.example.shopping.member.domain.entity.Point;
 import lombok.*;
@@ -24,6 +25,7 @@ public class MemberResponse {
     private List<DeliveryDto> deliveries;
     private Point point;
     private Grade grade;
+    private List<LoginHistory> loginHistory;
 
 
     public MemberResponse(Member member) {
@@ -38,6 +40,8 @@ public class MemberResponse {
                 member.getDeliveries().stream().map(DeliveryDto::new).toList() : new ArrayList<>();
         this.point = member.getPoint();
         this.grade = member.getGrade();
+        this.loginHistory = member.getLoginHistory();
+
     }
 
     @Getter @AllArgsConstructor

@@ -2,6 +2,7 @@ package com.example.shopping.member.domain.entity;
 
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.payment.domain.entity.Payment;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,6 +44,13 @@ public class Member {
     @OneToOne
     @JoinColumn(name = "payment_seq")
     private Payment payment;
+
+//    @OneToMany(mappedBy = "member")
+//    private List<LoginHistory> loginHistory;
+
+    @OneToMany(mappedBy = "member")
+    @JsonIgnore // 순환 참조 끊기
+    private List<LoginHistory> loginHistory;
 
     @Override
     public String toString() {

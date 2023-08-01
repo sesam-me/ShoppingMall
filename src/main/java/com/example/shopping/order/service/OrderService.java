@@ -64,8 +64,7 @@ public class OrderService {
                     .findByProductId(productSeq)
                     .orElseThrow(()->new RuntimeException("그런 상품 없다"));
 
-            inventory.change(10);
-
+            inventory.change(1);
 
         } catch (Exception e) {
             e.printStackTrace();

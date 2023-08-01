@@ -24,8 +24,8 @@ public class InterestService {
         return all.stream().map(InterestResponse::new).toList();
     }
 
-    public void saveInterest(InterestRequest interestRequest, Long productSeq) {
-        interestRepository.save(interestRequest.toEntity(productSeq));
+    public void saveInterest(InterestRequest interestRequest, Long productSeq, Long memberSeq) {
+        interestRepository.save(interestRequest.toEntity(productSeq ,memberSeq));
     }
 
     public void deleteInterest(Long interestSeq) {

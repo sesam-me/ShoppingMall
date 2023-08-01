@@ -24,4 +24,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "productSeq")
     private Product product;
+
+    public void update(String orderNum, LocalDate orderDate) {
+        this.orderNum = orderNum;
+        this.orderDate = orderDate;
+    }
 }

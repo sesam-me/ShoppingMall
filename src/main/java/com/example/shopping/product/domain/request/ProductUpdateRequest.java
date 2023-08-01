@@ -8,4 +8,5 @@ import lombok.Getter;
 public class ProductUpdateRequest {
     private String name;
     private String imgUrl;
+    private String brand;
 }

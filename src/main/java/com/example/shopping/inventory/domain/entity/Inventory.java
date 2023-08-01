@@ -28,4 +28,12 @@ public class Inventory {
         this.sales = sales;
         this.waste = waste;
     }
+
+    public void change(Integer quantity){
+        if(this.count < quantity){
+            throw new RuntimeException("너무 많이 시킴");
+        }
+        this.count-=quantity;
+        this.sales+=quantity;
+    }
 }

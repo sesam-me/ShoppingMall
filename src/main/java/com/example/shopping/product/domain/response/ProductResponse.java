@@ -25,6 +25,7 @@ public class ProductResponse {
     private String name;
     private String imgUrl;
     private String createAt;
+    private String brand;
     private List<ProductOptionDto> productOptionDto;
     private List<InterestDto> interestDto;
     private List<QuestionAndAnswerDto> questionAndAnswerDto;
@@ -38,6 +39,7 @@ public class ProductResponse {
         this.name = product.getName();
         this.imgUrl = product.getImgUrl();
         this.createAt = product.getCreateAt();
+        this.brand = product.getBrand();
         this.productOptionDto = product.getProductOptions() != null ?
                 product.getProductOptions().stream().map(ProductOptionDto::new).toList()
                 : new ArrayList<>();

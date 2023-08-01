@@ -6,9 +6,11 @@ import com.example.shopping.member.domain.Response.MemberLoginResponse;
 import com.example.shopping.member.domain.Response.MemberResponse;
 import com.example.shopping.member.domain.dto.*;
 import com.example.shopping.member.domain.entity.Grade;
+import com.example.shopping.member.domain.entity.LoginHistory;
 import com.example.shopping.member.domain.entity.Member;
 import com.example.shopping.member.domain.entity.Point;
 import com.example.shopping.member.repository.GradeRepository;
+import com.example.shopping.member.repository.LoginRecordRepository;
 import com.example.shopping.member.repository.MemberRepository;
 import com.example.shopping.member.repository.PointRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,6 +29,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PointRepository pointRepository;
     private final GradeRepository gradeRepository;
+    private final LoginRecordRepository loginRecordRepository;
 
     public ResponseEntity<RestResult<Object>> memberInsert(MemberInsertDto memberInsertDto){
         Member findMember = memberRepository.findById(memberInsertDto.getId());
@@ -98,34 +102,57 @@ public class MemberService {
 //        gradeRepository.save(grade);
 //    }
 
-    public MemberLoginResponse memberLogin(MemberLoginDto memberLoginDto) {
-        Member byIdAndPass = memberRepository.findByIdAndPassword(memberLoginDto.getId(), memberLoginDto.getPassword());
+//  if (findMember != null) {
+//        return ResponseEntity.status(HttpStatus.CONFLICT)
+//                .body(new RestResult<>("error", new RestError("duplicate_id", "이미 사용중인 ID 입니다.")));
+//    }
 
-        MemberLoginResponse memberLoginResponse = new MemberLoginResponse();
 
-        if(byIdAndPass != null) {
-            memberLoginResponse = MemberLoginResponse
+//    # 로그인 & 로그인 이력
+    public ResponseEntity<RestResult<Object>> memberLogin(MemberLoginDto memberLoginDto) {
+        // 입력받은 ID로 해당하는 ID가 존재하는지 확인한다.. 여기서 만약 null 이라면..? 해당 회원이 아예 존재하지 않는것이니.. 로그인 이력 테이블에 쌓아 줄 필요없이 바로 예외처리 해준다.
+        Member findMember = memberRepository.findById(memberLoginDto.getId());
+        if (findMember == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new RestResult<>("error",new RestError("NOT_FOUND","NOT_FOUND")));
+        }
+
+        // 방금 찾아온 회원의 정보에서 비밀번호를 꺼내와서.. 유저가 입력한 번호와 같지 않다면 ? 로그인 이력 테이블에 member_seq 와 로그인 실패기록을 적재한다..
+        if (!findMember.getPassword().equals(memberLoginDto.getPassword())) {
+            LoginHistory loginHistory = LoginHistory.builder()
+                    .loginTime(LocalDateTime.now())
+                    .isSuccessfulLogin(false)
+                    .member(findMember)
+                    .build();
+            loginRecordRepository.save(loginHistory);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new RestResult<>("error",new RestError("BAD_REQUEST","BAD_REQUEST")));
+        }
+
+        // 위에서 찾아온 회원의 정보에서 꺼내온 비밀번호와 유저가 입력한 번호가 같다면 .. ? 로그인을 성공 시켜주고  로그인 이력 테이블에 성공로그를 적재한다..
+        MemberLoginResponse
                     .builder()
-                    .address(byIdAndPass.getAddress())
-                    .id(byIdAndPass.getId())
-                    .deliveries(byIdAndPass.getDeliveries())
-                    .username(byIdAndPass.getUsername())
-                    .phoneNum(byIdAndPass.getPhoneNum())
+                    .address(findMember.getAddress())
+                    .id(findMember.getId())
+                    .deliveries(findMember.getDeliveries())
+                    .username(findMember.getUsername())
+                    .phoneNum(findMember.getPhoneNum())
                     .isLogin(true)
                     .build();
+
+            LoginHistory loginRecord = LoginHistory.builder()
+                    .member(findMember)
+                    .loginTime(LocalDateTime.now())
+                    .isSuccessfulLogin(true)
+                    .build();
+            loginRecordRepository.save(loginRecord);
+
+            return ResponseEntity.ok(new RestResult<>("success", "로그인 성공"));
         }
-        return memberLoginResponse;
-    }
-
-//    public ResponseEntity<RestResult<Object>> memberInsert(MemberInsertDto memberInsertDto){
-//        Member findMember = memberRepository.findById(memberInsertDto.getId());
-//
-//        if (findMember != null) {
-//            return ResponseEntity.status(HttpStatus.CONFLICT)
-//                    .body(new RestResult<>("error", new RestError("duplicate_id", "이미 사용중인 ID 입니다.")));
-//        }
 
 
+
+//    # 회원정보수정
     public ResponseEntity<RestResult<Object>> memberUpdate(MemberUpdateDto memberUpdateDto, String id){
         Member findById = memberRepository.findById(id); //  주어진 findById는 id가 Long디폴트값. -> repository에서 String id를 받는 걸 만들어서 사용.
 
@@ -176,7 +203,7 @@ public class MemberService {
     }
 
 
-//       ID 찾기
+//      # ID 찾기
     public ResponseEntity<RestResult<Object>> findByPhoneNum(String phoneNum){
         Member byPhoneNum = memberRepository.findByPhoneNum(phoneNum);
 
@@ -190,7 +217,7 @@ public class MemberService {
     }
 
 
-//     비밀번호 찾기
+//    # 비밀번호 찾기
     public ResponseEntity<RestResult<Object>> findById(String id){
 //        TODO
 //        회원의 ID 로 비밀번호를 찾는 기능을 만들어야함 (ok)
@@ -229,31 +256,9 @@ public class MemberService {
                 .build();
         memberRepository.save(member);
         return ResponseEntity.ok(new RestResult<>("success", "비밀번호수정이 완료되었습니다."));
-
-//        return ResponseEntity.ok(new RestResult<>("success", byId.getPassword()));
     }
 
 
-//    public ResponseEntity<RestResult<Object>> updatePassword(PasswordUpdateDto updateDto, String id){
-//        Member byId = memberRepository.findById(id);
-//
-//        Member member = Member.builder()
-//                .memberSeq(byId.getMemberSeq())
-//                .id(byId.getId())
-//                .password(updateDto.getPassword()) // password만 변경
-//                .username(byId.getUsername())
-//                .phoneNum(byId.getPhoneNum())
-//                .registrationDate(byId.getRegistrationDate())
-//                .address(byId.getAddress())
-//                .deliveries(byId.getDeliveries())
-//                .point(byId.getPoint())
-//                .grade(byId.getGrade())
-//                .payment(byId.getPayment())
-//                .build();
-//        memberRepository.save(member);
-//        return ResponseEntity.ok(new RestResult<>("success", "비밀번호수정이 완료되었습니다."));
-//
-//    }
 
 
 

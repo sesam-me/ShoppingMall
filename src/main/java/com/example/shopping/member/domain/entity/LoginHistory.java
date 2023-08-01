@@ -3,6 +3,7 @@ package com.example.shopping.member.domain.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -10,11 +11,10 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class LoginRecord {
+@Builder @Data
+public class LoginHistory {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long loginRecordSeq;
-    private Long memberSeq;
+    private Long loginHistorySeq;
     private LocalDateTime loginTime;
     private boolean isSuccessfulLogin;
 

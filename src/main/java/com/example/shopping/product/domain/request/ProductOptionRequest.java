@@ -16,7 +16,6 @@ public class ProductOptionRequest {
     public ProductOption toEntity(Long productSeq) {
         return ProductOption
                 .builder()
-                .color(color)
                 .size(size)
                 .product(Product.builder().productSeq(productSeq).build())
                 .build();

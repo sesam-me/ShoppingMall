@@ -27,6 +27,12 @@ public class MemberService {
     private final PointRepository pointRepository;
     private final GradeRepository gradeRepository;
 
+    public ResponseEntity<RestResult<Object>> findById(String id) {
+        Member byId = memberRepository.findById(id);
+        return ResponseEntity.ok(new RestResult<>("success", byId));
+
+    }
+
     public ResponseEntity<RestResult<Object>> memberInsert(MemberInsertDto memberInsertDto){
         Member findMember = memberRepository.findById(memberInsertDto.getId());
 

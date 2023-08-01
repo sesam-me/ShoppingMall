@@ -20,6 +20,7 @@ public class MemberResponse {
     private String username;
     private LocalDateTime registrationDate = LocalDateTime.now();
     private String address;
+    private String phoneNum;
     private List<DeliveryDto> deliveries;
     private Point point;
     private Grade grade;
@@ -32,6 +33,7 @@ public class MemberResponse {
         this.username = member.getUsername();
         this.registrationDate = member.getRegistrationDate();
         this.address = member.getAddress();
+        this.phoneNum = member.getPhoneNum();
         this.deliveries = member.getDeliveries() != null ?
                 member.getDeliveries().stream().map(DeliveryDto::new).toList() : new ArrayList<>();
         this.point = member.getPoint();

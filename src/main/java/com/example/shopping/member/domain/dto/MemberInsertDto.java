@@ -15,5 +15,6 @@ public class MemberInsertDto {
     private String username;
     private LocalDateTime registrationDate;
     private String address;
+    private String phoneNum;
 
 }

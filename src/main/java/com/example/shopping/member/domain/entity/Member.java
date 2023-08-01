@@ -21,6 +21,7 @@ public class Member {
     private String id;
     private String password;
     private String username;
+    private String phoneNum;
 
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)

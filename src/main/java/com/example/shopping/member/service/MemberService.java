@@ -2,6 +2,7 @@ package com.example.shopping.member.service;
 
 import com.example.shopping.common.RestError;
 import com.example.shopping.common.RestResult;
+import com.example.shopping.member.domain.Response.MemberLoginResponse;
 import com.example.shopping.member.domain.Response.MemberResponse;
 import com.example.shopping.member.domain.dto.*;
 import com.example.shopping.member.domain.entity.Grade;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +55,7 @@ public class MemberService {
                 .username(memberInsertDto.getUsername())
                 .registrationDate(memberInsertDto.getRegistrationDate())
                 .address(memberInsertDto.getAddress())
+                .phoneNum(memberInsertDto.getPhoneNum())
                 .grade(grade) // 저장된 Grade 엔티티를 설정
                 .point(point) // 저장된 Point 엔티티를 설정
                 .build();
@@ -109,6 +110,7 @@ public class MemberService {
                     .id(byIdAndPass.getId())
                     .deliveries(byIdAndPass.getDeliveries())
                     .username(byIdAndPass.getUsername())
+                    .phoneNum(byIdAndPass.getPhoneNum())
                     .isLogin(true)
                     .build();
         }
@@ -149,10 +151,11 @@ public class MemberService {
     }
 
     public ResponseEntity<RestResult<Object>> pointCharge(PointChargeDto pointChargeDto, String id){
-//        return pointRepository.findById(memberSeq).orElseThrow()
-//        return pointRepository.findById(memberSeq).orElse(null)
+//        TODO 여기 원래 Obtional들어가는거 아닌가..?
+//        null값일 경우를 대비해, 미리 오류 처리를 어떻게 할 것인지 정해둬야 함.
+//        방법 1) return pointRepository.findById(memberSeq).orElseThrow()
+//        방법 2) return pointRepository.findById(memberSeq).orElse(null)
         Point findById = pointRepository.findById(id);
-        System.out.println(findById);
 
         if(findById == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -170,4 +173,13 @@ public class MemberService {
         pointRepository.save(point);
         return ResponseEntity.ok(new RestResult<>("success","PONIT 충전이 완료되었습니다."));
     }
+
+
+
+    public String findByPhoneNum(String phoneNum){
+
+        Member byPhoneNum = memberRepository.findByPhoneNum(phoneNum);
+        return byPhoneNum.getId();
+    }
+
 }

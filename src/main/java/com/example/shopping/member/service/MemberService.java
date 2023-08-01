@@ -159,7 +159,7 @@ public class MemberService {
 
         if(findById == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new RestResult<>("error",new RestError("POINT_NOT_FOUNTD","충전할 POINT를 입력해주세요.")));
+                    .body(new RestResult<>("error",new RestError("POINT_NOT_FOUND","충전할 POINT를 입력해주세요.")));
         }
 
         Point point = Point.builder()
@@ -171,15 +171,33 @@ public class MemberService {
                 .expirationDate(findById.getExpirationDate())
                 .build();
         pointRepository.save(point);
-        return ResponseEntity.ok(new RestResult<>("success","PONIT 충전이 완료되었습니다."));
+        return ResponseEntity.ok(new RestResult<>("success","POINT 충전이 완료되었습니다."));
     }
 
 
 
-    public String findByPhoneNum(String phoneNum){
-
+    public ResponseEntity<RestResult<Object>> findByPhoneNum(String phoneNum){
         Member byPhoneNum = memberRepository.findByPhoneNum(phoneNum);
-        return byPhoneNum.getId();
+
+        if(!phoneNum.equals(byPhoneNum.getPhoneNum())){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new RestResult<>("error", new RestError("PHONENUM_NOT_FOUND","일치하는 핸드폰번호가 없습니다.")));
+        }
+
+        return ResponseEntity.ok(new RestResult<>("success", byPhoneNum.getId()));
+
+    }
+
+
+    public ResponseEntity<RestResult<Object>> findById(String id){
+        Member byId = memberRepository.findById(id);
+
+        if (byId == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new RestResult<>("error", new RestError("ID_NOT_FOUND", "일치하는 ID가 없습니다.")));
+        }
+
+        return ResponseEntity.ok(new RestResult<>("success", byId.getId()));
     }
 
 }

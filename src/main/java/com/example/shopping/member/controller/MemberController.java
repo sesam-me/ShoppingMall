@@ -44,9 +44,16 @@ public class MemberController {
         return memberService.pointCharge(pointChargeDto, id);
     }
 
+//   ID찾기
     @GetMapping("/findId/{phoneNum}")
-    public String findByPhoneNum(@PathVariable("phoneNum")String phoneNum){
+    public ResponseEntity<RestResult<Object>> findIdByPhoneNum(@PathVariable("phoneNum")String phoneNum){
         return memberService.findByPhoneNum(phoneNum);
+    }
+
+//    PASSWORD찾기
+    @GetMapping("/findPassword/{id}")
+    public ResponseEntity<RestResult<Object>> findById(@PathVariable("id")String id){
+        return memberService.findById(id);
     }
 
 //    ## point ##

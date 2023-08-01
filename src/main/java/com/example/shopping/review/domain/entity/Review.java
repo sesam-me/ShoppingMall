@@ -19,6 +19,7 @@ public class Review {
     private String content; //리뷰 내용
     private Integer rating; // 평점
     private String reviewImg; //리뷰 사진
+    private String title;
 
     @ManyToOne
     @JoinColumn(name = "productSeq")

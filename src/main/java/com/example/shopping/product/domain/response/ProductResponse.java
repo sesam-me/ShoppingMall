@@ -5,6 +5,7 @@ import com.example.shopping.order.domain.dto.HistoryDto;
 import com.example.shopping.order.domain.dto.OrderDto;
 import com.example.shopping.product.domain.dto.InterestDto;
 import com.example.shopping.product.domain.dto.ProductOptionDto;
+import com.example.shopping.product.domain.dto.ProductOptionDto2;
 import com.example.shopping.product.domain.entity.Interest;
 import com.example.shopping.product.domain.entity.Product;
 import com.example.shopping.product.domain.entity.ProductOption;
@@ -22,11 +23,15 @@ import java.util.List;
 
 public class ProductResponse {
     private Long productSeq;
-    private String name;
+    private String hName;
+    private String eName;
     private String imgUrl;
-    private String createAt;
+    private String detailImgUrl;
+    private LocalDate createAt;
     private String brand;
+    private Integer price;
     private List<ProductOptionDto> productOptionDto;
+    private List<ProductOptionDto2> productOptionDto2;
     private List<InterestDto> interestDto;
     private List<QuestionAndAnswerDto> questionAndAnswerDto;
     private List<ReviewDto> reviewDto;
@@ -36,25 +41,25 @@ public class ProductResponse {
 
     public ProductResponse(Product product) {
         this.productSeq = product.getProductSeq();
-        this.name = product.getName();
+        this.hName = product.getHname();
+        this.eName = product.getEname();
         this.imgUrl = product.getImgUrl();
+        this.detailImgUrl = product.getDetailImgUrl();
         this.createAt = product.getCreateAt();
         this.brand = product.getBrand();
+        this.price = product.getPrice();
         this.productOptionDto = product.getProductOptions() != null ?
                 product.getProductOptions().stream().map(ProductOptionDto::new).toList()
                 : new ArrayList<>();
-//        this.interestDto = product.getInterests() != null ?
-//                product.getInterests().stream().map(InterestDto::new).toList()
-//                : new ArrayList<>();
+        this.productOptionDto2 = product.getProductOptions2() != null ?
+                product.getProductOptions2().stream().map(ProductOptionDto2::new).toList()
+                : new ArrayList<>();
         this.questionAndAnswerDto = product.getQuestionAndAnswers() != null ?
                 product.getQuestionAndAnswers().stream().map(QuestionAndAnswerDto::new).toList() :
                 new ArrayList<>();
         this.reviewDto = product.getReviews() != null ?
                 product.getReviews().stream().map(ReviewDto::new).toList() :
                 new ArrayList<>();
-//        this.historyDto = product.getHistories() != null ?
-//                product.getHistories().stream().map(HistoryDto::new).toList() :
-//                new ArrayList<>();
         this.orderDto = product.getOrders() != null ?
                 product.getOrders().stream().map(OrderDto::new).toList() :
                 new ArrayList<>();

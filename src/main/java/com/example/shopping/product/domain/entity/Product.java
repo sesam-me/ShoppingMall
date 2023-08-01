@@ -9,6 +9,7 @@ import com.example.shopping.review.domain.entity.Review;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -22,14 +23,20 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productSeq;
-    private String name;
+    private String hname;
+    private String ename;
     private String imgUrl;
-    private String createAt;
+    private String detailImgUrl;
+    private LocalDate createAt;
     private String brand;
+    private Integer price;
 
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductOption> productOptions;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<ProductOption2> productOptions2;
 
 //    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
 //    private List<Interest> interests;
@@ -50,25 +57,13 @@ public class Product {
     private List<Inventory> inventories;
 
 
-    public void update(String name, String imgUrl, String brand) {
-        this.name = name;
+    public void update(String hname, String ename, String imgUrl, String brand, String detailImgUrl, Integer price) {
+        this.hname = hname;
+        this.ename = ename;
         this.imgUrl = imgUrl;
         this.brand = brand;
+        this.detailImgUrl = detailImgUrl;
+        this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "productSeq=" + productSeq +
-                ", name='" + name + '\'' +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", createAt='" + createAt + '\'' +
-                ", brand='" + brand + '\'' +
-                ", productOptions=" + productOptions +
-                ", questionAndAnswers=" + questionAndAnswers +
-                ", reviews=" + reviews +
-                ", orders=" + orders +
-                ", inventories=" + inventories +
-                '}';
-    }
 }

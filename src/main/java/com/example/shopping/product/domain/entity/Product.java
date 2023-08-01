@@ -55,4 +55,20 @@ public class Product {
         this.imgUrl = imgUrl;
         this.brand = brand;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productSeq=" + productSeq +
+                ", name='" + name + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", createAt='" + createAt + '\'' +
+                ", brand='" + brand + '\'' +
+                ", productOptions=" + productOptions +
+                ", questionAndAnswers=" + questionAndAnswers +
+                ", reviews=" + reviews +
+                ", orders=" + orders +
+                ", inventories=" + inventories +
+                '}';
+    }
 }

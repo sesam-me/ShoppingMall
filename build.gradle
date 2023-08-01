@@ -32,7 +32,6 @@ dependencies {
 
 	// mail..
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.1.1'
-
 }
 
 tasks.named('test') {

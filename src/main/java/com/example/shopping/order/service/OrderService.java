@@ -14,7 +14,9 @@ import com.example.shopping.order.domain.response.HistoryResponse;
 import com.example.shopping.order.domain.response.OrderResponse;
 import com.example.shopping.order.repository.HistoryRepository;
 import com.example.shopping.order.repository.OrderRepository;
+import com.example.shopping.product.domain.entity.Product;
 import com.example.shopping.product.domain.response.ProductResponse;
+import com.example.shopping.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +35,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final HistoryRepository historyRepository;
     private final InventoryRepository inventoryRepository;
+    private final ProductRepository productRepository;
 
     public List<OrderResponse> findAllOrder() {
         List<Order> all = orderRepository.findAll();
@@ -60,11 +63,10 @@ public class OrderService {
         // 재고를 체크..
 //        재고테이블에서 빠지는 로직;
         try {
-            Inventory inventory = inventoryRepository
-                    .findByProductId(productSeq)
+            Product product = productRepository.findById(productSeq)
                     .orElseThrow(()->new RuntimeException("그런 상품 없다"));
 
-            inventory.change(1);
+            System.out.println(product.toString());
 
         } catch (Exception e) {
             e.printStackTrace();

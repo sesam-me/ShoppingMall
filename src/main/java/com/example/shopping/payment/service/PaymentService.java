@@ -7,29 +7,27 @@ import com.example.shopping.payment.domain.entity.Payment;
 import com.example.shopping.payment.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
-//    private final PaymentRepository paymentRepository;
-//    private final MemberRepository memberRepository;
-//    public void paymentInsert(PaymentInsertDto paymentInsertDto, Member member){
-//        Optional<Member> findByMemberSeq = memberRepository.findById(member.getMemberSeq());
-//
-//        Payment payment = Payment.builder()
-//                .member(findByMemberSeq.get())
-//                .paymentAmount(paymentInsertDto.getPaymentAmount())
-//                .paymentMethod(paymentInsertDto.getPaymentMethod())
-//                .paymentStatus(paymentInsertDto.getPaymentStatus())
-//                .cardType(paymentInsertDto.getCardType())
-//                .paymentDate(paymentInsertDto.getPaymentDate())
-//                .build();
-//        paymentRepository.save(payment);
-//    }
+    private final PaymentRepository paymentRepository;
+    private final MemberRepository memberRepository;
+    public void paymentInsert(PaymentInsertDto paymentInsertDto, Member member){
+        Optional<Member> findByMemberSeq = memberRepository.findById(member.getMemberSeq());
+
+        Payment payment = Payment.builder()
+                .member(findByMemberSeq.get())
+                .paymentAmount(paymentInsertDto.getPaymentAmount())
+                .paymentMethod(paymentInsertDto.getPaymentMethod())
+                .paymentStatus(paymentInsertDto.getPaymentStatus())
+                .cardType(paymentInsertDto.getCardType())
+                .paymentDate(paymentInsertDto.getPaymentDate())
+                .build();
+        paymentRepository.save(payment);
+    }
 
 
 }

@@ -37,7 +37,7 @@ public class DeliveryInsertDto {
 
 //    {
 //        "LocalDateTime" : "2023-07-07",
-//            "deliverStatus" : "결제완료",
+//            "deliverStatus" : "배송준비",
 //        "recipientInformation" : "이동명",
 //        "deliveryMethod" : "택배",
 //        "deliveryFee" : 30_000,

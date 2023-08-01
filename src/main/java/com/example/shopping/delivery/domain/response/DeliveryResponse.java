@@ -2,6 +2,7 @@ package com.example.shopping.delivery.domain.response;
 
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.member.domain.entity.Member;
+import com.example.shopping.payment.domain.entity.Payment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,9 +29,7 @@ public class DeliveryResponse {
     private String deliveryLocation;
 
     private Member member;
-
-
-//    private Payment payment;
+    private Payment payment;
 //    private DeliveryCompany deliveryCompany;
 
     public DeliveryResponse(Delivery delivery) {
@@ -51,7 +50,9 @@ public class DeliveryResponse {
                 .point(delivery.getMember().getPoint())
                 .grade(delivery.getMember().getGrade())
                 .build();
-//        this.payment = delivery.getPayment();
+        this.payment = Payment.builder()
+                .paymentAmount(delivery.getPayment().getPaymentAmount())
+                .build();
 //        this.deliveryCompany = delivery.getDeliveryCompany();
     }
 

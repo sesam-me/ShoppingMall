@@ -34,6 +34,15 @@ public class MemberController {
         return memberService.memberLogin(memberLoginDto);
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<RestResult<Object>> memberUpdate(@RequestBody MemberUpdateDto memberUpdateDto, @PathVariable("id")String id){
+        return memberService.memberUpdate(memberUpdateDto, id);
+    }
+
+    @PutMapping("/charge/{id}")
+    public ResponseEntity<RestResult<Object>> pointCharge(@RequestBody PointChargeDto pointChargeDto, @PathVariable("id")String id){
+        return memberService.pointCharge(pointChargeDto, id);
+    }
 
 //    ## point ##
 //    @PostMapping("/insert/point")

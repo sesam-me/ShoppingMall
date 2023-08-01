@@ -12,3 +12,21 @@ spring:
       hibernate:
         format_sql: true
   port: 8080
+
+  mail:
+    host: smtp.naver.com
+    username: amy9047@naver.com
+    password: 1q2w3e4r!!
+    port: 465
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          debug: true
+          ssl:
+            trust: smtp.naver.com
+            enable: true

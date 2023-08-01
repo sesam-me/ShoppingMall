@@ -10,6 +10,7 @@ public class ProductDto {
     private String hName;
     private String eName;
     private String imgUrl;
+    private String brand;
 
 
 
@@ -19,6 +20,6 @@ public class ProductDto {
         this.hName = product.getHname();
         this.eName = product.getEname();
         this.imgUrl = product.getImgUrl();
-
+        this.brand = product.getBrand();
     }
 }

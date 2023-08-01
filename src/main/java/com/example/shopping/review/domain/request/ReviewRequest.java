@@ -15,12 +15,14 @@ public class ReviewRequest {
     private String content;
     private Integer rating;
     private String reviewImg;
+    private Integer heart;
 
     public Review toEntity(Long productSeq) {
         return Review.builder()
                 .content(content)
                 .rating(rating)
                 .reviewImg(reviewImg)
+                .heart(heart)
                 .product(Product.builder().productSeq(productSeq).build())
                 .build();
     }

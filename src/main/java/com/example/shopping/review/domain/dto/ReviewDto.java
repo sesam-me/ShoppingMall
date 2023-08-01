@@ -12,6 +12,7 @@ public class ReviewDto {
     private String content; //리뷰 내용
     private Integer rating; // 평점
     private String reviewImg; //리뷰 사진
+    private Integer heart;
 //    private Long productSeq;
 
     public ReviewDto(Review review) {
@@ -19,6 +20,7 @@ public class ReviewDto {
         this.content = review.getContent();
         this.rating = review.getRating();
         this.reviewImg = review.getReviewImg();
+        this.heart = review.getHeart();
 //        this.productSeq = review.getProduct().getProductSeq();
     }
 }

@@ -9,10 +9,12 @@ import java.time.LocalDate;
 @Getter
 public class InterestResponse  extends InterestDto {
     private ProductDto product;
+    private Long memberSeq;
 
 
     public InterestResponse(Interest interest) {
         super(interest);
         product = new ProductDto(interest.getProduct());
+        memberSeq = interest.getMember().getMemberSeq();
     }
 }

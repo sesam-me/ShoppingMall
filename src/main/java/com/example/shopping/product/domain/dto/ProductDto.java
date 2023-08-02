@@ -12,8 +12,6 @@ public class ProductDto {
     private String imgUrl;
 
 
-
-
     public ProductDto(Product product) {
         this.productSeq = product.getProductSeq();
         this.hName = product.getHname();

@@ -1,11 +1,13 @@
 package com.example.shopping.product.domain.entity;
 
+import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.inventory.domain.entity.Inventory;
 import com.example.shopping.inventory.domain.entity.InventoryAlert;
 import com.example.shopping.order.domain.entity.History;
 import com.example.shopping.order.domain.entity.Order;
 import com.example.shopping.review.domain.entity.QuestionAndAnswer;
 import com.example.shopping.review.domain.entity.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -55,6 +57,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Inventory> inventories;
+
+    @OneToMany(mappedBy = "products", fetch = FetchType.LAZY)
+    private List<Cart> carts;
 
 
     public void update(String hname, String ename, String imgUrl, String brand, String detailImgUrl, Integer price) {

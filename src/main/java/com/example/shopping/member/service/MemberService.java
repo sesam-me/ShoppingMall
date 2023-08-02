@@ -31,7 +31,7 @@ public class MemberService {
     private final GradeRepository gradeRepository;
     private final LoginRecordRepository loginRecordRepository;
 
-    public ResponseEntity<RestResult<Object>> findById(String id) {
+    public ResponseEntity<RestResult<Object>> findById2(String id) {
         Member byId = memberRepository.findById(id);
         return ResponseEntity.ok(new RestResult<>("success", byId));
 

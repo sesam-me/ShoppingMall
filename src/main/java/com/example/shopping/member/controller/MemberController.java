@@ -28,7 +28,7 @@ public class MemberController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<RestResult<Object>> findById2(@PathVariable String id) {
+    public ResponseEntity<RestResult<Object>> findById(@PathVariable String id) {
         return memberService.findById(id);
     }
 
@@ -55,8 +55,8 @@ public class MemberController {
 
 //    PASSWORD찾기
     @GetMapping("/findPassword/{id}")
-    public ResponseEntity<RestResult<Object>> findById(@PathVariable("id")String id){
-        return memberService.findById(id);
+    public ResponseEntity<RestResult<Object>> findPasswordById(@PathVariable("id")String id) throws Exception {
+        return memberService.findPasswordById(id);
     }
 
     @PostMapping ("/checkCurrentPassword/{id}")

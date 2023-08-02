@@ -18,4 +18,14 @@ public class MailController {
             throw new RuntimeException(e);
         }
     }
+
+    @PostMapping("/test/{id}")
+    public String selfVerificationTest(@PathVariable String id){
+
+        try {
+            return  mailService.sendVerificationMessage(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

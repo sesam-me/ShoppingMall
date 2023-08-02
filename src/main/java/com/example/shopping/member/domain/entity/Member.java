@@ -1,5 +1,6 @@
 package com.example.shopping.member.domain.entity;
 
+import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.payment.domain.entity.Payment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,12 +46,13 @@ public class Member {
     @JoinColumn(name = "payment_seq")
     private Payment payment;
 
-//    @OneToMany(mappedBy = "member")
-//    private List<LoginHistory> loginHistory;
 
     @OneToMany(mappedBy = "member")
-    @JsonIgnore // 순환 참조 끊기
+    @JsonIgnore // 순환 참조 끊기, member로 다시 순환해서 돌아올 때 끝내!
     private List<LoginHistory> loginHistory;
+
+    @OneToMany(mappedBy = "member")
+    private List<Cart> carts;
 
     @Override
     public String toString() {

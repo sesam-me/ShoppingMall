@@ -16,8 +16,8 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
-    @GetMapping
-    public List<Cart> findAllCart() {
+    @GetMapping()
+    public List<CartResponse> findAllCart() {
         return cartService.findAllCart();
     }
 

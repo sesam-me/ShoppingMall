@@ -1,5 +1,6 @@
 package com.example.shopping.product.domain.entity;
 
+import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.inventory.domain.entity.Inventory;
 import com.example.shopping.inventory.domain.entity.InventoryAlert;
 import com.example.shopping.order.domain.entity.History;
@@ -48,6 +49,8 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Inventory> inventories;
 
+    @ManyToOne
+    private Cart carts;
 
     public void update(String name, String imgUrl) {
         this.name = name;

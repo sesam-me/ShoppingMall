@@ -1,5 +1,6 @@
 package com.example.shopping.member.domain.Response;
 
+import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.member.domain.entity.Grade;
 import com.example.shopping.member.domain.entity.LoginHistory;
@@ -26,6 +27,7 @@ public class MemberResponse {
     private Point point;
     private Grade grade;
     private List<LoginHistory> loginHistory;
+    private List<Cart> carts;
 
 
     public MemberResponse(Member member) {
@@ -41,6 +43,7 @@ public class MemberResponse {
         this.point = member.getPoint();
         this.grade = member.getGrade();
         this.loginHistory = member.getLoginHistory();
+        this.carts = member.getCarts();
 
     }
 

@@ -20,8 +20,9 @@ import java.util.List;
 public class CartService {
     private final CartRepository cartRepository;
 
-    public List<Cart> findAllCart() {
-        return cartRepository.findAll();
+    public List<CartResponse> findAllCart() {
+        List<Cart> all = cartRepository.findAll();
+        return all.stream().map(CartResponse::new).toList();
     }
 
     public void saveCart(CartRequest cartRequest) {

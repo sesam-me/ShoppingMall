@@ -55,7 +55,6 @@ public class Member {
     private List<ReviewMember> reviewMembers;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    @JsonIgnore
     private List<Interest> interests;
 
     @OneToMany(mappedBy = "member")

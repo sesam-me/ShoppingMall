@@ -5,7 +5,9 @@ import com.example.shopping.cart.domain.request.CartRequest;
 import com.example.shopping.cart.domain.request.CartUpdateRequest;
 import com.example.shopping.cart.domain.response.CartResponse;
 import com.example.shopping.cart.service.CartService;
+import com.example.shopping.common.RestResult;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +26,11 @@ public class CartController {
     @PostMapping
     public void saveCart(@RequestBody CartRequest cartRequest) {
         cartService.saveCart(cartRequest);
+    }
+
+    @PostMapping("{userSeq}")
+    public ResponseEntity<RestResult<Object>> getCarts(@PathVariable Long userSeq) {
+        return cartService.getCarts(userSeq);
     }
 
     @DeleteMapping("{cartSeq}")

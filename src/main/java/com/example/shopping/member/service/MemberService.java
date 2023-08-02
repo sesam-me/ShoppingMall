@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -79,41 +80,6 @@ public class MemberService {
         return all.stream().map(MemberResponse::new).toList();
     }
 
-
-//   ## point ##
-
-//    public void pointInsert(PointInsertDto pointInsertDto){
-//        Optional<Member> findByMemberSeq = memberRepository.findById(pointInsertDto.getMemberSeq());
-//
-//        Point point = Point.builder()
-//                .pointSeq(pointInsertDto.getPointSeq())
-//                .pointBalance(pointInsertDto.getPointBalance())
-//                .accumulationDate(pointInsertDto.getAccumulationDate())
-//                .usageDate(pointInsertDto.getUsageDate())
-//                .expirationDate(pointInsertDto.getExpirationDate())
-//                .build();
-//        pointRepository.save(point);
-//    }
-
-
-//    ## grade ##
-//    public void gradeInsert(GradeInsertDto gradeInsertDto){
-//        Optional<Member> findByMemberSeq = memberRepository.findById(gradeInsertDto.getMemberSeq());
-//
-//        Grade grade = Grade.builder()
-//                .gradeSeq(gradeInsertDto.getGradeSeq())
-//                .gradeName(gradeInsertDto.getGradeName())
-//                .build();
-//
-//        gradeRepository.save(grade);
-//    }
-
-//  if (findMember != null) {
-//        return ResponseEntity.status(HttpStatus.CONFLICT)
-//                .body(new RestResult<>("error", new RestError("duplicate_id", "이미 사용중인 ID 입니다.")));
-//    }
-
-
 //    # 로그인 & 로그인 이력
     public ResponseEntity<RestResult<Object>> memberLogin(MemberLoginDto memberLoginDto) {
         // 입력받은 ID로 해당하는 ID가 존재하는지 확인한다.. 여기서 만약 null 이라면..? 해당 회원이 아예 존재하지 않는것이니.. 로그인 이력 테이블에 쌓아 줄 필요없이 바로 예외처리 해준다.
@@ -159,7 +125,7 @@ public class MemberService {
 
 
 
-//    # 회원정보수정
+    //    # 회원정보수정
     public ResponseEntity<RestResult<Object>> memberUpdate(MemberUpdateDto memberUpdateDto, String id){
         Member findById = memberRepository.findById(id); //  주어진 findById는 id가 Long디폴트값. -> repository에서 String id를 받는 걸 만들어서 사용.
 
@@ -201,7 +167,7 @@ public class MemberService {
         Point point = Point.builder()
                 .pointSeq(findById.getPointSeq()) // 기본키 pointSeq를 가져와야 findById에서 맞는 값을 가져옴. 아니면 값 추가됨.
                 .id(findById.getId())
-                .pointBalance(pointChargeDto.getPointBalance())
+                .pointBalance(findById.getPointBalance() + pointChargeDto.getPointBalance())
                 .accumulationDate(findById.getAccumulationDate())
                 .usageDate(findById.getUsageDate())
                 .expirationDate(findById.getExpirationDate())
@@ -266,8 +232,9 @@ public class MemberService {
         return ResponseEntity.ok(new RestResult<>("success", "비밀번호수정이 완료되었습니다."));
     }
 
-
-
-
+    public List<LoginHistory> findHistory(Long memberSeq) {
+        Optional<Member> byId = memberRepository.findById(memberSeq);
+        return loginRecordRepository.findByMember(byId.get());
+    }
 
 }

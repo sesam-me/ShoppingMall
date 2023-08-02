@@ -1,5 +1,6 @@
 package com.example.shopping.member.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,5 +22,6 @@ public class LoginHistory {
 
     @ManyToOne
     @JoinColumn(name = "member_seq")
+    @JsonIgnore
     private Member member;
 }

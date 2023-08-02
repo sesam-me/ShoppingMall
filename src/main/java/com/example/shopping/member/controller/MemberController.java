@@ -3,6 +3,7 @@ package com.example.shopping.member.controller;
 import com.example.shopping.common.RestResult;
 import com.example.shopping.member.domain.Response.MemberResponse;
 import com.example.shopping.member.domain.dto.*;
+import com.example.shopping.member.domain.entity.LoginHistory;
 import com.example.shopping.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -65,9 +66,10 @@ public class MemberController {
     }
 
 
-
-
-
+    @GetMapping("/history/{memberSeq}")
+    public List<LoginHistory> findHistory(@PathVariable Long memberSeq) {
+        return memberService.findHistory(memberSeq);
+    }
 
 //    ## point ##
 //    @PostMapping("/insert/point")

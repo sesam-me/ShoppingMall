@@ -1,5 +1,6 @@
 package com.example.shopping.product.controller;
 
+import com.example.shopping.member.domain.entity.LoginHistory;
 import com.example.shopping.product.domain.request.ProductRequest;
 import com.example.shopping.product.domain.request.ProductUpdateRequest;
 import com.example.shopping.product.domain.response.ProductResponse;
@@ -27,8 +28,6 @@ public class ProductController {
     }
     @PostMapping
     public void save(@RequestBody ProductRequest productRequest) {
-        System.out.println(productRequest.toString());
-
         productService.save(productRequest);
     }
 

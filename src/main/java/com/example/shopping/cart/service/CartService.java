@@ -5,12 +5,16 @@ import com.example.shopping.cart.domain.request.CartRequest;
 import com.example.shopping.cart.domain.request.CartUpdateRequest;
 import com.example.shopping.cart.domain.response.CartResponse;
 import com.example.shopping.cart.repository.CartRepository;
+import com.example.shopping.common.RestResult;
+import com.example.shopping.member.domain.entity.Member;
+import com.example.shopping.member.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
-
+import java.util.Optional;
 
 
 @Service
@@ -19,6 +23,7 @@ import java.util.List;
 @Slf4j
 public class CartService {
     private final CartRepository cartRepository;
+    private final MemberRepository memberRepository;
 
     public List<CartResponse> findAllCart() {
         List<Cart> all = cartRepository.findAll();
@@ -39,7 +44,16 @@ public class CartService {
         return new CartResponse(cart);
     }
 
-    private Cart findById(Long cartSeq) {
+    public Cart findById(Long cartSeq) {
         return cartRepository.findById(cartSeq).orElseThrow(() -> new RuntimeException());
     }
+
+    public ResponseEntity<RestResult<Object>> getCarts(Long userSeq) {
+        Optional<Member> member = memberRepository.findById(userSeq);
+
+        List<Object[]> cartsWithProductsByMemberSeq = cartRepository.findCartsWithProductsByMemberSeq(userSeq);
+
+        return ResponseEntity.ok(new RestResult<>("success", cartsWithProductsByMemberSeq));
+    }
+
 }

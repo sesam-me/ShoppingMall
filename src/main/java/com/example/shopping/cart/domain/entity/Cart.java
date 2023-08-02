@@ -22,11 +22,14 @@ public class Cart {
     private Integer cartCount;
 
     @ManyToOne
+    @JoinColumn(name = "member_seq")
     @JsonIgnore
     private Member member;
 
-    @OneToMany(mappedBy = "carts", fetch = FetchType.LAZY)
-    private List<Product> products;
+    @ManyToOne
+    @JoinColumn(name = "product_seq")
+    @JsonIgnore
+    private Product products;
 
     public void update(Integer cartCount) {
         this.cartCount = cartCount;

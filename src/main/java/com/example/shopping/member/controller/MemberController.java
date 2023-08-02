@@ -33,8 +33,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public MemberLoginResponse login(@RequestBody MemberLoginDto memberLoginDto) {
-
+    public ResponseEntity<RestResult<Object>> login(@RequestBody MemberLoginDto memberLoginDto) {
         return memberService.memberLogin(memberLoginDto);
     }
 
@@ -47,6 +46,28 @@ public class MemberController {
     public ResponseEntity<RestResult<Object>> pointCharge(@RequestBody PointChargeDto pointChargeDto, @PathVariable("id")String id){
         return memberService.pointCharge(pointChargeDto, id);
     }
+
+//   ID찾기
+    @GetMapping("/findId/{phoneNum}")
+    public ResponseEntity<RestResult<Object>> findIdByPhoneNum(@PathVariable("phoneNum")String phoneNum){
+        return memberService.findByPhoneNum(phoneNum);
+    }
+
+//    PASSWORD찾기
+    @GetMapping("/findPassword/{id}")
+    public ResponseEntity<RestResult<Object>> findById(@PathVariable("id")String id){
+        return memberService.findById(id);
+    }
+
+    @PostMapping ("/checkCurrentPassword/{id}")
+    public ResponseEntity<RestResult<Object>> checkCurrentPassword(@RequestBody PasswordUpdateDto passwordUpdateDto, @PathVariable("id")String id){
+        return memberService.checkCurrentPassword(passwordUpdateDto, id);
+    }
+
+
+
+
+
 
 //    ## point ##
 //    @PostMapping("/insert/point")

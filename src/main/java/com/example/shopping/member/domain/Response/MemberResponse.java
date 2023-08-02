@@ -1,7 +1,9 @@
 package com.example.shopping.member.domain.Response;
 
+import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.member.domain.entity.Grade;
+import com.example.shopping.member.domain.entity.LoginHistory;
 import com.example.shopping.member.domain.entity.Member;
 import com.example.shopping.member.domain.entity.Point;
 import lombok.*;
@@ -20,9 +22,12 @@ public class MemberResponse {
     private String username;
     private LocalDateTime registrationDate = LocalDateTime.now();
     private String address;
+    private String phoneNum;
     private List<DeliveryDto> deliveries;
     private Point point;
     private Grade grade;
+    private List<LoginHistory> loginHistory;
+    private List<Cart> carts;
 
 
     public MemberResponse(Member member) {
@@ -32,10 +37,14 @@ public class MemberResponse {
         this.username = member.getUsername();
         this.registrationDate = member.getRegistrationDate();
         this.address = member.getAddress();
+        this.phoneNum = member.getPhoneNum();
         this.deliveries = member.getDeliveries() != null ?
                 member.getDeliveries().stream().map(DeliveryDto::new).toList() : new ArrayList<>();
         this.point = member.getPoint();
         this.grade = member.getGrade();
+        this.loginHistory = member.getLoginHistory();
+        this.carts = member.getCarts();
+
     }
 
     @Getter @AllArgsConstructor

@@ -1,4 +1,4 @@
-package com.example.shopping.member.domain.dto;
+package com.example.shopping.member.domain.Response;
 
 import com.example.shopping.delivery.domain.entity.Delivery;
 import lombok.AllArgsConstructor;
@@ -14,6 +14,7 @@ public class MemberLoginResponse {
     private String id;
     private String address;
     private String username;
+    private String phoneNum;
     private List<Delivery> deliveries;
     private Boolean isLogin;
 }

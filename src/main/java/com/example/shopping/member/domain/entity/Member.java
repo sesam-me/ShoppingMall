@@ -1,12 +1,16 @@
 package com.example.shopping.member.domain.entity;
 
+import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.payment.domain.entity.Payment;
 import com.example.shopping.product.domain.entity.Interest;
-import com.example.shopping.review.domain.entity.Review;
 import com.example.shopping.review.domain.entity.ReviewMember;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,6 +28,7 @@ public class Member {
     private String id;
     private String password;
     private String username;
+    private String phoneNum;
 
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
@@ -51,6 +56,13 @@ public class Member {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Interest> interests;
+
+    @OneToMany(mappedBy = "member")
+    @JsonIgnore // 순환 참조 끊기, member로 다시 순환해서 돌아올 때 끝내!
+    private List<LoginHistory> loginHistory;
+
+    @OneToMany(mappedBy = "member")
+    private List<Cart> carts;
 
     @Override
     public String toString() {

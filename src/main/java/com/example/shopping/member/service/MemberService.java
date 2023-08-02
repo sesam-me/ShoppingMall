@@ -136,24 +136,24 @@ public class MemberService {
         }
 
         // 위에서 찾아온 회원의 정보에서 꺼내온 비밀번호와 유저가 입력한 번호가 같다면 .. ? 로그인을 성공 시켜주고  로그인 이력 테이블에 성공로그를 적재한다..
-        MemberLoginResponse
-                    .builder()
-                    .address(findMember.getAddress())
-                    .id(findMember.getId())
-                    .deliveries(findMember.getDeliveries())
-                    .username(findMember.getUsername())
-                    .phoneNum(findMember.getPhoneNum())
-                    .isLogin(true)
-                    .build();
+        MemberLoginResponse build = MemberLoginResponse
+                .builder()
+                .address(findMember.getAddress())
+                .id(findMember.getId())
+                .deliveries(findMember.getDeliveries())
+                .username(findMember.getUsername())
+                .phoneNum(findMember.getPhoneNum())
+                .isLogin(true)
+                .build();
 
-            LoginHistory loginRecord = LoginHistory.builder()
+        LoginHistory loginRecord = LoginHistory.builder()
                     .member(findMember)
                     .loginTime(LocalDateTime.now())
                     .isSuccessfulLogin(true)
                     .build();
             loginRecordRepository.save(loginRecord);
 
-            return ResponseEntity.ok(new RestResult<>("success", "로그인 성공"));
+            return ResponseEntity.ok(new RestResult<>("success", build));
         }
 
 

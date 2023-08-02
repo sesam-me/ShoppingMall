@@ -8,6 +8,7 @@ import com.example.shopping.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,6 +42,18 @@ public class ProductService {
         return productRepository.findById(productSeq).orElseThrow(() -> new RuntimeException());
     }
 
+//  # 방법 1) 상품명으로 상품 검색
+    public List<ProductResponse> searchProductByKeyword(String productName) {
+        Specification<Product> spec = ProductSpecifications.byKeyword(productName);
+        List<Product> all = productRepository.findAll(spec);
+        return all.stream().map(ProductResponse::new).toList();
+    }
 
+
+//    # 방법 2)
+    public List<ProductResponse> searchProductByHnameAndEname(String productName){
+        List<Product> product = productRepository.searchProductByHnameAndEname(productName);
+        return product.stream().map(ProductResponse::new).toList();
+    }
 }
 

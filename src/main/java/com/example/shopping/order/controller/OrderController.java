@@ -23,8 +23,8 @@ public class OrderController {
     }
 
     @PostMapping("{productSeq}")
-    public void saveOrder(@RequestBody OrderRequest orderRequest, @RequestBody HistoryRequest historyRequest, @PathVariable("productSeq") Long productSeq) {
-        orderService.saveOrder(orderRequest,historyRequest ,productSeq);
+    public void saveOrder(@RequestBody OrderRequest orderRequest, @PathVariable("productSeq") Long productSeq) {
+        orderService.saveOrder(orderRequest, productSeq);
     }
 
     @DeleteMapping("{orderSeq}")

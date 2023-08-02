@@ -22,7 +22,7 @@ public class ReviewRequest {
                 .content(content)
                 .rating(rating)
                 .reviewImg(reviewImg)
-                .heart(heart)
+                .heart(0)
                 .product(Product.builder().productSeq(productSeq).build())
                 .build();
     }

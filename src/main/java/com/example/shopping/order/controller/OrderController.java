@@ -24,7 +24,7 @@ public class OrderController {
 
     @PostMapping("{productSeq}")
     public void saveOrder(@RequestBody OrderRequest orderRequest, @PathVariable("productSeq") Long productSeq) {
-        orderService.saveOrder(orderRequest ,productSeq);
+        orderService.saveOrder(orderRequest, productSeq);
     }
 
     @DeleteMapping("{orderSeq}")

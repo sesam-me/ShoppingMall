@@ -42,7 +42,7 @@ public class MemberResponse {
     class DeliveryDto{
         private Long deliverSeq;
         private LocalDateTime deliveryDate;
-        private String deliverStatus;
+        private Integer deliverStatus;
         private String recipientInformation;
         private String deliveryMethod;
         private Integer deliveryFee;

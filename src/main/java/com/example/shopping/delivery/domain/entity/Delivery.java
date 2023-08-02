@@ -16,7 +16,7 @@ public class Delivery {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long deliverySeq;
     private LocalDateTime deliveryDate;
-    private String deliveryStatus;
+    private Integer deliveryStatus;
     private String recipientInformation;
     private String deliveryMethod;
     private Integer deliveryFee;

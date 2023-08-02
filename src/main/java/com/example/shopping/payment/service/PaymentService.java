@@ -15,6 +15,7 @@ import java.util.Optional;
 public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final MemberRepository memberRepository;
+
     public void paymentInsert(PaymentInsertDto paymentInsertDto, Member member){
         Optional<Member> findByMemberSeq = memberRepository.findById(member.getMemberSeq());
 

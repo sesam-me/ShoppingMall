@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class DeliveryInsertDto {
     private LocalDateTime deliveryDate;
-    private String deliverStatus;
+    private Integer deliverStatus;
     private String recipientInformation;
     private String deliveryMethod;
     private Integer deliveryFee;

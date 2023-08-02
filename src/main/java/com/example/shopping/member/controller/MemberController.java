@@ -29,7 +29,7 @@ public class MemberController {
 
     @GetMapping("{id}")
     public ResponseEntity<RestResult<Object>> findById2(@PathVariable String id) {
-        return memberService.findById(id);
+        return memberService.findById2(id);
     }
 
     @PostMapping("/login")

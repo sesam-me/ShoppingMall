@@ -25,7 +25,7 @@ public class Interest {
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "member_seq")
+    @JoinColumn(name = "memberSeq")
     private Member member;
 
 

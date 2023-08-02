@@ -138,6 +138,7 @@ public class MemberService {
         // 위에서 찾아온 회원의 정보에서 꺼내온 비밀번호와 유저가 입력한 번호가 같다면 .. ? 로그인을 성공 시켜주고  로그인 이력 테이블에 성공로그를 적재한다..
         MemberLoginResponse build = MemberLoginResponse
                 .builder()
+                .memberSeq(findMember.getMemberSeq())
                 .address(findMember.getAddress())
                 .id(findMember.getId())
                 .deliveries(findMember.getDeliveries())
@@ -169,6 +170,7 @@ public class MemberService {
 
 
         Member member = Member.builder()
+                .memberSeq(findById.getMemberSeq())
                 .id(findById.getId())
                 .registrationDate(findById.getRegistrationDate())
                 .grade(findById.getGrade())

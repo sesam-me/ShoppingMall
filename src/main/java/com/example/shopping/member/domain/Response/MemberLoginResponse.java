@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor @NoArgsConstructor @Builder
 public class MemberLoginResponse {
+    private Long memberSeq;
     private String id;
     private String address;
     private String username;

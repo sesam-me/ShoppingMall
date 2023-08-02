@@ -6,8 +6,13 @@ import com.example.shopping.member.domain.entity.Grade;
 import com.example.shopping.member.domain.entity.LoginHistory;
 import com.example.shopping.member.domain.entity.Member;
 import com.example.shopping.member.domain.entity.Point;
+import com.example.shopping.product.domain.dto.InterestDto;
+import com.example.shopping.product.domain.entity.Interest;
+import com.example.shopping.product.domain.entity.Product;
+import com.example.shopping.review.domain.entity.Review;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,7 @@ public class MemberResponse {
     private Point point;
     private Grade grade;
     private List<LoginHistory> loginHistory;
+    private List<InterestsDto> interests;
     private List<Cart> carts;
 
 
@@ -43,8 +49,40 @@ public class MemberResponse {
         this.point = member.getPoint();
         this.grade = member.getGrade();
         this.loginHistory = member.getLoginHistory();
+        this.interests = member.getInterests() != null ?
+        member.getInterests().stream().map(InterestsDto::new).toList() :new ArrayList<>();
         this.carts = member.getCarts();
 
+    }
+
+    @Getter @AllArgsConstructor
+    class InterestsDto {
+        private Long interestSeq;
+        private LocalDate interestDate; //관심 표현한 날짜
+        private Integer interestLike; // 관심 상태 좋아요인지 아닌지
+        private Long productSeq;
+        private String hname;
+        private String ename;
+        private String imgUrl;
+        private String detailImgUrl;
+        private LocalDate createAt;
+        private String brand;
+        private Integer price;
+        private Review review;
+
+        public InterestsDto(Interest interest) {
+            this.interestSeq = interest.getInterestSeq();
+            this.interestDate = interest.getInterestDate();
+            this.interestLike = interest.getInterestLike();
+            this.productSeq = interest.getProduct().getProductSeq();
+            this.hname = interest.getProduct().getHname();
+            this.ename = interest.getProduct().getEname();
+            this.imgUrl = interest.getProduct().getImgUrl();
+            this.detailImgUrl = interest.getProduct().getDetailImgUrl();
+            this.createAt = interest.getProduct().getCreateAt();
+            this.brand = interest.getProduct().getBrand();
+            this.price = interest.getProduct().getPrice();
+        }
     }
 
     @Getter @AllArgsConstructor

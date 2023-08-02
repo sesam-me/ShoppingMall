@@ -1,6 +1,7 @@
 package com.example.shopping.product.controller;
 
 import com.example.shopping.member.domain.entity.LoginHistory;
+import com.example.shopping.product.domain.entity.Product;
 import com.example.shopping.product.domain.request.ProductRequest;
 import com.example.shopping.product.domain.request.ProductUpdateRequest;
 import com.example.shopping.product.domain.response.ProductResponse;
@@ -22,10 +23,16 @@ public class ProductController {
         return productService.findAll();
     }
 
+    @GetMapping("{productSeq}")
+    public ProductResponse getProduct(@PathVariable Long productSeq) {
+        return productService.getProductResponse(productSeq);
+    }
+
     @PutMapping("{productSeq}")
     public ProductResponse update(@PathVariable("productSeq") Long productSeq, @RequestBody ProductUpdateRequest productUpdateRequest) {
         return productService.update(productSeq, productUpdateRequest);
     }
+
     @PostMapping
     public void save(@RequestBody ProductRequest productRequest) {
         productService.save(productRequest);

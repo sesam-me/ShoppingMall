@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/qas")
+@CrossOrigin("*")
 public class QuestionAndAnswerController {
     private final QuestionAndAnswerService questionAndAnswerService;
 
@@ -19,10 +20,10 @@ public class QuestionAndAnswerController {
         return questionAndAnswerService.findAllQAndA();
     }
 
-    @PostMapping("{productSeq}")
+    @PostMapping("{productSeq}/{memberSeq}")
     public void saveQAndA(@RequestBody QuestionAndAnswerRequest questionAndAnswerRequest,
-                          @PathVariable("productSeq")Long productSeq) {
-        questionAndAnswerService.saveQAndA(questionAndAnswerRequest, productSeq);
+                          @PathVariable("productSeq")Long productSeq, @PathVariable("memberSeq")Long memberSeq) {
+        questionAndAnswerService.saveQAndA(questionAndAnswerRequest, productSeq, memberSeq);
     }
 
     @DeleteMapping("{qaSeq}")

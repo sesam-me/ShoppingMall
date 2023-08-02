@@ -12,6 +12,7 @@ public class QuestionAndAnswerDto {
     private String title; //질문 제목
     private String content; //질문 내용
     private String answer; //답변
+    private String name;
 //    private Long productSeq;
 
     public QuestionAndAnswerDto(QuestionAndAnswer questionAndAnswer) {
@@ -19,6 +20,7 @@ public class QuestionAndAnswerDto {
         this.title = questionAndAnswer.getTitle();
         this.content = questionAndAnswer.getContent();
         this.answer = questionAndAnswer.getAnswer();
+        this.name = questionAndAnswer.getMember().getId();
 //        this.productSeq = questionAndAnswer.getProduct().getProductSeq();
     }
 }

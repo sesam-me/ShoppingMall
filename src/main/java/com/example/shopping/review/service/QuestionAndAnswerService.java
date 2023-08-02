@@ -21,9 +21,9 @@ public class QuestionAndAnswerService {
         return questionAndAnswerRepository.findAll();
     }
 
-    public void saveQAndA(QuestionAndAnswerRequest questionAndAnswerRequest, Long productSeq) {
+    public void saveQAndA(QuestionAndAnswerRequest questionAndAnswerRequest, Long productSeq, Long memberSeq) {
 
-        questionAndAnswerRepository.save(questionAndAnswerRequest.toEntity(productSeq));
+        questionAndAnswerRepository.save(questionAndAnswerRequest.toEntity(productSeq, memberSeq));
     }
 
     public void deleteQAndA(Long qaSeq) {

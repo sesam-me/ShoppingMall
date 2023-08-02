@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +40,11 @@ public class ProductService {
 
     private Product findById(Long productSeq) {
         return productRepository.findById(productSeq).orElseThrow(() -> new RuntimeException());
+    }
+
+    public ProductResponse getProductResponse(Long productSeq) {
+        Optional<Product> productResponse = productRepository.findById(productSeq);
+        return productResponse.map(ProductResponse::new).orElse(null);
     }
 
 

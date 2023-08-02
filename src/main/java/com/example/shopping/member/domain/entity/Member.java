@@ -4,6 +4,7 @@ import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.payment.domain.entity.Payment;
 import com.example.shopping.product.domain.entity.Interest;
+import com.example.shopping.review.domain.entity.QuestionAndAnswer;
 import com.example.shopping.review.domain.entity.ReviewMember;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -63,6 +64,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Cart> carts;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<QuestionAndAnswer> questionAndAnswers;
 
     @Override
     public String toString() {

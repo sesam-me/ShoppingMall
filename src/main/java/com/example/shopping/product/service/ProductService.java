@@ -1,16 +1,21 @@
 package com.example.shopping.product.service;
 
+import com.example.shopping.common.RestResult;
 import com.example.shopping.product.domain.entity.Product;
 import com.example.shopping.product.domain.request.ProductRequest;
 import com.example.shopping.product.domain.request.ProductUpdateRequest;
 import com.example.shopping.product.domain.response.ProductResponse;
+import com.example.shopping.product.domain.response.ProductResponse2;
 import com.example.shopping.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,8 +57,36 @@ public class ProductService {
 
 //    # 방법 2)
     public List<ProductResponse> searchProductByHnameAndEname(String productName){
-        List<Product> product = productRepository.searchProductByHnameAndEname(productName);
-        return product.stream().map(ProductResponse::new).toList();
+        List<Product> products = productRepository.searchProductByHnameAndEname(productName);
+        return products.stream().map(ProductResponse::new).toList();
     }
+
+
+//    사이즈, 컬러 검색
+//    TODO 이게 뭐야!!!! ResponseEntity<RestResult<Object>>
+    public ResponseEntity<RestResult<Object>> searchBySizeAndColor(List<Integer> size, List<String> color){
+        List<Object[]> products = productRepository.searchSizeAndColor(size, color);
+
+        List list = new ArrayList();
+
+        for (Object[] row : products) {
+                ProductResponse2 productResponse2 = ProductResponse2.builder()
+                    .hName((String) row[0])
+                    .eName((String) row[1])
+                    .imgUrl((String) row[2])
+                    .detailImgUrl((String) row[3])
+                    .createAt((LocalDate) row[4])
+                    .brand((String) row[5])
+                    .price((Integer) row[6])
+                    .size((Integer) row[7])
+                    .color((String) row[8])
+                    .build();
+            list.add(productResponse2);
+        }
+
+        return ResponseEntity.ok(new RestResult<>("success", list));
+//        return products.stream().map(ProductResponse2::new).toList();
+    }
+
 }
 

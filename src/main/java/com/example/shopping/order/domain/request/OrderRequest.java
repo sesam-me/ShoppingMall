@@ -1,5 +1,6 @@
 package com.example.shopping.order.domain.request;
 
+import com.example.shopping.member.domain.entity.Member;
 import com.example.shopping.order.domain.entity.Order;
 import com.example.shopping.product.domain.entity.Product;
 import lombok.AllArgsConstructor;
@@ -24,12 +25,14 @@ public class OrderRequest {
     private LocalDateTime paymentDate; //결재일
     private String recipientAddress; //배송지
     private Long memberSeq;
+    private Long productSeq;
 
 
-    public Order toEntity(Long productSeq) {
+    public Order toEntity(Long productSeq, Long memberSeq) {
         return Order.builder()
                 .orderNum(orderNum)
                 .orderDate(orderDate)
+                .member(Member.builder().memberSeq(memberSeq).build())
                 .product(Product.builder().productSeq(productSeq).build())
                 .build();
     }

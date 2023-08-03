@@ -52,4 +52,9 @@ public class DeliveryService {
         List<Delivery> all = deliveryRepository.findAll();
         return all.stream().map(DeliveryResponse::new).toList();
     }
+
+    public List<Delivery> findByMemerSeq(Long memberSeq) {
+        Optional<Member> findByMemberSeq = memberRepository.findById(memberSeq);
+        return deliveryRepository.findAllByMember(findByMemberSeq.get());
+    }
 }

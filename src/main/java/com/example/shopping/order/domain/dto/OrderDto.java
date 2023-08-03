@@ -2,12 +2,14 @@ package com.example.shopping.order.domain.dto;
 
 import com.example.shopping.order.domain.entity.Order;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class OrderDto {
     private Long orderSeq;
     private String orderNum; // 주문번호

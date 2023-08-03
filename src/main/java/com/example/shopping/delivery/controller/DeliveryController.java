@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/deliveries")
+@CrossOrigin("*")
 public class DeliveryController {
     private final DeliveryService deliveryService;
 
@@ -25,5 +26,10 @@ public class DeliveryController {
     public List<DeliveryResponse> findAll(){
         return deliveryService.findAll();
         //TODO DeliveryResponse 만들기
+    }
+
+    @GetMapping("{memberSeq}")
+    public List<Delivery> findByMemerSeq(@PathVariable Long memberSeq) {
+        return deliveryService.findByMemerSeq(memberSeq);
     }
 }

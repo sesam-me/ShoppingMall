@@ -2,6 +2,7 @@ package com.example.shopping.member.domain.entity;
 
 import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.delivery.domain.entity.Delivery;
+import com.example.shopping.order.domain.entity.Order;
 import com.example.shopping.payment.domain.entity.Payment;
 import com.example.shopping.product.domain.entity.Interest;
 import com.example.shopping.review.domain.entity.QuestionAndAnswer;
@@ -67,6 +68,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<QuestionAndAnswer> questionAndAnswers;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Order> orders;
 
     @Override
     public String toString() {

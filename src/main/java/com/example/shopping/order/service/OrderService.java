@@ -7,6 +7,7 @@ import com.example.shopping.delivery.repository.DeliveryRepository;
 import com.example.shopping.inventory.domain.entity.Inventory;
 import com.example.shopping.inventory.repository.InventoryRepository;
 import com.example.shopping.member.domain.entity.Member;
+import com.example.shopping.member.repository.MemberRepository;
 import com.example.shopping.order.domain.entity.History;
 import com.example.shopping.order.domain.entity.Order;
 import com.example.shopping.order.domain.request.HistoryRequest;
@@ -21,6 +22,7 @@ import com.example.shopping.payment.domain.entity.Payment;
 import com.example.shopping.payment.domain.entity.PaymentHistory;
 import com.example.shopping.payment.repository.PaymentHistoryRepository;
 import com.example.shopping.payment.repository.PaymentRepository;
+import com.example.shopping.product.domain.dto.ProductDto;
 import com.example.shopping.product.domain.entity.Product;
 import com.example.shopping.product.domain.response.ProductResponse;
 import com.example.shopping.product.repository.ProductRepository;
@@ -31,6 +33,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,18 +49,26 @@ public class OrderService {
     private final PaymentRepository paymentRepository;
     private final DeliveryRepository deliveryRepository;
     private final PaymentHistoryRepository paymentHistoryRepository;
+    private final MemberRepository memberRepository;
+
+    public List<OrderResponse> findByMemberSeq(Long memberSeq) {
+        Optional<Member> byId = memberRepository.findById(memberSeq);
+        List<Order> byMember = orderRepository.findAllByMember(byId.get());
+        return byMember.stream().map(OrderResponse::new).toList();
+    }
 
     public List<OrderResponse> findAllOrder() {
         List<Order> all = orderRepository.findAll();
         return all.stream().map(OrderResponse::new).toList();
     }
 
-    public ResponseEntity<RestResult<Object>> saveOrder(OrderRequest orderRequest, Long productSeq) {
+    public ResponseEntity<RestResult<Object>> saveOrder(OrderRequest orderRequest, Long productSeq, Long memberSeq) {
         // 유저의 잔액을 조회 해야힘..
         // 잔액이 상품의 가격보다 낮다 ? return
         Payment save;
+        Product product;
         try {
-            orderRepository.save(orderRequest.toEntity(productSeq));
+            orderRepository.save(orderRequest.toEntity(productSeq, memberSeq));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -69,6 +80,7 @@ public class OrderService {
                     .historyDate(null)
                     .cancelContent(null)
                     .refundContent(null)
+                    .product(Product.builder().productSeq(productSeq).build())
                     .build();
             historyRepository.save(history);
 
@@ -81,7 +93,7 @@ public class OrderService {
         // 재고를 체크..
 //        재고테이블에서 빠지는 로직;
         try {
-            Product product = productRepository.findById(productSeq)
+            product = productRepository.findById(productSeq)
                     .orElseThrow(()->new RuntimeException("We_don't_have_product"));
 
             Optional<Inventory> inventory = inventoryRepository.findByProduct(product);
@@ -91,6 +103,8 @@ public class OrderService {
                         .body(new RestResult<>("bed_request", new RestError("bed_request", "no_more_inventory")));
             }
             Inventory inventory1 = Inventory.builder()
+                    .inventorySeq(inventory.get().getInventorySeq())
+                    .product(Product.builder().productSeq(productSeq).build())
                     .count(inventory.get().getCount() -1)
                     .sales(inventory.get().getSales() + 1)
                     .waste(inventory.get().getWaste())
@@ -109,6 +123,7 @@ public class OrderService {
                     .paymentMethod(orderRequest.getPaymentMethod())
                     .paymentStatus(orderRequest.getPaymentStatus())
                     .cardType(orderRequest.getCardType())
+                    .member(Member.builder().memberSeq(orderRequest.getMemberSeq()).build())
                     .paymentDate(orderRequest.getPaymentDate())
                     .build();
 
@@ -132,28 +147,53 @@ public class OrderService {
 
         try {
             Member member = Member.builder().memberSeq(orderRequest.getMemberSeq()).build();
-            Delivery delivery = Delivery.builder()
-                    .deliveryStatus(1)
-                    .deliveryDate(null)
-                    .recipientInformation(null)
-                    .deliveryMethod(null)
-                    .deliveryFee(null)
-                    .recipientAddress(orderRequest.getRecipientAddress())
-                    .recipientPhoneNumber(null)
-                    .deliveryFeeCondition(null)
-                    .deliveryCompanyName("한진택배")
-                    .deliveryCompanyContact(null)
-                    .deliveryLocation(null)
-                    .member(member)
-                    .payment(save)
-                    .build();
-            deliveryRepository.save(delivery);
+
+//            Order order = orderRepository.findByMember(member);
+            List<Order> orders = orderRepository.findAllByMember(member);
+            List<Delivery> deliveries = new ArrayList<>();
+
+            for (Order order : orders) {
+                // 이미 생성된 Delivery가 있는지 확인
+                boolean isExistingDelivery = deliveries.stream()
+                        .anyMatch(delivery -> delivery.getOrder().equals(order));
+
+                if (!isExistingDelivery) {
+                    Delivery delivery = Delivery.builder()
+                            .deliveryStatus(1)
+                            .deliveryDate(null)
+                            .recipientInformation(null)
+                            .deliveryMethod(null)
+                            .deliveryFee(null)
+                            .recipientAddress(orderRequest.getRecipientAddress())
+                            .recipientPhoneNumber(null)
+                            .deliveryFeeCondition(null)
+                            .deliveryCompanyName("한진택배")
+                            .deliveryCompanyContact(null)
+                            .deliveryLocation(null)
+                            .member(member)
+                            .product(product)
+                            .order(order)
+                            .payment(save)
+                            .build();
+
+                    deliveries.add(delivery);
+                }
+            }
+
+            // deliveries 리스트에 있는 Delivery들을 모두 저장
+            for (Delivery delivery : deliveries) {
+                deliveryRepository.save(delivery);
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new RestResult<>("error", new RestError("server_error", "server_error")));
         }
+
+
+
         // 전부 다 정상적이라면 ..?
         return ResponseEntity.ok(new RestResult<>("success", "주문성공"));
 

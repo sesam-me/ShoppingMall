@@ -1,5 +1,7 @@
 package com.example.shopping.order.domain.entity;
 
+import com.example.shopping.delivery.domain.entity.Delivery;
+import com.example.shopping.member.domain.entity.Member;
 import com.example.shopping.product.domain.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,6 +26,15 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "productSeq")
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "memberSeq")
+    private Member member;
+
+    @OneToMany(mappedBy = "order")
+    private List<Delivery> deliveries;
+
+
 
     public void update(String orderNum, LocalDate orderDate) {
         this.orderNum = orderNum;

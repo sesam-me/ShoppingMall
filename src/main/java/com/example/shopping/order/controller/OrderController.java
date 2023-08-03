@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/orders")
+@CrossOrigin("*")
 public class OrderController {
     private final OrderService orderService;
 
@@ -22,9 +23,14 @@ public class OrderController {
         return orderService.findAllOrder();
     }
 
-    @PostMapping("{productSeq}")
-    public void saveOrder(@RequestBody OrderRequest orderRequest, @PathVariable("productSeq") Long productSeq) {
-        orderService.saveOrder(orderRequest, productSeq);
+    @GetMapping("{memberSeq}")
+    public List<OrderResponse> findByMemberSeq(@PathVariable Long memberSeq) {
+        return orderService.findByMemberSeq(memberSeq);
+    }
+
+    @PostMapping("{productSeq}/{memberSeq}")
+    public void saveOrder(@RequestBody OrderRequest orderRequest, @PathVariable("productSeq") Long productSeq, @PathVariable("memberSeq") Long memberSeq) {
+        orderService.saveOrder(orderRequest, productSeq, memberSeq);
     }
 
     @DeleteMapping("{orderSeq}")

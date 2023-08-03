@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeliveryResponse {
+public class DeliveryResponse2 {
     private Long deliverySeq;
     private LocalDateTime deliveryDate;
     private Integer deliveryStatus;
@@ -28,12 +28,11 @@ public class DeliveryResponse {
     private String deliveryCompanyContact;
     private String deliveryLocation;
 
-    private Member member;
-    private Payment payment;
+
 
 //    private DeliveryCompany deliveryCompany;
 
-    public DeliveryResponse(Delivery delivery) {
+    public DeliveryResponse2(Delivery delivery) {
         this.deliverySeq = delivery.getDeliverySeq();
         this.deliveryDate = delivery.getDeliveryDate();
         this.deliveryStatus = delivery.getDeliveryStatus();
@@ -42,18 +41,7 @@ public class DeliveryResponse {
         this.deliveryFee = delivery.getDeliveryFee();
         this.recipientAddress = delivery.getRecipientAddress();
         this.recipientPhoneNumber = delivery.getRecipientPhoneNumber();
-        this.member = Member.builder()
-                .memberSeq(delivery.getMember().getMemberSeq())
-                .address(delivery.getMember().getAddress())
-                .id(delivery.getMember().getId())
-                .username(delivery.getMember().getUsername())
-                .registrationDate(delivery.getMember().getRegistrationDate())
-                .point(delivery.getMember().getPoint())
-                .grade(delivery.getMember().getGrade())
-                .build();
-        this.payment = Payment.builder()
-                .paymentAmount(delivery.getPayment().getPaymentAmount())
-                .build();
+
 //        this.deliveryCompany = delivery.getDeliveryCompany();
     }
 

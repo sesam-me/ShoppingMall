@@ -31,6 +31,7 @@ public class MemberService {
     private final PointRepository pointRepository;
     private final GradeRepository gradeRepository;
     private final LoginRecordRepository loginRecordRepository;
+    private final MailService mailService;
 
     public ResponseEntity<RestResult<Object>> findById2(String id) {
         Member byId = memberRepository.findById(id);
@@ -192,18 +193,37 @@ public class MemberService {
 
 
 //    # 비밀번호 찾기
-    public ResponseEntity<RestResult<Object>> findById(String id){
+    public ResponseEntity<RestResult<Object>> findPasswordById(String id) throws Exception {
 //        TODO
 //        회원의 ID 로 비밀번호를 찾는 기능을 만들어야함 (ok)
 //        회원의 ID를 입력하면 그 이메일로 임시비밀번호가 발송되고 임시비밀번호로 바뀌어야함
+
+
         Member byId = memberRepository.findById(id);
+        String ePw = mailService.sendVerificationMessage(id);
 
         if (byId == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new RestResult<>("error", new RestError("ID_NOT_FOUND", "일치하는 ID가 없습니다.")));
         }
 
-        return ResponseEntity.ok(new RestResult<>("success", byId.getId()));
+        Member member = Member.builder()
+                .memberSeq(byId.getMemberSeq())
+                .id(byId.getId())
+                .password(ePw)
+                .username(byId.getUsername())
+                .phoneNum(byId.getPhoneNum())
+                .registrationDate(byId.getRegistrationDate())
+                .address(byId.getAddress())
+                .deliveries(byId.getDeliveries())
+                .point(byId.getPoint())
+                .grade(byId.getGrade())
+                .payment(byId.getPayment())
+                .build();
+
+        memberRepository.save(member);
+
+        return ResponseEntity.ok(new RestResult<>("success", "인증메일이 전송되었습니다."));
     }
 
 

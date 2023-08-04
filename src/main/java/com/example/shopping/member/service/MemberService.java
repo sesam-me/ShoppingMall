@@ -154,7 +154,6 @@ public class MemberService {
 
 //    POINT 충전
     public ResponseEntity<RestResult<Object>> pointCharge(PointChargeDto pointChargeDto, String id){
-//        TODO 여기 원래 Obtional들어가는거 아닌가..?
 //        null값일 경우를 대비해, 미리 오류 처리를 어떻게 할 것인지 정해둬야 함.
 //        방법 1) return pointRepository.findById(memberSeq).orElseThrow()
 //        방법 2) return pointRepository.findById(memberSeq).orElse(null)
@@ -194,10 +193,8 @@ public class MemberService {
 
 //    # 비밀번호 찾기
     public ResponseEntity<RestResult<Object>> findPasswordById(String id) throws Exception {
-//        TODO
 //        회원의 ID 로 비밀번호를 찾는 기능을 만들어야함 (ok)
-//        회원의 ID를 입력하면 그 이메일로 임시비밀번호가 발송되고 임시비밀번호로 바뀌어야함
-
+//        회원의 ID를 입력하면 그 이메일로 임시비밀번호가 발송되고 임시비밀번호로 바뀌어야함 (ok)
 
         Member byId = memberRepository.findById(id);
         String ePw = mailService.sendVerificationMessage(id);

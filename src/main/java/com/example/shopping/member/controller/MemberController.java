@@ -55,7 +55,7 @@ public class MemberController {
     }
 
 //    PASSWORD찾기
-    @GetMapping("/findPassword/{id}")
+        @GetMapping("/findPassword/{id}")
     public ResponseEntity<RestResult<Object>> findPasswordById(@PathVariable("id")String id) throws Exception {
         return memberService.findPasswordById(id);
     }

@@ -34,8 +34,6 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<Delivery> deliveries;
 
-
-
     public void update(String orderNum, LocalDate orderDate) {
         this.orderNum = orderNum;
         this.orderDate = orderDate;

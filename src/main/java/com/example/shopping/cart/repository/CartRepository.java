@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
-    Optional<Cart> findById(Long cartSeq);
-    @Query("SELECT c, p FROM Cart c JOIN c.products p WHERE c.member.memberSeq = :memberSeq")
-    List<Object[]> findCartsWithProductsByMemberSeq(Long memberSeq);
+
 
 }

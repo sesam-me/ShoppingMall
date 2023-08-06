@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class OrderRequest {
     private String orderNum; // 주문번호
-    private LocalDate orderDate; //주문일자
+    private LocalDateTime orderDate; //주문일자
     private int paymentAmount; // 결재금액
     private String paymentMethod; // 결재방법
     private String paymentStatus; // 결재상태

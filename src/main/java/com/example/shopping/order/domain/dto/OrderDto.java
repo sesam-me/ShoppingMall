@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 public class OrderDto {
     private Long orderSeq;
     private String orderNum; // 주문번호
-    private LocalDate orderDate; //주문일자
+    private LocalDateTime orderDate; //주문일자
 
     public OrderDto(Order order) {
         this.orderSeq = order.getOrderSeq();

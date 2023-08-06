@@ -1,15 +1,11 @@
 package com.example.shopping.member.domain.Response;
 
-import com.example.shopping.cart.domain.dto.CartDto;
-import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.member.domain.entity.Grade;
 import com.example.shopping.member.domain.entity.LoginHistory;
 import com.example.shopping.member.domain.entity.Member;
 import com.example.shopping.member.domain.entity.Point;
-import com.example.shopping.product.domain.dto.InterestDto;
 import com.example.shopping.product.domain.entity.Interest;
-import com.example.shopping.product.domain.entity.Product;
 import com.example.shopping.review.domain.entity.Review;
 import lombok.*;
 
@@ -34,7 +30,7 @@ public class MemberResponse {
     private Grade grade;
     private List<LoginHistory> loginHistory;
     private List<InterestsDto> interests;
-    private List<CartsDto> carts;
+
 
 
     public MemberResponse(Member member) {
@@ -52,25 +48,10 @@ public class MemberResponse {
         this.loginHistory = member.getLoginHistory();
         this.interests = member.getInterests() != null ?
         member.getInterests().stream().map(InterestsDto::new).toList() :new ArrayList<>();
-        this.carts = member.getCarts() != null ?
-        member.getCarts().stream().map(CartsDto::new).toList() : new ArrayList<>();
 
     }
 
-    @Getter @AllArgsConstructor
-    class CartsDto {
-        private Long cartSeq;
-        private Integer cartCount;
-        private Long memberSeq;
-        private Long productSeq;
 
-        public CartsDto(Cart cart) {
-            this.cartSeq = cart.getCartSeq();
-            this.cartCount = cart.getCartCount();
-            this.memberSeq = cart.getMember().getMemberSeq();
-            this.productSeq = cart.getProducts().getProductSeq();
-        }
-    }
 
     @Getter @AllArgsConstructor
     class InterestsDto {

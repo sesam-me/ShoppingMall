@@ -18,13 +18,13 @@ import java.time.LocalDateTime;
 public class Payment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentSeq;
-    private Long memberSeq;
     private int paymentAmount;
     private String paymentMethod;
     private String paymentStatus;
     private String cardType;
     private LocalDateTime paymentDate;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "member_seq")
     private Member member;
 }

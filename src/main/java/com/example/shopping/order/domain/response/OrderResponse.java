@@ -9,12 +9,13 @@ import com.example.shopping.product.domain.dto.ProductDto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 public class OrderResponse extends OrderDto {
     private String orderNum; // 주문번호
-    private LocalDate orderDate; //주문일자
+    private LocalDateTime orderDate; //주문일자
     private ProductDto product;
     private List<DeliveryResponse2> delivery;
 

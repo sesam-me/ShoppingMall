@@ -1,6 +1,5 @@
 package com.example.shopping.member.domain.entity;
 
-import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.order.domain.entity.Order;
 import com.example.shopping.payment.domain.entity.Payment;
@@ -49,9 +48,8 @@ public class Member {
     @JoinColumn(name = "grade_seq")
     private Grade grade;
 
-    @OneToOne
-    @JoinColumn(name = "payment_seq")
-    private Payment payment;
+    @OneToMany(mappedBy = "member")
+    private List<Payment> payment;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<ReviewMember> reviewMembers;
@@ -63,8 +61,6 @@ public class Member {
     @JsonIgnore // 순환 참조 끊기, member로 다시 순환해서 돌아올 때 끝내!
     private List<LoginHistory> loginHistory;
 
-    @OneToMany(mappedBy = "member")
-    private List<Cart> carts;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<QuestionAndAnswer> questionAndAnswers;

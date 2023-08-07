@@ -44,7 +44,7 @@ public class ProductController {
         productService.delete(productSeq);
     }
 
-// 방법1) 상품검색 : jpa, 따로 기억을 하고 있기 때문에 계속 DB를 가지 않아도 됨.
+// 방법1) 상품검색 : jpa, 따로 기억을 하고 있기 때문에 계속 DB가지 않아도 됨.
     @GetMapping("/searchProduct")
     public List<ProductResponse> searchProductByKeyword(@RequestParam("productName")String productName){
         return productService.searchProductByKeyword(productName);
@@ -56,7 +56,7 @@ public class ProductController {
     }
 
 //    사이즈, 컬러 검색
-    @GetMapping("/searchBySizeColor")
+    @PostMapping("/searchBySizeColor")
     public ResponseEntity<RestResult<Object>> searchBySizeAndColor(@RequestParam("size")List<Integer> size, @RequestParam("color")List<String> color){
         return productService.searchBySizeAndColor(size, color);
     }

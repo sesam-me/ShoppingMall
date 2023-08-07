@@ -71,7 +71,6 @@ public class ProductService {
 
 
 //    사이즈, 컬러 검색
-//    TODO 이게 뭐야!!!! ResponseEntity<RestResult<Object>>
     public ResponseEntity<RestResult<Object>> searchBySizeAndColor(List<Integer> size, List<String> color){
         List<Object[]> products = productRepository.searchSizeAndColor(size, color);
 

@@ -55,7 +55,7 @@ public class ReviewService {
         try {
             Optional<Review> review = reviewRepository.findById(reviewSeq);
             Review review1 = review.get();
-            review1.setHeart(review1.getHeart() + 1); // heart 라는 필드가 있어야 하는 이유 반전교화 공뷰
+            review1.setHeart(review1.getHeart() + 1); // heart 라는 필드가 있어야 하는 이유 반전교화 공부
             reviewRepository.save(review1);
 
         }catch (Exception e) {

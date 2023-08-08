@@ -71,14 +71,5 @@ public class MemberController {
         return memberService.findHistory(memberSeq);
     }
 
-//    ## point ##
-//    @PostMapping("/insert/point")
-//    public void pointInsert(@RequestBody PointInsertDto pointInsertDto){
-//        memberService.pointInsert(pointInsertDto);
-//    }
-//
-////    ## grade ##
-//    @PostMapping("insert/grade")
-//    public void gradeInsert(@RequestBody GradeInsertDto gradeInsertDto) {memberService.gradeInsert(gradeInsertDto);}
 
 }

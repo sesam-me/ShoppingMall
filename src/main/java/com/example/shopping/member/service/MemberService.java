@@ -36,7 +36,6 @@ public class MemberService {
     public ResponseEntity<RestResult<Object>> findById2(String id) {
         Member byId = memberRepository.findById(id);
 
-        // MemberResponse 클래스가 필요한 정보를 포함하도록 가정합니다.
         MemberResponse memberResponse = createMemberResponseFromMember(byId);
 
         return ResponseEntity.ok(new RestResult<>("success", memberResponse));
@@ -125,17 +124,21 @@ public class MemberService {
                     .body(new RestResult<>("error",new RestError("BAD_REQUEST","BAD_REQUEST")));
         }
 
+        MemberResponse memberResponse = createMemberResponseFromMember(findMember);
+
         // 위에서 찾아온 회원의 정보에서 꺼내온 비밀번호와 유저가 입력한 번호가 같다면 .. ? 로그인을 성공 시켜주고  로그인 이력 테이블에 성공로그를 적재한다..
         MemberLoginResponse build = MemberLoginResponse
                 .builder()
-                .memberSeq(findMember.getMemberSeq())
-                .address(findMember.getAddress())
-                .id(findMember.getId())
-                .deliveries(findMember.getDeliveries())
-                .username(findMember.getUsername())
-                .phoneNum(findMember.getPhoneNum())
+                .memberSeq(memberResponse.getMemberSeq())
+                .address(memberResponse.getAddress())
+                .id(memberResponse.getId())
+                .deliveries(memberResponse.getDeliveries())
+                .username(memberResponse.getUsername())
+                .phoneNum(memberResponse.getPhoneNum())
                 .isLogin(true)
                 .build();
+
+
 
         LoginHistory loginRecord = LoginHistory.builder()
                     .member(findMember)

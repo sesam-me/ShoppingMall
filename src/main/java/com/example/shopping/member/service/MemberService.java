@@ -35,9 +35,31 @@ public class MemberService {
 
     public ResponseEntity<RestResult<Object>> findById2(String id) {
         Member byId = memberRepository.findById(id);
-        return ResponseEntity.ok(new RestResult<>("success", byId));
 
+        // MemberResponse 클래스가 필요한 정보를 포함하도록 가정합니다.
+        MemberResponse memberResponse = createMemberResponseFromMember(byId);
+
+        return ResponseEntity.ok(new RestResult<>("success", memberResponse));
     }
+
+    private MemberResponse createMemberResponseFromMember(Member member) {
+        MemberResponse memberResponse = MemberResponse.builder()
+                .memberSeq(member.getMemberSeq())
+                .id(member.getId())
+                .password(member.getPassword())
+                .username(member.getUsername())
+                .registrationDate(member.getRegistrationDate())
+                .address(member.getAddress())
+                .phoneNum(member.getPhoneNum())
+                .point(member.getPoint())
+                .grade(member.getGrade())
+                .loginHistory(member.getLoginHistory())
+                .build();
+
+        // 필요한 다른 정보도 설정 가능합니다.
+        return memberResponse;
+    }
+
 
     public ResponseEntity<RestResult<Object>> memberInsert(MemberInsertDto memberInsertDto){
         Member findMember = memberRepository.findById(memberInsertDto.getId());
@@ -85,6 +107,7 @@ public class MemberService {
     public ResponseEntity<RestResult<Object>> memberLogin(MemberLoginDto memberLoginDto) {
         // 입력받은 ID로 해당하는 ID가 존재하는지 확인한다.. 여기서 만약 null 이라면..? 해당 회원이 아예 존재하지 않는것이니.. 로그인 이력 테이블에 쌓아 줄 필요없이 바로 예외처리 해준다.
         Member findMember = memberRepository.findById(memberLoginDto.getId());
+
         if (findMember == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new RestResult<>("error",new RestError("NOT_FOUND","NOT_FOUND")));
@@ -181,9 +204,9 @@ public class MemberService {
     public ResponseEntity<RestResult<Object>> findByPhoneNum(String phoneNum){
         Member byPhoneNum = memberRepository.findByPhoneNum(phoneNum);
 
-        if(!phoneNum.equals(byPhoneNum.getPhoneNum())){
+        if(byPhoneNum == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new RestResult<>("error", new RestError("PHONENUM_NOT_FOUND","일치하는 핸드폰번호가 없습니다.")));
+                    .body(new RestResult<>("error", new RestError("PHONENUM_NOT_FOUND","일치하는 정보가 없습니다.")));
         }
 
         return ResponseEntity.ok(new RestResult<>("success", byPhoneNum.getId()));

@@ -1,5 +1,6 @@
 package com.example.shopping.review.controller;
 
+import com.example.shopping.common.RestResult;
 import com.example.shopping.review.domain.entity.Review;
 import com.example.shopping.review.domain.request.ReviewRequest;
 import com.example.shopping.review.service.ReviewService;
@@ -33,8 +34,8 @@ public class ReviewController {
     }
 
     @PostMapping("/{reviewSeq}/like/{memberSeq}")
-    public void saveLike(@PathVariable("reviewSeq") Long reviewSeq, @PathVariable("memberSeq") Long memberSeq) {
-        reviewService.saveLike(reviewSeq, memberSeq);
+    public ResponseEntity<RestResult<Object>> saveLike(@PathVariable("reviewSeq") Long reviewSeq, @PathVariable("memberSeq") Long memberSeq) {
+        return reviewService.saveLike(reviewSeq, memberSeq);
     }
 
     @DeleteMapping("/{reviewSeq}/like")

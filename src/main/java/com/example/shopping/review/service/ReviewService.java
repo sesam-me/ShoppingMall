@@ -36,16 +36,30 @@ public class ReviewService {
         reviewRepository.save(reviewRequest.toEntity(productSeq));
     }
 
-    public void saveLike(Long reviewSeq, Long memberSeq) {
+    public ResponseEntity<RestResult<Object>> saveLike(Long reviewSeq, Long memberSeq) {
         try {
             Optional<Member> member = memberRepository.findById(memberSeq);
             Optional<Review> review = reviewRepository.findById(reviewSeq);
+
+            if (!member.isPresent()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new RestResult<>("error", new RestError("NOT_FOUND", "찾을 수 없는 유저")));
+            }
+
+            Optional<ReviewMember> byMemberSeq = Optional.ofNullable(reviewMemberRepository.findByMemberAndReview(member.get(), review.get()));
+
+            if (byMemberSeq.isPresent()) {
+
+                return deleteLike(member.get().getMemberSeq(), review.get().getReviewSeq());
+            }
+
 
             ReviewMember reviewMember = ReviewMember
                     .builder()
                     .review(review.get())
                     .member(member.get())
                     .build();
+
             reviewMemberRepository.save(reviewMember);
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,14 +74,16 @@ public class ReviewService {
 
         }catch (Exception e) {
             e.printStackTrace();
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new RestResult<>("error", new RestError("server_error", "server_error")));
         }
         //review_member 테이블에 값이 들어왔을때
         //review 의 heart 수를 올려줘
+
+        return ResponseEntity.ok(new RestResult<>("success", "좋아요 추가 완료"));
     }
 
-    public void deleteLike(Long memberSeq, Long reviewSeq) {
+    public ResponseEntity<RestResult<Object>> deleteLike(Long memberSeq, Long reviewSeq) {
         try {
             reviewMemberRepository.deleteLike(memberSeq, reviewSeq);
         }catch (Exception e) {
@@ -86,6 +102,8 @@ public class ReviewService {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new RestResult<>("error", new RestError("server_error", "server_error")));
         }
+
+        return ResponseEntity.ok(new RestResult<>("success", "좋아요 취소 완료"));
 
         //review_member 테이블에 값이 지워졌을 때
         //review 의 heart 수를 내려줘

@@ -59,7 +59,6 @@ public class MemberService {
         return memberResponse;
     }
 
-
     public ResponseEntity<RestResult<Object>> memberInsert(MemberInsertDto memberInsertDto){
         Member findMember = memberRepository.findById(memberInsertDto.getId());
 

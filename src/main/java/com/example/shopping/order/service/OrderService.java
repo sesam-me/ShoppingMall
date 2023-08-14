@@ -31,11 +31,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ScheduledFuture;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +56,10 @@ public class OrderService {
     private final DeliveryRepository deliveryRepository;
     private final PaymentHistoryRepository paymentHistoryRepository;
     private final MemberRepository memberRepository;
+    private final TaskScheduler taskScheduler;
+
+    private ScheduledFuture<?> scheduledDeliveryTask; // ScheduledFuture 객체
+
 
     public List<OrderResponse> findByMemberSeq(Long memberSeq) {
         Optional<Member> byId = memberRepository.findById(memberSeq);
@@ -170,43 +180,10 @@ public class OrderService {
                     .order(Order.builder().orderSeq(orderSave.getOrderSeq()).build())
                     .payment(Payment.builder().paymentSeq(paymentSave.getPaymentSeq()).build())
                     .build();
-            deliveryRepository.save(delivery);
-//            List<Order> orders = orderRepository.findAllByMember(member);
-//
-//            List<Delivery> deliveries = new ArrayList<>();
-//
-//            for (Order order : orders) {
-//                // 이미 생성된 Delivery가 있는지 확인
-//                boolean isExistingDelivery = deliveries.stream()
-//                        .anyMatch(delivery -> delivery.getOrder().equals(order));
-//
-//                if (!isExistingDelivery) {
-//                    Delivery delivery = Delivery.builder()
-//                            .deliveryStatus(1)
-//                            .deliveryDate(null)
-//                            .recipientInformation(null)
-//                            .deliveryMethod(null)
-//                            .deliveryFee(null)
-//                            .recipientAddress(orderRequest.getRecipientAddress())
-//                            .recipientPhoneNumber(null)
-//                            .deliveryFeeCondition(null)
-//                            .deliveryCompanyName("한진택배")
-//                            .deliveryCompanyContact(null)
-//                            .deliveryLocation(null)
-//                            .member(member)
-//                            .product(product)
-//                            .order(order)
-//                            .payment(save)
-//                            .build();
-//
-//                    deliveries.add(delivery);
-//                }
-//            }
-//
-//            // deliveries 리스트에 있는 Delivery들을 모두 저장
-//            for (Delivery delivery : deliveries) {
-//                deliveryRepository.save(delivery);
-//            }
+            Delivery save = deliveryRepository.save(delivery);
+
+            // delivery 적재 후 .. 배송 status 변경 schedule..
+            scheduledDeliveryTask = taskScheduler.scheduleAtFixedRate(() -> deliveryScheduled(save), Instant.now().plusSeconds(10), Duration.ofSeconds(10));
 
 
         } catch (Exception e) {
@@ -236,5 +213,31 @@ public class OrderService {
     private Order findById(Long orderSeq) {
         return orderRepository.findById(orderSeq).orElseThrow(() -> new RuntimeException());
     }
+    public void stopDeliverySchedule() {
+        // 해당 스케줄 종료..
+        if (scheduledDeliveryTask != null) {
+            scheduledDeliveryTask.cancel(false);
+        }
+    }
+
+    @Async
+    public void deliveryScheduled(Delivery delivery) {
+        Optional<Delivery> byId = deliveryRepository.findById(delivery.getDeliverySeq());
+
+        System.out.println(byId.get().getDeliverySeq() + " status 변경 진행중..");
+
+        int currentStatus = byId.get().getDeliveryStatus();
+
+        if (currentStatus < 4) {
+            // deliveryStatus 값을 1씩 증가시킴
+            byId.get().setDeliveryStatus(byId.get().getDeliveryStatus() + 1);
+            deliveryRepository.save(byId.get());
+        } else {
+            // deliveryStatus 값이 4가 되었으므로 스케줄링 종료
+            stopDeliverySchedule();
+        }
+    }
+
+
 }
 

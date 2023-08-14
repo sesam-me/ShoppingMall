@@ -112,6 +112,4 @@ public class ReviewService {
     public void deleteReview(Long reviewSeq) {
         reviewRepository.deleteById(reviewSeq);
     }
-
-
 }

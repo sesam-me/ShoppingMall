@@ -78,6 +78,22 @@ public class OrderService {
         Order orderSave;
         Product productSave;
 
+        try {
+            // 유저 포인트 확인..
+            Optional<Member> byId = memberRepository.findById(memberSeq);
+            if (byId.get().getPoint().getPointBalance() - orderRequest.getPaymentAmount() < 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new RestResult<>("BAD_REQUEST", new RestError("BAD_REQUEST", "포인트 잔액이 부족 합니다.")));
+            }
+
+            byId.get().getPoint().setPointBalance(byId.get().getPoint().getPointBalance() - orderRequest.getPaymentAmount());
+
+            memberRepository.save(byId.get());
+        } catch (Exception e) {
+
+        }
+
+
         // 주문 테이블 적재..
         try {
             orderSave = orderRepository.save(orderRequest.toEntity(productSeq, memberSeq));

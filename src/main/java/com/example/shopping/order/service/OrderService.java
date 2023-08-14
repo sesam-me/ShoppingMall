@@ -183,7 +183,7 @@ public class OrderService {
             Delivery save = deliveryRepository.save(delivery);
 
             // delivery 적재 후 .. 배송 status 변경 schedule..
-            scheduledDeliveryTask = taskScheduler.scheduleAtFixedRate(() -> deliveryScheduled(save), Instant.now().plusSeconds(10), Duration.ofSeconds(10));
+            scheduledDeliveryTask = taskScheduler.scheduleAtFixedRate(() -> deliveryScheduled(save), Instant.now().plusSeconds(60), Duration.ofSeconds(60));
 
 
         } catch (Exception e) {

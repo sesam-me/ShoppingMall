@@ -10,6 +10,9 @@ import com.example.shopping.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,9 +29,14 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public List<ProductResponse> findAll() {
-        List<Product> all = productRepository.findAll();
-        return all.stream().map(ProductResponse::new).toList();
+    public Page<ProductResponse> findAll(PageRequest request) {
+        Page<Product> productPage = productRepository.findAll(request);
+        List<ProductResponse> productResponses = productPage
+                .map(product -> new ProductResponse(product))
+                .toList();
+        // PageImpl클래스를 사용하여 productResponses리스트와 페이지 정보 총 엔티티 수를 이용하여 새로운 Page객체를 생성하고 반환
+        // new PageImpl<>(페이지 내용, 페이지정보, 총 아이템 수)
+        return new PageImpl<>(productResponses, request, productPage.getTotalElements());
     }
 
     public void save(ProductRequest productRequest) {

@@ -7,6 +7,8 @@ import com.example.shopping.product.domain.request.ProductUpdateRequest;
 import com.example.shopping.product.domain.response.ProductResponse;
 import com.example.shopping.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +22,9 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<ProductResponse> findAll() {
-        return productService.findAll();
+    public Page<ProductResponse> findAll(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "3") Integer size) {
+        PageRequest request = PageRequest.of(page, size);
+        return productService.findAll(request);
     }
 
     @GetMapping("{productSeq}")

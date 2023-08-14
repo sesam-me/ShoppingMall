@@ -31,7 +31,6 @@ public class Product {
     private String brand;
     private Integer price;
 
-
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductOption> productOptions;
 

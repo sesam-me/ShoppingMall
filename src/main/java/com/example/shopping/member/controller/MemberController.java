@@ -48,14 +48,14 @@ public class MemberController {
         return memberService.pointCharge(pointChargeDto, id);
     }
 
-//   ID찾기
+//   ID 찾기
     @GetMapping("/findId/{phoneNum}")
     public ResponseEntity<RestResult<Object>> findIdByPhoneNum(@PathVariable("phoneNum")String phoneNum){
         return memberService.findByPhoneNum(phoneNum);
     }
 
-//    PASSWORD찾기
-        @GetMapping("/findPassword/{id}")
+//    PASSWORD 찾기
+    @GetMapping("/findPassword/{id}")
     public ResponseEntity<RestResult<Object>> findPasswordById(@PathVariable("id")String id) throws Exception {
         return memberService.findPasswordById(id);
     }
@@ -71,14 +71,5 @@ public class MemberController {
         return memberService.findHistory(memberSeq);
     }
 
-//    ## point ##
-//    @PostMapping("/insert/point")
-//    public void pointInsert(@RequestBody PointInsertDto pointInsertDto){
-//        memberService.pointInsert(pointInsertDto);
-//    }
-//
-////    ## grade ##
-//    @PostMapping("insert/grade")
-//    public void gradeInsert(@RequestBody GradeInsertDto gradeInsertDto) {memberService.gradeInsert(gradeInsertDto);}
 
 }

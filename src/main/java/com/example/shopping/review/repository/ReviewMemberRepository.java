@@ -12,9 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReviewMemberRepository extends JpaRepository<ReviewMember, Long> {
-    //    @Modifying
-//    @Query("INSERT INTO ReviewMember (MemberSeq, ReviewSeq) VALUES (:MemberSeq, :ReviewSeq)")
-//    void insertLike(@Param("MemberSeq") Long MemberSeq, @Param("ReviewSeq") Long ReviewSeq);
+
+    ReviewMember findByMemberAndReview(Member member, Review review);
 
     Boolean existsByMember_MemberSeqAndReview_ReviewSeq(Long memberSeq, Long reviewSeq);
 

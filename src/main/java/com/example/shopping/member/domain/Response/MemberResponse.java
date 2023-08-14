@@ -100,7 +100,6 @@ public class MemberResponse {
 
         private Long memberSeq;
         private Long paymentSeq;
-//        private Long orderSeq;
 
         public DeliveryDto(Delivery delivery) {
             this.deliverSeq = delivery.getDeliverySeq();
@@ -118,7 +117,6 @@ public class MemberResponse {
 
             this.memberSeq = delivery.getMember().getMemberSeq();
             this.paymentSeq = delivery.getPayment().getPaymentSeq();
-//            this.orderSeq = delivery.getMember().getOderSeq;
         }
     }
 

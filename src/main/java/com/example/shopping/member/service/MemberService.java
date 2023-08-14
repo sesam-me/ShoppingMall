@@ -35,8 +35,28 @@ public class MemberService {
 
     public ResponseEntity<RestResult<Object>> findById2(String id) {
         Member byId = memberRepository.findById(id);
-        return ResponseEntity.ok(new RestResult<>("success", byId));
 
+        MemberResponse memberResponse = createMemberResponseFromMember(byId);
+
+        return ResponseEntity.ok(new RestResult<>("success", memberResponse));
+    }
+
+    private MemberResponse createMemberResponseFromMember(Member member) {
+        MemberResponse memberResponse = MemberResponse.builder()
+                .memberSeq(member.getMemberSeq())
+                .id(member.getId())
+                .password(member.getPassword())
+                .username(member.getUsername())
+                .registrationDate(member.getRegistrationDate())
+                .address(member.getAddress())
+                .phoneNum(member.getPhoneNum())
+                .point(member.getPoint())
+                .grade(member.getGrade())
+                .loginHistory(member.getLoginHistory())
+                .build();
+
+        // 필요한 다른 정보도 설정 가능합니다.
+        return memberResponse;
     }
 
     public ResponseEntity<RestResult<Object>> memberInsert(MemberInsertDto memberInsertDto){
@@ -85,6 +105,7 @@ public class MemberService {
     public ResponseEntity<RestResult<Object>> memberLogin(MemberLoginDto memberLoginDto) {
         // 입력받은 ID로 해당하는 ID가 존재하는지 확인한다.. 여기서 만약 null 이라면..? 해당 회원이 아예 존재하지 않는것이니.. 로그인 이력 테이블에 쌓아 줄 필요없이 바로 예외처리 해준다.
         Member findMember = memberRepository.findById(memberLoginDto.getId());
+
         if (findMember == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new RestResult<>("error",new RestError("NOT_FOUND","NOT_FOUND")));
@@ -102,17 +123,21 @@ public class MemberService {
                     .body(new RestResult<>("error",new RestError("BAD_REQUEST","BAD_REQUEST")));
         }
 
+        MemberResponse memberResponse = createMemberResponseFromMember(findMember);
+
         // 위에서 찾아온 회원의 정보에서 꺼내온 비밀번호와 유저가 입력한 번호가 같다면 .. ? 로그인을 성공 시켜주고  로그인 이력 테이블에 성공로그를 적재한다..
         MemberLoginResponse build = MemberLoginResponse
                 .builder()
-                .memberSeq(findMember.getMemberSeq())
-                .address(findMember.getAddress())
-                .id(findMember.getId())
-                .deliveries(findMember.getDeliveries())
-                .username(findMember.getUsername())
-                .phoneNum(findMember.getPhoneNum())
+                .memberSeq(memberResponse.getMemberSeq())
+                .address(memberResponse.getAddress())
+                .id(memberResponse.getId())
+                .deliveries(memberResponse.getDeliveries())
+                .username(memberResponse.getUsername())
+                .phoneNum(memberResponse.getPhoneNum())
                 .isLogin(true)
                 .build();
+
+
 
         LoginHistory loginRecord = LoginHistory.builder()
                     .member(findMember)
@@ -181,9 +206,9 @@ public class MemberService {
     public ResponseEntity<RestResult<Object>> findByPhoneNum(String phoneNum){
         Member byPhoneNum = memberRepository.findByPhoneNum(phoneNum);
 
-        if(!phoneNum.equals(byPhoneNum.getPhoneNum())){
+        if(byPhoneNum == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new RestResult<>("error", new RestError("PHONENUM_NOT_FOUND","일치하는 핸드폰번호가 없습니다.")));
+                    .body(new RestResult<>("error", new RestError("PHONENUM_NOT_FOUND","일치하는 정보가 없습니다.")));
         }
 
         return ResponseEntity.ok(new RestResult<>("success", byPhoneNum.getId()));

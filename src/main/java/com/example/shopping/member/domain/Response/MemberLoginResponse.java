@@ -16,6 +16,9 @@ public class MemberLoginResponse {
     private String address;
     private String username;
     private String phoneNum;
-    private List<Delivery> deliveries;
+    private List<MemberResponse.DeliveryDto> deliveries;
     private Boolean isLogin;
+
+
+
 }

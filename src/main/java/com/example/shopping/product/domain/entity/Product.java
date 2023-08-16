@@ -1,13 +1,16 @@
 package com.example.shopping.product.domain.entity;
 
 
+import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.inventory.domain.entity.Inventory;
 import com.example.shopping.order.domain.entity.Order;
 import com.example.shopping.review.domain.entity.QuestionAndAnswer;
 import com.example.shopping.review.domain.entity.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.log4j.Log4j2;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -58,6 +61,8 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Delivery> deliveries;
 
+    @OneToMany(mappedBy = "product")
+    private List<Cart> carts;
 
     public void update(String hname, String ename, String imgUrl, String brand, String detailImgUrl, Integer price) {
         this.hname = hname;

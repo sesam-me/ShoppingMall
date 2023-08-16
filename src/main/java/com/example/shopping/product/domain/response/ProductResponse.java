@@ -1,5 +1,7 @@
 package com.example.shopping.product.domain.response;
 
+import com.example.shopping.cart.domain.dto.CartDto;
+import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.inventory.domain.dto.InventoryDto;
 import com.example.shopping.order.domain.dto.HistoryDto;
 import com.example.shopping.order.domain.dto.OrderDto;
@@ -20,7 +22,6 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor @NoArgsConstructor @Builder
-
 public class ProductResponse {
     private Long productSeq;
     private String hName;
@@ -38,6 +39,7 @@ public class ProductResponse {
     private List<HistoryDto> historyDto;
     private List<OrderDto> orderDto;
     private List<InventoryDto> inventoryDto;
+    private List<CartDto> cartDto;
 
     public ProductResponse(Product product) {
         this.productSeq = product.getProductSeq();
@@ -69,7 +71,9 @@ public class ProductResponse {
         this.inventoryDto = product.getInventories() != null ?
                 product.getInventories().stream().map(InventoryDto::new).toList() :
                 new ArrayList<>();
-
+        this.cartDto = product.getCarts() != null ?
+                product.getCarts().stream().map(CartDto::new).toList() :
+                new ArrayList<>();
     }
 
 }

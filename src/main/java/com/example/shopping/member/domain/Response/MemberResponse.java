@@ -1,5 +1,7 @@
 package com.example.shopping.member.domain.Response;
 
+import com.example.shopping.cart.domain.dto.CartDto;
+import com.example.shopping.cart.domain.entity.Cart;
 import com.example.shopping.delivery.domain.entity.Delivery;
 import com.example.shopping.member.domain.entity.Grade;
 import com.example.shopping.member.domain.entity.LoginHistory;
@@ -30,6 +32,7 @@ public class MemberResponse {
     private Grade grade;
     private List<LoginHistory> loginHistory;
     private List<InterestsDto> interests;
+    private List<CartDto> carts;
 
 
 
@@ -48,7 +51,7 @@ public class MemberResponse {
         this.loginHistory = member.getLoginHistory();
         this.interests = member.getInterests() != null ?
         member.getInterests().stream().map(InterestsDto::new).toList() :new ArrayList<>();
-
+        this.carts = member.getCarts().stream().map(CartDto::new).toList();
     }
 
 

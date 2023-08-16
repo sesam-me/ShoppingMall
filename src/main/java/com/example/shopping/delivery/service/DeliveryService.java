@@ -25,10 +25,6 @@ public class DeliveryService {
         Optional<Member> findByMemberSeq = memberRepository.findById(deliveryInsertDto.getMember_seq());
         Optional<Payment> findByPaymentSeq = paymentRepository.findById(deliveryInsertDto.getPayment_seq());
 
-        System.out.println(findByMemberSeq);
-        System.out.println(findByPaymentSeq);
-
-
         Delivery delivery = Delivery.builder()
                 .deliveryDate(deliveryInsertDto.getDeliveryDate())
                 .deliveryStatus(deliveryInsertDto.getDeliverStatus())

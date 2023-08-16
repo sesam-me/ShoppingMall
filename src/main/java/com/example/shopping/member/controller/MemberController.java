@@ -18,14 +18,14 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
-    @PostMapping("/insert")
-    public ResponseEntity<RestResult<Object>> memberInsert(@RequestBody MemberInsertDto memberInsertDto){
-        return memberService.memberInsert(memberInsertDto);
-    }
-
     @GetMapping
     public List<MemberResponse> findAll(){
         return memberService.findAll();
+    }
+
+    @PostMapping("/insert")
+    public ResponseEntity<RestResult<Object>> memberInsert(@RequestBody MemberInsertDto memberInsertDto){
+        return memberService.memberInsert(memberInsertDto);
     }
 
     @GetMapping("{id}")
